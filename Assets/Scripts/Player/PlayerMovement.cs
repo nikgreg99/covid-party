@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed = 1.0f;
-    [SerializeField] private float _speedRotate = 5.0f;
+    [SerializeField] private float _speedRotate = 50.0f;
     [SerializeField] private float _speedMultiplier = 5.0f;
     [SerializeField] private float _mouseSensitiity = 5.0f;
 
@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _mouseMode = false;
     private bool _speedUp = false;
 
-    private void updateTranslation(float moveX, float moveZ)
+    private void UpdateTranslation(float moveX, float moveZ)
     {
         _translation = Vector3.zero;
         _translation += Vector3.right * moveX;
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void updateRotation()
+    private void UpdateRotation()
     {
         float rotationY = 0;
 
@@ -44,6 +44,20 @@ public class PlayerMovement : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             rotationY += Input.GetAxis("Mouse X") * _mouseSensitiity;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                rotationY -= 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                rotationY += 1;
+            }
         }
         _rotation = Vector3.up * rotationY;
 
@@ -66,14 +80,14 @@ public class PlayerMovement : MonoBehaviour
         float moveZ = Input.GetAxis("Vertical");
 
         _speedUp = Input.GetKeyDown(KeyCode.LeftShift);
-
-        updateTranslation(moveX, moveZ);
-        updateRotation();
+            
+        UpdateTranslation(moveX, moveZ);
+        UpdateRotation();
     }
 
     void FixedUpdate()
     {
-        _rigidbody.MovePosition(_rigidbody.position +_translation * _speed * Time.fixedDeltaTime);
+        _rigidbody.MovePosition(_rigidbody.position + _translation * _speed * Time.fixedDeltaTime);
         _rigidbody.MoveRotation(_rigidbody.rotation * Quaternion.Euler(_rotation * _speedRotate * Time.fixedDeltaTime));
     }
 }
