@@ -25,8 +25,9 @@ public class AIMovement : MonoBehaviour
     {
         body.velocity = moveDir * speed;
         counter += Time.deltaTime;
+        RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward, maxDistFromWall) || (counter > duration))
+        if (body.SweepTest(transform.forward, out hit, maxDistFromWall) || (counter > duration))
         {
             moveDir = chooseDirection();
             transform.rotation = Quaternion.LookRotation(moveDir);
@@ -37,24 +38,25 @@ public class AIMovement : MonoBehaviour
     Vector3 chooseDirection()
     {
         System.Random rand = new System.Random();
-        int dir = rand.Next(0, 3);
-        Vector3 temp = new Vector3();
-        if(dir == 0)
+        int x = rand.Next(1, 10);
+        int z = rand.Next(1, 10);
+        int sign = rand.Next(0, 3);
+        Vector3 dir = new Vector3();
+        if(sign == 0)
         {
-            temp = transform.forward;
-        }
-        else if (dir == 1)
+            dir = new Vector3(x, 0, z);
+        } else if(sign == 1)
         {
-            temp = -transform.forward;
+            dir = new Vector3(-x, 0, z);
         }
-        else if (dir == 2)
+        else if (sign == 2)
         {
-            temp = transform.right;
+            dir = new Vector3(-x, 0, -z);
         }
-        else if (dir == 3)
+        else if (sign == 3)
         {
-            temp = -transform.right;
+            dir = new Vector3(x, 0, -z);
         }
-        return temp;
+        return dir.normalized;
     }
 }
