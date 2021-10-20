@@ -18,11 +18,14 @@ public class PlayerMovement : MonoBehaviour
     private bool _mouseMode = false;
     private bool _speedUp = false;
 
+    private List<Animator> _animators = new List<Animator>();
+    private bool _lastMoving = false;
+
     private void UpdateTranslation(float moveX, float moveZ)
     {
         _translation = Vector3.zero;
-        _translation += Vector3.right * moveX;
-        _translation += Vector3.forward * moveZ;
+        _translation += transform.right * moveX;
+        _translation += transform.forward * moveZ;
 
         if (_speedUp)
         {
@@ -52,11 +55,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                rotationY -= 1;
+                rotationY = -1;
             }
             else if (Input.GetKeyDown(KeyCode.E))
             {
-                rotationY += 1;
+                rotationY = 1;
             }
         }
         _rotation = Vector3.up * rotationY;
@@ -67,11 +70,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        foreach (Animator a in GetComponentsInChildren<Animator>())
+        {
+            _animators.Add(a);
+        }
     }
 
     void Update()
@@ -79,8 +86,23 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
+        bool moving = moveX != 0 || moveZ != 0;
+
+        if (_lastMoving != moving)
+        {
+            _lastMoving = moving;
+
+            foreach (Animator a in _animators)
+            {
+                a.SetBool("moving", moving);
+            }
+        }
+
+
+
+
         _speedUp = Input.GetKeyDown(KeyCode.LeftShift);
-            
+
         UpdateTranslation(moveX, moveZ);
         UpdateRotation();
     }
@@ -91,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.MoveRotation(_rigidbody.rotation * Quaternion.Euler(_rotation * _speedRotate * Time.fixedDeltaTime));
     }
 }
- 
-   
 
-   
+
+
+
