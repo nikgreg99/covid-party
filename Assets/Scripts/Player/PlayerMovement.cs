@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed = 1.0f;
     [SerializeField] private float _speedRotate = 50.0f;
-    [SerializeField] private float _speedMultiplier = 5.0f;
+    [SerializeField] private float _speedMultiplier = 3.0f;
     [SerializeField] private float _mouseSensitiity = 5.0f;
     [SerializeField] private float _camPlayerSlerpFactor = 1f;
 
@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _rotation = Vector3.zero;
 
     private bool _mouseMode = false;
-    private bool _speedUp = false;
 
     private List<Animator> _animators = new List<Animator>();
     private bool _lastMoving = false;
@@ -33,11 +32,6 @@ public class PlayerMovement : MonoBehaviour
         _translation = Vector3.zero;
         _translation += transform.right * moveX;
         _translation += transform.forward * moveZ;
-
-        if (_speedUp)
-        {
-            _translation *= _speedMultiplier;
-        }
     }
 
     private void UpdateRotation()
@@ -71,10 +65,13 @@ public class PlayerMovement : MonoBehaviour
         }
         //_rotation = Vector3.up * rotationY;
 
+<<<<<<< HEAD
         if (_speedUp)
         {
             _translation *= _speedMultiplier;
         }
+=======
+>>>>>>> switch-camera
     }
 
 
@@ -122,11 +119,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-
-        _speedUp = Input.GetKeyDown(KeyCode.LeftShift);
-
+        bool speedUp = Input.GetKey(KeyCode.LeftShift);
+       
+       
         UpdateTranslation(moveX, moveZ);
         UpdateRotation();
+
+        if (speedUp)
+        {
+            _translation *= _speedMultiplier;
+            _rotation *= _speedMultiplier;
+        }
     }
 
     void FixedUpdate()
@@ -135,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.MoveRotation(_rigidbody.rotation * Quaternion.Euler(_rotation * _speedRotate * Time.fixedDeltaTime));
     }
 }
+
 
 
 
