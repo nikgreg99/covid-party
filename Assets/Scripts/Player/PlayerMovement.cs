@@ -65,13 +65,6 @@ public class PlayerMovement : MonoBehaviour
         }
         //_rotation = Vector3.up * rotationY;
 
-<<<<<<< HEAD
-        if (_speedUp)
-        {
-            _translation *= _speedMultiplier;
-        }
-=======
->>>>>>> switch-camera
     }
 
 
