@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _speedRotate = 50.0f;
     [SerializeField] private float _speedMultiplier = 5.0f;
     [SerializeField] private float _mouseSensitiity = 5.0f;
+    [SerializeField] private float _camPlayerSlerpFactor = 1f;
 
     private Rigidbody _rigidbody;
 
@@ -20,6 +21,12 @@ public class PlayerMovement : MonoBehaviour
 
     private List<Animator> _animators = new List<Animator>();
     private bool _lastMoving = false;
+
+    [SerializeField] private OrbitCamera _orbitCamera;
+
+    private Vector3 targetRotation;
+    private Vector3 startRotation;
+    private float _startTime;
 
     private void UpdateTranslation(float moveX, float moveZ)
     {
@@ -46,27 +53,27 @@ public class PlayerMovement : MonoBehaviour
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            rotationY += Input.GetAxis("Mouse X") * _mouseSensitiity;
+            //rotationY += Input.GetAxis("Mouse X") * _mouseSensitiity;
         }
         else
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            /*if (Input.GetKeyDown(KeyCode.Q))
             {
                 rotationY = -1;
             }
             else if (Input.GetKeyDown(KeyCode.E))
             {
                 rotationY = 1;
-            }
+            }*/
         }
-        _rotation = Vector3.up * rotationY;
+        //_rotation = Vector3.up * rotationY;
 
         if (_speedUp)
         {
-            _rotation *= _speedMultiplier;
+            _translation *= _speedMultiplier;
         }
     }
 
@@ -74,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //_orbitCamera = GetComponentInChildren<OrbitCamera>();
         _rigidbody = GetComponent<Rigidbody>();
         foreach (Animator a in GetComponentsInChildren<Animator>())
         {
@@ -98,6 +106,20 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        float camYRotation = _orbitCamera.gameObject.transform.rotation.eulerAngles.y;
+        float playerYRotation = transform.rotation.eulerAngles.y;
+        if (Mathf.Abs(camYRotation - playerYRotation)>=5 && (targetRotation == null || Mathf.Abs(targetRotation.y - camYRotation)>=5))
+        {
+            targetRotation = new Vector3(0, camYRotation, 0);
+            startRotation = new Vector3(0,playerYRotation, 0);
+            _startTime = Time.time;
+        }
+
+        float progress = (Time.time - _startTime) * _camPlayerSlerpFactor;
+        if (progress <= 1)
+        {
+            transform.rotation = Quaternion.Slerp(Quaternion.Euler(startRotation), Quaternion.Euler(targetRotation) , progress);
+        }
 
 
 

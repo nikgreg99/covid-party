@@ -16,6 +16,11 @@ public class OrbitCamera : MonoBehaviour
     {
         _rotY = transform.eulerAngles.y;
         _offset = _target.position - transform.position;
+
+#if !UNITY_EDITOR
+        Cursor.visible = false;
+#endif
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
    

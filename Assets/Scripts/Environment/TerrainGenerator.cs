@@ -41,25 +41,28 @@ public class TerrainGenerator : MonoBehaviour
     {
         GameObject wallParent = GameObject.FindGameObjectWithTag("WallParent");
 
-        GameObject wall1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall1.transform.position = new Vector3(_width / 2, _depth, 0);
-        wall1.transform.localScale = new Vector3(1, _depth * 2, _height);
-        wall1.transform.SetParent(wallParent.transform);
+        if (wallParent != null)
+        {
+            GameObject wall1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wall1.transform.position = new Vector3(_width / 2, _depth, 0);
+            wall1.transform.localScale = new Vector3(1, _depth * 2, _height);
+            wall1.transform.SetParent(wallParent.transform);
 
-        GameObject wall2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall2.transform.position = new Vector3(-_width / 2, _depth, 0);
-        wall2.transform.localScale = new Vector3(1, _depth * 2, _height);
-        wall2.transform.SetParent(wallParent.transform);
+            GameObject wall2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wall2.transform.position = new Vector3(-_width / 2, _depth, 0);
+            wall2.transform.localScale = new Vector3(1, _depth * 2, _height);
+            wall2.transform.SetParent(wallParent.transform);
 
-        GameObject wall3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall3.transform.position = new Vector3(0, _depth, _height / 2);
-        wall3.transform.localScale = new Vector3(_width, _depth * 2, 1);
-        wall3.transform.SetParent(wallParent.transform);
+            GameObject wall3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wall3.transform.position = new Vector3(0, _depth, _height / 2);
+            wall3.transform.localScale = new Vector3(_width, _depth * 2, 1);
+            wall3.transform.SetParent(wallParent.transform);
 
-        GameObject wall4 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall4.transform.position = new Vector3(0, _depth, -_height / 2);
-        wall4.transform.localScale = new Vector3(_width, _depth * 2, 1);
-        wall4.transform.SetParent(wallParent.transform);
+            GameObject wall4 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wall4.transform.position = new Vector3(0, _depth, -_height / 2);
+            wall4.transform.localScale = new Vector3(_width, _depth * 2, 1);
+            wall4.transform.SetParent(wallParent.transform);
+        }
     }
 
     private void SpawnGivenPlayer()
