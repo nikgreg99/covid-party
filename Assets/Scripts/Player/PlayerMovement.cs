@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed = 1.0f;
     [SerializeField] private float _speedRotate = 50.0f;
-    [SerializeField] private float _speedMultiplier = 3.0f;
+    [SerializeField] private float _speedMultiplier = 3f;
     [SerializeField] private float _mouseSensitiity = 5.0f;
     [SerializeField] private float _camPlayerSlerpFactor = 1f;
 
@@ -26,12 +26,18 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 targetRotation;
     private Vector3 startRotation;
     private float _startTime;
+    private bool _speedUp = false;
 
     private void UpdateTranslation(float moveX, float moveZ)
     {
         _translation = Vector3.zero;
         _translation += transform.right * moveX;
         _translation += transform.forward * moveZ;
+
+        if (_speedUp)
+        {
+            _translation *= _speedMultiplier;
+        }
     }
 
     private void UpdateRotation()
@@ -73,17 +79,17 @@ public class PlayerMovement : MonoBehaviour
 
         float camYRotation = _orbitCamera.gameObject.transform.rotation.eulerAngles.y;
         float playerYRotation = transform.rotation.eulerAngles.y;
-        if (Mathf.Abs(camYRotation - playerYRotation)>=5 && (targetRotation == null || Mathf.Abs(targetRotation.y - camYRotation)>=5))
+        if (Mathf.Abs(camYRotation - playerYRotation) >= 5 && (targetRotation == null || Mathf.Abs(targetRotation.y - camYRotation) >= 5))
         {
             targetRotation = new Vector3(0, camYRotation, 0);
-            startRotation = new Vector3(0,playerYRotation, 0);
+            startRotation = new Vector3(0, playerYRotation, 0);
             _startTime = Time.time;
         }
 
         float progress = (Time.time - _startTime) * _camPlayerSlerpFactor;
         if (progress <= 1)
         {
-            transform.rotation = Quaternion.Slerp(Quaternion.Euler(startRotation), Quaternion.Euler(targetRotation) , progress);
+            transform.rotation = Quaternion.Slerp(Quaternion.Euler(startRotation), Quaternion.Euler(targetRotation), progress);
         }
 
 
