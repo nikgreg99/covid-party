@@ -29,6 +29,12 @@ public class TerrainGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (_randomGen)
+        {
+            _originX = Random.Range(0, 400);
+            _originY = Random.Range(0, 400);
+        }
+
         _terrain = GetComponent<Terrain>();
         this.transform.position = new Vector3(-_width / 2, 0, -_height / 2);
         _terrain.terrainData = GenerateTerrainData(_terrain.terrainData);
@@ -87,9 +93,6 @@ public class TerrainGenerator : MonoBehaviour
 
     private float[,] GenerateHeights()
     {
-        float offsX = _randomGen ? Random.Range(0, 400) : _originX;
-        float offsY = _randomGen ? Random.Range(0, 400) : _originY;
-
         float[,] heights = new float[_width, _height];
 
         for (int x = 0; x < _width; x++)
@@ -97,8 +100,8 @@ public class TerrainGenerator : MonoBehaviour
             for (int y = 0; y < _height; y++)
             {
 
-                float perlinX = (float)x / _width * _scale + offsX;
-                float perlinY = (float)y / _height * _scale + offsY;
+                float perlinX = (float)x / _width * _scale + _originX;
+                float perlinY = (float)y / _height * _scale + _originY;
 
                 heights[x, y] = Mathf.PerlinNoise(perlinX, perlinY);
             }
@@ -111,6 +114,10 @@ public class TerrainGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SpawnGivenPlayer();
+        }
         //DoGenerate();
     }
 

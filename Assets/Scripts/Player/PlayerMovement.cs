@@ -36,35 +36,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateRotation()
     {
-        float rotationY = 0;
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (_speedUp)
         {
-            _mouseMode = !_mouseMode;
+            _rotation *= _speedMultiplier;
         }
-
-        if (_mouseMode)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            //rotationY += Input.GetAxis("Mouse X") * _mouseSensitiity;
-        }
-        else
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-
-            /*if (Input.GetKeyDown(KeyCode.Q))
-            {
-                rotationY = -1;
-            }
-            else if (Input.GetKeyDown(KeyCode.E))
-            {
-                rotationY = 1;
-            }*/
-        }
-        //_rotation = Vector3.up * rotationY;
-
     }
 
 
@@ -112,17 +87,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        bool speedUp = Input.GetKey(KeyCode.LeftShift);
-       
-       
+        _speedUp = Input.GetKey(KeyCode.LeftShift);
+
         UpdateTranslation(moveX, moveZ);
         UpdateRotation();
-
-        if (speedUp)
-        {
-            _translation *= _speedMultiplier;
-            _rotation *= _speedMultiplier;
-        }
     }
 
     void FixedUpdate()
