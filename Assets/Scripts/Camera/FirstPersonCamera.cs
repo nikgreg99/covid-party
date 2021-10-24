@@ -22,7 +22,7 @@ public class FirstPersonCamera : MonoBehaviour
         rotY += Input.GetAxis("Mouse Y") * _rotYSpeed;
         float clampedRotY = Mathf.Clamp(rotY, -_rotYMaxAngle, _rotYMaxAngle);
 
-        Quaternion rotation = Quaternion.Euler(0, rotY, 0);
+        Quaternion rotation = Quaternion.Euler(0, clampedRotY, 0);
         _target.rotation = rotation;
     }
 }
