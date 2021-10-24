@@ -15,8 +15,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _translation = Vector3.zero;
     private Vector3 _rotation = Vector3.zero;
 
-    private bool _mouseMode = false;
-
     private List<Animator> _animators = new List<Animator>();
     private bool _lastMoving = false;
 
