@@ -4,14 +4,32 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    private OrbitCamera _orbitCamera;
-    private bool _isFirstPerson = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        _orbitCamera = GetComponent<OrbitCamera>();
+    [SerializeField] private bool _isFirstPerson = false;
+    [SerializeField] private GameObject firstPersonCamera;
+    [SerializeField] private GameObject orbitCamera;
+   
 
+
+    private void Start()
+    {
+        UpdateView();
     }
+
+    private void UpdateView()
+    {
+        if (_isFirstPerson)
+        {
+            firstPersonCamera.SetActive(true);
+            orbitCamera.SetActive(false);
+        }
+        else
+        {
+            firstPersonCamera.SetActive(false);
+            orbitCamera.SetActive(true);
+        }
+    }
+
+
 
     private void ChangeView()
     {
@@ -19,10 +37,6 @@ public class CameraManager : MonoBehaviour
         UpdateView();
     }
 
-    private void UpdateView()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()

@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _speed = 1.0f;
     [SerializeField] private float _speedRotate = 50.0f;
     [SerializeField] private float _speedMultiplier = 3f;
-    [SerializeField] private float _mouseSensitiity = 5.0f;
     [SerializeField] private float _camPlayerSlerpFactor = 1f;
 
     private Rigidbody _rigidbody;
@@ -91,7 +90,6 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.rotation = Quaternion.Slerp(Quaternion.Euler(startRotation), Quaternion.Euler(targetRotation), progress);
         }
-
 
         _speedUp = Input.GetKey(KeyCode.LeftShift);
 
