@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 158423652}
   - component: {fileID: 158423653}
+  - component: {fileID: 158423654}
   m_Layer: 0
   m_Name: First Camera
   m_TagString: Untagged
@@ -197,6 +198,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &158423654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158423651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e274b29839df5af409af6fe8474f4185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 638718251}
+  _rotYSpeed: 1.5
+  _rotYMaxAngle: 360
 --- !u!1 &358169318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,7 +1039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca6ed9de4e17364fb2b48138ebdbfc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isFirstPerson: 1
+  _isFirstPerson: 0
   firstPersonCamera: {fileID: 158423651}
   orbitCamera: {fileID: 963194225}
 --- !u!1 &1181266581
@@ -1397,7 +1413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _speedRotate: 50
-  _speedMultiplier: 1.5
+  _speedMultiplier: 5
   _camPlayerSlerpFactor: 3
   _orbitCamera: {fileID: 963194230}
 --- !u!136 &1643640419
