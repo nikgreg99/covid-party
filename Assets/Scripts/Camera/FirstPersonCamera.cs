@@ -5,24 +5,30 @@ using UnityEngine;
 public class FirstPersonCamera : MonoBehaviour
 {
     [SerializeField] private Transform _target;
+    [SerializeField] private float _rotXSpeed = 1.5f;
     [SerializeField] private float _rotYSpeed = 1.5f;
     [SerializeField] private float _rotYMaxAngle = 360.0f;
 
-    private float rotY;
+    private float _rotX;
+    private float _rotY;
 
     // Start is called before the first frame update
     void Start()
     {
-        rotY = _target.eulerAngles.y;
+        _rotX = _target.eulerAngles.x;
+        _rotY = _target.eulerAngles.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rotY += Input.GetAxis("Mouse Y") * _rotYSpeed;
-        float clampedRotY = Mathf.Clamp(rotY, -_rotYMaxAngle, _rotYMaxAngle);
+        _rotX += Input.GetAxis("Mouse X") * _rotXSpeed;
+        _rotY += Input.GetAxis("Mouse Y") * _rotYSpeed;
 
-        Quaternion rotation = Quaternion.Euler(0, clampedRotY, 0);
-        _target.rotation = rotation;
+        _rotY = Mathf.Clamp(_rotY ,-_rotYMaxAngle, _rotYMaxAngle);
+
+        Quaternion xQuat = Quaternion.AngleAxis(_rotX, Vector3.up);
+        Quaternion yQuat = Quaternion.AngleAxis(_rotY, Vector3.left);
+        _target.rotation = xQuat * yQuat;
     }
 }
