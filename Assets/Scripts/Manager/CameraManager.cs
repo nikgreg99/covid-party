@@ -5,31 +5,31 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] private bool _isFirstPerson = false;
-    [SerializeField] private GameObject firstPersonCamera;
-    [SerializeField] private GameObject orbitCamera;
-   
+    [SerializeField] private GameObject _firstCamera;
+    [SerializeField] private GameObject _orbitCamera;
 
 
-    private void Start()
-    {
+    private void Start() {
+
         UpdateView();
     }
 
     private void UpdateView()
     {
+  
         if (_isFirstPerson)
         {
-            firstPersonCamera.SetActive(true);
-            orbitCamera.SetActive(false);
+            _firstCamera.SetActive(true);
+            _orbitCamera.SetActive(false);
         }
         else
         {
-            firstPersonCamera.SetActive(false);
-            orbitCamera.SetActive(true);
+            _firstCamera.SetActive(false);
+            _orbitCamera.SetActive(true);
         }
     }
 
-
+       
 
     private void ChangeView()
     {
