@@ -97,7 +97,14 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        _rigidbody.MovePosition(_rigidbody.position + _translation * _speed * Time.fixedDeltaTime);
+        Vector3 dir = _translation * _speed * Time.fixedDeltaTime;
+        /*Ray ray = new Ray(_rigidbody.position, dir);
+        RaycastHit hit;
+        if (!Physics.Raycast(ray, out hit, dir.magnitude+GetComponent<CapsuleCollider>().radius+0.2f) || hit.collider.gameObject.layer != LayerMask.NameToLayer("Obstacle"))
+        {*/
+        _rigidbody.MovePosition(_rigidbody.position + dir);
+        //}
+
         _rigidbody.MoveRotation(_rigidbody.rotation * Quaternion.Euler(_rotation * _speedRotate * Time.fixedDeltaTime));
     }
 }

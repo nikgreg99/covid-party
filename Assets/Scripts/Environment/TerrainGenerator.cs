@@ -29,6 +29,7 @@ public class TerrainGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         if (_randomGen)
         {
             _originX = Random.Range(0, 400);
@@ -53,21 +54,25 @@ public class TerrainGenerator : MonoBehaviour
             wall1.transform.position = new Vector3(_width / 2, _depth, 0);
             wall1.transform.localScale = new Vector3(1, _depth * 2, _height);
             wall1.transform.SetParent(wallParent.transform);
+            wall1.layer = wallParent.layer;
 
             GameObject wall2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall2.transform.position = new Vector3(-_width / 2, _depth, 0);
             wall2.transform.localScale = new Vector3(1, _depth * 2, _height);
             wall2.transform.SetParent(wallParent.transform);
+            wall2.layer = wallParent.layer;
 
             GameObject wall3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall3.transform.position = new Vector3(0, _depth, _height / 2);
             wall3.transform.localScale = new Vector3(_width, _depth * 2, 1);
             wall3.transform.SetParent(wallParent.transform);
+            wall3.layer = wallParent.layer;
 
             GameObject wall4 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall4.transform.position = new Vector3(0, _depth, -_height / 2);
             wall4.transform.localScale = new Vector3(_width, _depth * 2, 1);
             wall4.transform.SetParent(wallParent.transform);
+            wall4.layer = wallParent.layer;
         }
     }
 

@@ -30,7 +30,7 @@ public class AIMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        body.MovePosition(body.position + moveDir * Time.deltaTime * speed);
+        body.MovePosition(body.position + transform.forward * Time.deltaTime * speed);
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
@@ -40,6 +40,7 @@ public class AIMovement : MonoBehaviour
         {
             speed = initialSpeed;
             moveDir = chooseDirection();
+            transform.rotation = Quaternion.LookRotation(moveDir);
             counter = 0.0f;
         }
         else if (distanceToPlayer < 5f)
@@ -51,7 +52,8 @@ public class AIMovement : MonoBehaviour
             speed = initialSpeed;
             Vector3 playerPos = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             Vector3 enemyPos = new Vector3(transform.position.x, 0, transform.position.z);
-            moveDir = (playerPos - enemyPos).normalized;
+            moveDir = (enemyPos - playerPos).normalized;
+            transform.rotation = Quaternion.LookRotation(moveDir);
         }
     }
 
