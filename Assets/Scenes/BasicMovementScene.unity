@@ -149,7 +149,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158423651}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 0, y: 1.68, z: -0.04}
+=======
+  m_LocalPosition: {x: -0.57, y: 1.67, z: 0.11}
+>>>>>>> jump-camera
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 638718251}
@@ -563,7 +567,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1643640417}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.53, z: 0}
+  m_LocalPosition: {x: 0, y: 4.69, z: -1.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 653726734}
@@ -932,7 +936,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -7.98}
+  m_LocalPosition: {x: 0, y: 1.78, z: -6.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 638718251}
@@ -996,8 +1000,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isFirstPerson: 0
-  firstPersonCamera: {fileID: 158423651}
-  orbitCamera: {fileID: 963194225}
+  _firstPersonCameraObj: {fileID: 158423651}
+  _orbitCameraObj: {fileID: 963194225}
 --- !u!1 &1181266581
 GameObject:
   m_ObjectHideFlags: 0

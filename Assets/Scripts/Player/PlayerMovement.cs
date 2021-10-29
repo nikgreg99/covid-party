@@ -10,7 +10,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _speedMultiplier = 3f;
     [SerializeField] private float _camPlayerSlerpFactor = 1f;
 
+    [SerializeField] private float _jumpSpeed = 5.0f;
+    [SerializeField] private float _offsetSpeed = 0.5f;
+  
+
     private Rigidbody _rigidbody;
+    private CapsuleCollider _capsuleCollider;
 
     private Vector3 _translation = Vector3.zero;
     private Vector3 _rotation = Vector3.zero;
@@ -45,12 +50,35 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool checkJump()
+    {
+        bool _hitGround = false;
+        RaycastHit hit;
+
+        Debug.Log(_rigidbody.velocity.y);
+        if (Mathf.Abs(_rigidbody.velocity.y ) < _offsetSpeed && Physics.Raycast(transform.position, Vector3.down, out hit))
+        {
+            float check = (_capsuleCollider.height / 2) + 0.6f;
+            _hitGround = hit.distance <= check;
+            Debug.Log(check);
+            Debug.Log(hit.distance);
+        }
+        return _hitGround;
+    }
+
+    private void jump()
+    {
+        Vector3 velocity = _rigidbody.velocity;
+        velocity.y = _jumpSpeed;
+        _rigidbody.velocity = velocity;
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        //_orbitCamera = GetComponentInChildren<OrbitCamera>();
         _rigidbody = GetComponent<Rigidbody>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
         foreach (Animator a in GetComponentsInChildren<Animator>())
         {
             _animators.Add(a);
@@ -93,6 +121,15 @@ public class PlayerMovement : MonoBehaviour
 
         UpdateTranslation(moveX, moveZ);
         UpdateRotation();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (checkJump())
+            {
+                jump();
+            }
+        }
+       
     }
 
     void FixedUpdate()

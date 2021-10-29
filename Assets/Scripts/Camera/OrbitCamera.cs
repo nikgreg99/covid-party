@@ -25,7 +25,11 @@ public class OrbitCamera : MonoBehaviour
 #endif
     }
 
-   
+    private void OnEnable()
+    {
+        
+    }
+
     void LateUpdate()
     {
         _rotY += Input.GetAxis("Mouse X") * _rotSpeed;
