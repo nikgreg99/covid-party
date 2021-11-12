@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 158423652}
   - component: {fileID: 158423653}
-  - component: {fileID: 158423654}
   m_Layer: 0
   m_Name: First Camera
   m_TagString: Untagged
@@ -198,22 +197,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &158423654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 158423651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e274b29839df5af409af6fe8474f4185, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 638718251}
-  _rotXSpeed: 1.5
-  _rotYSpeed: 1.5
-  _rotYMaxAngle: 360
 --- !u!1 &358169318
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +915,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.78, z: -6.91}
+  m_LocalPosition: {x: -0.64, y: 1.14, z: -6.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 638718251}
@@ -992,12 +975,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1078743775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ca6ed9de4e17364fb2b48138ebdbfc7, type: 3}
+  m_Script: {fileID: 11500000, guid: 8433cbc68bdbf654d81bd2c4424a89b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isFirstPerson: 0
-  _firstPersonCameraObj: {fileID: 158423651}
-  _orbitCameraObj: {fileID: 963194225}
+  firstCameera: {fileID: 158423651}
+  orbitCamera: {fileID: 963194225}
 --- !u!1 &1181266581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,6 +1325,8 @@ MonoBehaviour:
   _speedRotate: 50
   _speedMultiplier: 2.5
   _camPlayerSlerpFactor: 3
+  _jumpSpeed: 5
+  _offsetSpeed: 0.5
   _orbitCamera: {fileID: 963194230}
 --- !u!136 &1643640419
 CapsuleCollider:
@@ -1371,7 +1356,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &1643640421
 MonoBehaviour:
@@ -1387,6 +1372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shotDelay: 0.5
   _shotSpeed: 30.58
+  _range: 4
 --- !u!1 &78758272201084241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,14 +1504,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  maxDistFromObstacle: 20
+  maxDistFromObstacle: 0
   maxDistFromPlayer: 50
   groundMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
 --- !u!136 &1594522161192962522
 CapsuleCollider:
   m_ObjectHideFlags: 0

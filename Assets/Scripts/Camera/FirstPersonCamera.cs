@@ -19,9 +19,17 @@ public class FirstPersonCamera : MonoBehaviour
         _rotY = _target.eulerAngles.y;
     }
 
+    public void updateRotationAxes(float x, float y)
+    {
+        _rotX = x;
+        _rotY = y;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(_rotX);
+        Debug.Log(_rotY);
         _rotX += Input.GetAxis("Mouse X") * _rotXSpeed;
         _rotY += Input.GetAxis("Mouse Y") * _rotYSpeed;
 

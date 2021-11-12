@@ -25,10 +25,6 @@ public class OrbitCamera : MonoBehaviour
 #endif
     }
 
-    private void OnEnable()
-    {
-        
-    }
 
     void LateUpdate()
     {

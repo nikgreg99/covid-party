@@ -55,13 +55,10 @@ public class PlayerMovement : MonoBehaviour
         bool _hitGround = false;
         RaycastHit hit;
 
-        Debug.Log(_rigidbody.velocity.y);
         if (Mathf.Abs(_rigidbody.velocity.y ) < _offsetSpeed && Physics.Raycast(transform.position, Vector3.down, out hit))
         {
             float check = (_capsuleCollider.height / 2) + 0.6f;
             _hitGround = hit.distance <= check;
-            Debug.Log(check);
-            Debug.Log(hit.distance);
         }
         return _hitGround;
     }
