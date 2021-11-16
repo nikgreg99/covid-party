@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AIMovement : MonoBehaviour
@@ -18,8 +17,6 @@ public class AIMovement : MonoBehaviour
     public LayerMask groundMask;
     public LayerMask obstacleMask;
 
-    private List<Animator> _animators = new List<Animator>();
-
     // Start is called before the first frame update
     void Start()
     {
@@ -28,21 +25,11 @@ public class AIMovement : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(moveDir);
         player = GameObject.FindGameObjectWithTag("Player");
         initialSpeed = speed;
-
-        foreach (Animator a in GetComponentsInChildren<Animator>())
-        {
-            _animators.Add(a);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (Animator a in _animators)
-        {
-            a.SetBool("moving", true);
-        }
-
         body.MovePosition(body.position + transform.forward * Time.deltaTime * speed);
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
