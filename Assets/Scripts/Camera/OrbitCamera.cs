@@ -31,13 +31,11 @@ public class OrbitCamera : MonoBehaviour
 
     void Update()
     {
-        _rotY += Input.GetAxis("Mouse X") * _sensitivity * Time.deltaTime;
-        _rotX -= Input.GetAxis("Mouse Y") * _sensitivity * Time.deltaTime;
+        _rotY += Input.GetAxis("Mouse X") * _sensitivity;
+        _rotX -= Input.GetAxis("Mouse Y") * _sensitivity;
 
         _rotX = Mathf.Clamp(_rotX, -_maxAngleRotationX, _maxAngleRotationX);
         _rotY = Mathf.Clamp(_rotY, -_maxAngleRotationY, _maxAngleRotationY);
-
-
 
         Quaternion rotation = Quaternion.Euler(_rotX, _rotY, 0);
         transform.position = _target.position - (rotation * _offset);
