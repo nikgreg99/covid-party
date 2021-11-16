@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public delegate void ScoreAction(int value);
+    public static event ScoreAction SimpleHit;
+
     private Rigidbody _rb;
     private float _range = 1;
     private float _startTime;
@@ -21,6 +24,7 @@ public class Projectile : MonoBehaviour
         if (Time.time - _startTime > _range)
         {
             _rb.useGravity = true;
+            _rb.AddForce(Vector3.down*10,ForceMode.Acceleration);
         }
     }
 
@@ -43,6 +47,11 @@ public class Projectile : MonoBehaviour
         if (collisionLayer == LayerMask.NameToLayer("Ground") || collisionLayer == LayerMask.NameToLayer("Obstacle"))
         {
             StartCoroutine(destroyRoutine(1));
+        }
+        else if (collision.gameObject.GetComponent<AIMovement>() != null)
+        {
+            SimpleHit(10);
+            Destroy(this.gameObject);
         }
     }
 }

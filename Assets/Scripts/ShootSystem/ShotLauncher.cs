@@ -18,15 +18,16 @@ public class ShotLauncher : MonoBehaviour
 
     }
 
-    internal void GenerateShot(float shotSpeed, float range)
+    internal void GenerateShot(float shotSpeed, float range,float shotSize)
     {
         if (_projectilePrefab != null)
         {
             GameObject proj = GameObject.Instantiate(_projectilePrefab);
             proj.transform.position = transform.position;
+            proj.transform.localScale = proj.transform.localScale * shotSize;
             Rigidbody rb = proj.GetComponent<Rigidbody>();
             proj.GetComponent<Projectile>().SetRange(range);
-            rb.velocity = transform.forward * shotSpeed;
+            rb.velocity = CameraManager.currentCamera.transform.forward * shotSpeed;
         }
         else
         {

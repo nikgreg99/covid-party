@@ -7,6 +7,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private bool _isFirstPerson = false;
     [SerializeField] private GameObject firstCameera;
     [SerializeField] private GameObject orbitCamera;
+    public static Camera currentCamera { get; private set; }
 
 
     private void Start()
@@ -18,13 +19,15 @@ public class CameraManager : MonoBehaviour
     {
         if (_isFirstPerson)
         {
-             firstCameera.SetActive(true);
-             orbitCamera.SetActive(false);
-        } 
+            firstCameera.SetActive(true);
+            orbitCamera.SetActive(false);
+            currentCamera = firstCameera.GetComponent<Camera>();
+        }
         else
         {
             firstCameera.SetActive(false);
-             orbitCamera.SetActive(true);
+            orbitCamera.SetActive(true);
+            currentCamera = orbitCamera.GetComponent<Camera>();
         }
     }
 
@@ -42,6 +45,6 @@ public class CameraManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             ChangeView();
-        }   
+        }
     }
 }

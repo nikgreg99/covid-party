@@ -10,6 +10,7 @@ public class ShootingScript : MonoBehaviour
     [SerializeField] private float _shotDelay = 0.5f;
     [SerializeField] private float _shotSpeed = 2f;
     [SerializeField] private float _range = 4f;
+    [SerializeField] private float _shotSize = 2f;
 
 
     private ShotLauncher _launcher;
@@ -36,7 +37,7 @@ public class ShootingScript : MonoBehaviour
         if (Time.time >= _lastShotTime + _shotDelay && _launcher != null)
         {
             _lastShotTime = Time.time;
-            _launcher.GenerateShot(_shotSpeed,_range);
+            _launcher.GenerateShot(_shotSpeed,_range,_shotSize);
         }
     }
 }
