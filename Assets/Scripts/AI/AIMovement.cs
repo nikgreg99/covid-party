@@ -49,7 +49,11 @@ public class AIMovement : MonoBehaviour
 
         counter += Time.deltaTime;
 
-        if ((Physics.CheckSphere(transform.position, maxDistFromObstacle, obstacleMask) || counter > Random.Range(10f, 15f)) && (distanceToPlayer > maxDistFromPlayer))
+        if(Physics.CheckSphere(transform.position, maxDistFromObstacle, obstacleMask) && (distanceToPlayer < maxDistFromPlayer))
+        {
+            speed = 0;
+        }
+        else if ((Physics.CheckSphere(transform.position, maxDistFromObstacle, obstacleMask) || counter > Random.Range(10f, 15f)) && (distanceToPlayer > maxDistFromPlayer))
         {
             speed = initialSpeed;
             moveDir = chooseDirection();
