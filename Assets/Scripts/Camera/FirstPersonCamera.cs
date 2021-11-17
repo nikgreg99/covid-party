@@ -5,7 +5,7 @@ using UnityEngine;
 public class FirstPersonCamera : MonoBehaviour
 {
 
-    [SerializeField] private float _sensitivity = 100.0f;
+    [SerializeField] private float _sensitivity = 30.0f;
     [SerializeField] private float _maxAngleRotationX = 45.0f;
     [SerializeField] private Transform _player;
 

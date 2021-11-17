@@ -12,20 +12,20 @@ public class SpawnerManager : MonoBehaviour
 
     private Vector3 _terrainArea;
 
-    private float _minHeightBound;
-    private float _minWidthBound;
-    private float _maxHeightBound;
-    private float _maxWidthBound;
+    private float _xMinBound;
+    private float _zMinBound;
+    private float _xMaxBound;
+    private float _zWidthBound;
 
     private void Start()
     {
         Terrain terrain = GetComponent<Terrain>();
         _terrainArea = terrain.terrainData.size;
 
-        _minHeightBound = transform.position.x;
-        _minWidthBound = transform.position.z;
-        _maxHeightBound = _minHeightBound + _terrainArea.x;
-        _maxWidthBound = _minWidthBound + _terrainArea.z;
+        _xMinBound = transform.position.x;
+        _zMinBound = transform.position.z;
+        _xMaxBound = _xMinBound + _terrainArea.x;
+        _zWidthBound = _zMinBound + _terrainArea.z;
 
         for (int i = 0; i < _numMaxEnemies; i++)
         {
@@ -60,13 +60,14 @@ public class SpawnerManager : MonoBehaviour
             cumulativeWeight += _spawnList[chosenIndex].weight;
         }
 
-        float randomHeight = Random.Range(_minHeightBound, _maxHeightBound);
-        float randomWidth = Random.Range(_minWidthBound, _maxWidthBound);
+        float randomHeight = Random.Range(_xMinBound, _xMaxBound);
+        float randomWidth = Random.Range(_zMinBound, _zWidthBound);
 
         Vector3 randomPosition = new Vector3(randomHeight, 0.0f , randomWidth);
 
 
         GameObject currentGameObject = _spawnList[chosenIndex].gameObject;
+        currentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
         Instantiate(currentGameObject, randomPosition, Quaternion.identity);
     }
 }
