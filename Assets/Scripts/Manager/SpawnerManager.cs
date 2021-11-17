@@ -8,6 +8,8 @@ public class SpawnerManager : MonoBehaviour
     [SerializeField] private Spawnable[] _spawnList;
     [SerializeField] private int _numMaxEnemies = 10;
 
+    private int _terrainHeight;
+
     private float _totalSpawnWeight;
 
     private Vector3 _terrainArea;
@@ -19,6 +21,8 @@ public class SpawnerManager : MonoBehaviour
 
     private void Start()
     {
+        _terrainHeight = GetComponent<TerrainGenerator>().Height;
+
         Terrain terrain = GetComponent<Terrain>();
         _terrainArea = terrain.terrainData.size;
 
@@ -29,7 +33,7 @@ public class SpawnerManager : MonoBehaviour
 
         for (int i = 0; i < _numMaxEnemies; i++)
         {
-            Spawn();
+            StartCoroutine(Spawn());
         }
     }
 
@@ -47,7 +51,7 @@ public class SpawnerManager : MonoBehaviour
     }
 
     
-    public void Spawn()
+    public IEnumerator Spawn()
     {
         float pick = Random.value * _totalSpawnWeight;
         int chosenIndex = 0;
@@ -63,11 +67,12 @@ public class SpawnerManager : MonoBehaviour
         float randomHeight = Random.Range(_xMinBound, _xMaxBound);
         float randomWidth = Random.Range(_zMinBound, _zWidthBound);
 
-        Vector3 randomPosition = new Vector3(randomHeight, 0.0f , randomWidth);
+        Vector3 randomPosition = new Vector3(randomHeight, 7.0f , randomWidth);
 
 
         GameObject currentGameObject = _spawnList[chosenIndex].gameObject;
         currentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
         Instantiate(currentGameObject, randomPosition, Quaternion.identity);
+        yield return new  WaitForSeconds(0.1f);
     }
 }

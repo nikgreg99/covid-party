@@ -16,6 +16,11 @@ public class TerrainGenerator : MonoBehaviour
 
     [SerializeField] private int _height;
 
+    public int Height
+    {
+        get;
+    }
+
   
     [SerializeField] private int _scale;
 
