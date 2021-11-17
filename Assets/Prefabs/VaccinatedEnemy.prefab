@@ -9,7 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 956576273200903083, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_Name
-      value: MaskedEnemy
+      value: VaccinatedEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 956576273200903086, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2347037433376122451, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_RootOrder
@@ -17,19 +21,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2347037433376122451, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -91.55008
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2347037433376122451, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 26.39355
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2347037433376122451, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.821016
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2347037433376122451, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.8588853
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2347037433376122451, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_LocalRotation.x
@@ -37,7 +41,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2347037433376122451, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5121681
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2347037433376122451, guid: 016297273bbd0c648bf5771505b8c489, type: 3}
       propertyPath: m_LocalRotation.z

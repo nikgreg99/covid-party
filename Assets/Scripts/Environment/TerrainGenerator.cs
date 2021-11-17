@@ -6,27 +6,17 @@ using Random = UnityEngine.Random;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    //public delegate void GenerationAction();
-    //public static event GenerationAction generated;
-
+ 
     private Terrain _terrain;
 
     [SerializeField] private int _width;
 
-    public int Width
-    {
-        get;
-    }
-
+    
     [SerializeField] private int _depth;
 
     [SerializeField] private int _height;
 
-    public int Height
-    {
-        get;
-    }
-
+  
     [SerializeField] private int _scale;
 
     [SerializeField] private int _originX;
@@ -35,7 +25,6 @@ public class TerrainGenerator : MonoBehaviour
 
     [SerializeField] private Transform _playerSpawnTransform;
     [SerializeField] private float _playerSapwnYOffset;
-
 
 
     // Start is called before the first frame update
@@ -135,7 +124,6 @@ public class TerrainGenerator : MonoBehaviour
         {
             SpawnGivenPlayer();
         }
-        //DoGenerate();
     }
 
 }
