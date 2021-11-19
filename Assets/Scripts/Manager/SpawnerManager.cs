@@ -12,7 +12,8 @@ public class SpawnerManager : MonoBehaviour
     private float _totalSpawnWeight;
 
     private Vector3 _terrainArea;
-    
+
+    private TerrainData _terrainData;
 
     private float _xMinBound;
     private float _zMinBound;
@@ -22,7 +23,8 @@ public class SpawnerManager : MonoBehaviour
     private void Start()
     {
         Terrain terrain = GetComponent<Terrain>();
-        _terrainArea = terrain.terrainData.size;
+        _terrainData = terrain.terrainData;
+        _terrainArea = _terrainData.size;
 
         _xMinBound = transform.position.x;
         _zMinBound = transform.position.z;
@@ -42,20 +44,20 @@ public class SpawnerManager : MonoBehaviour
             _totalSpawnWeight += spawnable.weight;
     }
 
-    
+
     void Awake()
     {
         OnValidate();
     }
 
-    
+
     public IEnumerator Spawn()
     {
         float pick = Random.value * _totalSpawnWeight;
         int chosenIndex = 0;
         float cumulativeWeight = _spawnList[0].weight;
 
-        
+
         while (pick > cumulativeWeight && chosenIndex < _spawnList.Length - 1)
         {
             chosenIndex++;
@@ -65,15 +67,15 @@ public class SpawnerManager : MonoBehaviour
         float randomHeight = Random.Range(_xMinBound, _xMaxBound);
         float randomWidth = Random.Range(_zMinBound, _zMaxBound);
 
-        
+
         GameObject currentGameObject = _spawnList[chosenIndex].gameObject;
         CapsuleCollider gameObjectCollider = currentGameObject.GetComponent<CapsuleCollider>();
 
-        RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit);
+        /*RaycastHit hit;
+        Physics.Raycast(transform.position, Vector3.down, out hit);*/
 
-        Vector3 randomPosition = new Vector3(randomHeight, gameObjectCollider.height + hit.distance + offsetSpawn, randomWidth);
+        Vector3 randomPosition = new Vector3(randomHeight, _terrainData.GetInterpolatedHeight(randomHeight - _xMinBound, randomWidth-_zMinBound) + gameObjectCollider.height / 2 + offsetSpawn, randomWidth);
         Instantiate(currentGameObject, randomPosition, Quaternion.identity);
-        yield return new  WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f);
     }
 }
