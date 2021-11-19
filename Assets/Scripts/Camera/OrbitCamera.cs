@@ -7,7 +7,7 @@ public class OrbitCamera : MonoBehaviour
 
     [SerializeField] private Transform _target;
     [SerializeField] private float _rotSpeed = 1.5f;
-    [SerializeField] private float _maxAngleRotationX = 90.0f;
+    [SerializeField] private float _maxAngleRotationX = 360.0f;
 
     private float _rotY;
     private float _rotX;
