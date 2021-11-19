@@ -7,29 +7,27 @@ public class SpawnerManager : MonoBehaviour
 
     [SerializeField] private Spawnable[] _spawnList;
     [SerializeField] private int _numMaxEnemies = 10;
-
-    private int _terrainHeight;
+    [SerializeField] private int offsetSpawn = 5;
 
     private float _totalSpawnWeight;
 
     private Vector3 _terrainArea;
+    
 
     private float _xMinBound;
     private float _zMinBound;
     private float _xMaxBound;
-    private float _zWidthBound;
+    private float _zMaxBound;
 
     private void Start()
     {
-        _terrainHeight = GetComponent<TerrainGenerator>().Height;
-
         Terrain terrain = GetComponent<Terrain>();
         _terrainArea = terrain.terrainData.size;
 
         _xMinBound = transform.position.x;
         _zMinBound = transform.position.z;
         _xMaxBound = _xMinBound + _terrainArea.x;
-        _zWidthBound = _zMinBound + _terrainArea.z;
+        _zMaxBound = _zMinBound + _terrainArea.z;
 
         for (int i = 0; i < _numMaxEnemies; i++)
         {
@@ -65,13 +63,16 @@ public class SpawnerManager : MonoBehaviour
         }
 
         float randomHeight = Random.Range(_xMinBound, _xMaxBound);
-        float randomWidth = Random.Range(_zMinBound, _zWidthBound);
+        float randomWidth = Random.Range(_zMinBound, _zMaxBound);
 
-        Vector3 randomPosition = new Vector3(randomHeight, 7.0f , randomWidth);
-
-
+        
         GameObject currentGameObject = _spawnList[chosenIndex].gameObject;
-        currentGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+        CapsuleCollider gameObjectCollider = currentGameObject.GetComponent<CapsuleCollider>();
+
+        RaycastHit hit;
+        Physics.Raycast(transform.position, Vector3.down, out hit);
+
+        Vector3 randomPosition = new Vector3(randomHeight, gameObjectCollider.height + hit.distance + offsetSpawn, randomWidth);
         Instantiate(currentGameObject, randomPosition, Quaternion.identity);
         yield return new  WaitForSeconds(0.1f);
     }
