@@ -9,22 +9,46 @@ public class OrbitCamera : MonoBehaviour
     [SerializeField] private float _rotSpeed = 1.5f;
     [SerializeField] private float _maxAngleRotationX = 360.0f;
 
-    private float _rotY;
-    private float _rotX;
+    [SerializeField] private float _offsetZ = -7;
+    [SerializeField] private float _offsetY = 1;
+
+    [SerializeField] private float _targetXOffset = 1;
+
+    private CameraManager _cameraManager;
+
+    private float _rotY = 0;
+    private float _rotX = 0;
     private Vector3 _offset;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _rotY = transform.eulerAngles.y;
-        _rotX = transform.eulerAngles.x;
+        _cameraManager = GetComponentInParent<CameraManager>();
+        transform.position = _target.position + _offsetZ * _target.forward + _offsetY * _target.up;
         _offset = _target.position - transform.position;
+        SetLookAt();
+
+        _rotX = transform.rotation.x;
+        _rotY = transform.rotation.y;
+
+        _cameraManager.CurRotX = _rotX;
+        _cameraManager.CurRotX = _rotX;
 
 #if !UNITY_EDITOR
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 #endif
+    }
+
+    private void OnEnable()
+    {
+        if (_cameraManager != null)
+        {
+            _rotY = _cameraManager.CurRotY;
+            _rotX = _cameraManager.CurRotX;
+        }
+
     }
 
 
@@ -37,10 +61,21 @@ public class OrbitCamera : MonoBehaviour
 
             _rotX = Mathf.Clamp(_rotX, -_maxAngleRotationX, _maxAngleRotationX);
 
+            _cameraManager.CurRotX = _rotX;
+            _cameraManager.CurRotY = _rotY;
+
             Quaternion rotation = Quaternion.Euler(_rotX, _rotY, 0);
             transform.position = _target.position - (rotation * _offset);
-            transform.LookAt(_target);
+            //GetComponentInParent<CameraManager>().setRotation(transform.rotation);
+            SetLookAt();
         }
 
+    }
+
+    private void SetLookAt()
+    {
+            Vector3 lookAt = _target.position;
+            lookAt += _targetXOffset * _target.right;
+            transform.LookAt(lookAt, _target.up);
     }
 }
