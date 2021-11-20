@@ -7,6 +7,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private bool _isFirstPerson = false;
     [SerializeField] private GameObject firstCameera;
     [SerializeField] private GameObject orbitCamera;
+    public static Quaternion orbitRotation { get; private set; }
     public static Camera currentCamera { get; private set; }
 
 
@@ -19,6 +20,7 @@ public class CameraManager : MonoBehaviour
     {
         if (_isFirstPerson)
         {
+            orbitRotation = orbitCamera.transform.rotation;
             firstCameera.SetActive(true);
             orbitCamera.SetActive(false);
             currentCamera = firstCameera.GetComponent<Camera>();

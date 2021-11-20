@@ -23,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
     private List<Animator> _animators = new List<Animator>();
     private bool _lastMoving = false;
 
-    [SerializeField] private OrbitCamera _orbitCamera;
-
     private Vector3 targetRotation;
     private Vector3 startRotation;
     private float _startTime;
@@ -99,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        float camYRotation = _orbitCamera.gameObject.transform.rotation.eulerAngles.y;
+        float camYRotation = CameraManager.currentCamera.gameObject.transform.rotation.eulerAngles.y;
         float playerYRotation = transform.rotation.eulerAngles.y;
         if (Mathf.Abs(camYRotation - playerYRotation) >= 5 && (targetRotation == null || Mathf.Abs(targetRotation.y - camYRotation) >= 5))
         {

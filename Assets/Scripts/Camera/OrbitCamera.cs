@@ -30,14 +30,17 @@ public class OrbitCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        _rotY += Input.GetAxis("Mouse X") * _rotSpeed;
-        _rotX -= Input.GetAxis("Mouse Y") * _rotSpeed;
+        if (!PauseMenu.gameIsPaused)
+        {
+            _rotY += Input.GetAxis("Mouse X") * _rotSpeed;
+            _rotX -= Input.GetAxis("Mouse Y") * _rotSpeed;
 
-        _rotX = Mathf.Clamp(_rotX, -_maxAngleRotationX, _maxAngleRotationX);
+            _rotX = Mathf.Clamp(_rotX, -_maxAngleRotationX, _maxAngleRotationX);
 
-        Quaternion rotation = Quaternion.Euler(_rotX, _rotY, 0);
-        transform.position = _target.position - (rotation * _offset);
-        transform.LookAt(_target);
+            Quaternion rotation = Quaternion.Euler(_rotX, _rotY, 0);
+            transform.position = _target.position - (rotation * _offset);
+            transform.LookAt(_target);
+        }
 
     }
 }
