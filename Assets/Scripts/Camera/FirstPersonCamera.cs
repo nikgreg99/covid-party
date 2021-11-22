@@ -31,7 +31,7 @@ public class FirstPersonCamera : MonoBehaviour
     void Start()
     {
         _cameraManager = GetComponentInParent<CameraManager>();
-        transform.position = _player.position;
+        transform.position = _player.position + 1.66f * _player.up;
     }
 
     // Update is called once per frame
@@ -52,7 +52,7 @@ public class FirstPersonCamera : MonoBehaviour
             _cameraManager.CurRotY = _rotY;
 
             transform.rotation = Quaternion.Euler(_rotX, _rotY, 0.0f);
-            transform.position = _player.position;
+            transform.position = _player.position + 1.66f * _player.up;
             //_player.Rotate(Vector3.up * mouseX);
         }
 

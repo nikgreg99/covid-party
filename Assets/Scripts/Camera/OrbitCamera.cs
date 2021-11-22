@@ -13,6 +13,7 @@ public class OrbitCamera : MonoBehaviour
     [SerializeField] private float _offsetY = 1;
 
     [SerializeField] private float _targetXOffset = 1;
+    [SerializeField] private float _targetYOffset = 1;
 
     private CameraManager _cameraManager;
 
@@ -74,8 +75,8 @@ public class OrbitCamera : MonoBehaviour
 
     private void SetLookAt()
     {
-            Vector3 lookAt = _target.position;
-            lookAt += _targetXOffset * _target.right;
-            transform.LookAt(lookAt, _target.up);
+        Vector3 lookAt = _target.position;
+        lookAt += _targetXOffset * _target.right + _targetYOffset * _target.up;
+        transform.LookAt(lookAt, _target.up);
     }
 }
