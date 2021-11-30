@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 public class TerrainGenerator : MonoBehaviour
 {
+
+    public delegate void TerrainAction();
+    public static TerrainAction terrainReady;
  
     private Terrain _terrain;
 
@@ -45,6 +48,8 @@ public class TerrainGenerator : MonoBehaviour
         _terrain = GetComponent<Terrain>();
         this.transform.position = new Vector3(-_width / 2, 0, -_height / 2);
         _terrain.terrainData = GenerateTerrainData(_terrain.terrainData);
+
+        terrainReady();
 
         SpawnGivenPlayer();
         SpwanWalls();
