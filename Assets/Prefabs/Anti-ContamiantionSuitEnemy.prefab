@@ -62,7 +62,8 @@ GameObject:
   - component: {fileID: 4309384758574665671}
   - component: {fileID: 1592631091868080698}
   - component: {fileID: 1592631091868080701}
-  - component: {fileID: 1592631091868080702}
+  - component: {fileID: -3091003341407552872}
+  - component: {fileID: -7884700113064810977}
   m_Layer: 0
   m_Name: Anti-ContamiantionSuitEnemy
   m_TagString: Untagged
@@ -120,7 +121,7 @@ CapsuleCollider:
   m_Height: 4.937666
   m_Direction: 1
   m_Center: {x: 0, y: -0.2708063, z: 0}
---- !u!114 &1592631091868080702
+--- !u!114 &-3091003341407552872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,15 +133,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c80561fe8acf649a523158ac8731c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  maxDistFromObstacle: 0
-  maxDistFromPlayer: 50
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
+  body: {fileID: 1592631091868080698}
+  agent: {fileID: -7884700113064810977}
+  wanderRadius: 1000
+  wanderTime: 10
+  minDistanceToPlayer: 10
+  multiplyBy: 3
+--- !u!195 &-7884700113064810977
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592631091868080703}
+  m_Enabled: 0
+  m_AgentTypeID: -334000983
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &2595025632945835576
 GameObject:
   m_ObjectHideFlags: 0

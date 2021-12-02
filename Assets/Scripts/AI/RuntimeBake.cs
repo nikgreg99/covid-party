@@ -3,11 +3,7 @@ using UnityEngine;
 
 public class RuntimeBake : MonoBehaviour
 {
-    private NavMeshSurface surface;
-    void Start()
-    {
-        surface = GetComponent<NavMeshSurface>();
-    }
+    [SerializeField] private NavMeshSurface surface;
 
     void Bake()
     {
