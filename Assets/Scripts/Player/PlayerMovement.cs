@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed = 1.0f;
@@ -12,9 +11,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _jumpSpeed = 5.0f;
     [SerializeField] private float _offsetSpeed = 0.5f;
-  
-
-    private Rigidbody _rigidbody;
+    [SerializeField] private float _gravity = 9.81f;
+ 
+    private CharacterController _characterController;
     private CapsuleCollider _capsuleCollider;
 
     private Vector3 _translation = Vector3.zero;
@@ -27,6 +26,18 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 startRotation;
     private float _startTime;
     private bool _speedUp = false;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        _characterController = GetComponent<CharacterController>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
+        foreach (Animator a in GetComponentsInChildren<Animator>())
+        {
+            _animators.Add(a);
+        }
+
+    }
 
     private void UpdateTranslation(float moveX, float moveZ)
     {
@@ -53,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         bool _hitGround = false;
         RaycastHit hit;
 
-        if (Mathf.Abs(_rigidbody.velocity.y ) < _offsetSpeed && Physics.Raycast(transform.position, Vector3.down, out hit))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
             float check = (_capsuleCollider.height / 2) + 0.6f;
             _hitGround = hit.distance <= check;
@@ -61,23 +72,29 @@ public class PlayerMovement : MonoBehaviour
         return _hitGround;
     }
 
-    private void jump()
+    private void jump(Vector3 movement)
     {
-        Vector3 velocity = _rigidbody.velocity;
-        velocity.y = _jumpSpeed;
-        _rigidbody.velocity = velocity;
+        movement.y = _jumpSpeed;
+        movement.y -= _gravity * Time.deltaTime;
+
+        _characterController.Move(movement * Time.deltaTime);
     }
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void move()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _capsuleCollider = GetComponent<CapsuleCollider>();
-        foreach (Animator a in GetComponentsInChildren<Animator>())
+        Vector3 direction = _translation * _speed * Time.deltaTime;
+
+         _characterController.Move(direction);
+        _characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            _animators.Add(a);
+            if (checkJump())
+            {
+                jump(direction);
+            }
         }
+
     }
 
     void Update()
@@ -117,22 +134,10 @@ public class PlayerMovement : MonoBehaviour
         UpdateTranslation(moveX, moveZ);
         UpdateRotation();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (checkJump())
-            {
-                jump();
-            }
-        }
-       
+        move();
     }
 
-    void FixedUpdate()
-    {
-        Vector3 dir = _translation * _speed * Time.fixedDeltaTime;
-        _rigidbody.MovePosition(_rigidbody.position + dir);
-        _rigidbody.MoveRotation(_rigidbody.rotation * Quaternion.Euler(_rotation * _speedRotate * Time.fixedDeltaTime));
-    }
+  
 }
 
 

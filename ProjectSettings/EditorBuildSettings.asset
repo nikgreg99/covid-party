@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: f5f52a49edb3ae946b433ca4ef2ea364
   - enabled: 1
-    path: Assets/Scenes/BasicMovementScene.unity
+    path: Assets/Scenes/CountrySide.unity
     guid: 95945b75bff5ef8498d986de6460908e
   m_configObjects: {}
