@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 1592631091868080698}
   - component: {fileID: 1592631091868080701}
   - component: {fileID: -3091003341407552872}
-  - component: {fileID: -7884700113064810977}
+  - component: {fileID: -1967302983616267048}
   m_Layer: 0
   m_Name: Anti-ContamiantionSuitEnemy
   m_TagString: Untagged
@@ -134,12 +134,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 1592631091868080698}
-  agent: {fileID: -7884700113064810977}
+  agent: {fileID: -1967302983616267048}
   wanderRadius: 1000
   wanderTime: 10
-  minDistanceToPlayer: 10
-  multiplyBy: 3
---- !u!195 &-7884700113064810977
+  minDistanceToPlayer: 50
+  multiplyBy: 15
+--- !u!195 &-1967302983616267048
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,7 +147,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1592631091868080703}
   m_Enabled: 0
-  m_AgentTypeID: -334000983
+  m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8

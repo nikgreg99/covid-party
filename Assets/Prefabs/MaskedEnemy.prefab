@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 956576273200903086}
   - component: {fileID: 956576273200903081}
   - component: {fileID: 956576273200903082}
-  - component: {fileID: -704330123722618942}
+  - component: {fileID: 9074731663099167796}
   m_Layer: 0
   m_Name: MaskedEnemy
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956576273200903083}
-  m_LocalRotation: {x: 0, y: 0.5121681, z: 0, w: -0.8588853}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -83,12 +83,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 956576273200903086}
-  agent: {fileID: -704330123722618942}
+  agent: {fileID: 9074731663099167796}
   wanderRadius: 1000
   wanderTime: 10
-  minDistanceToPlayer: 10
-  multiplyBy: 3
---- !u!195 &-704330123722618942
+  minDistanceToPlayer: 50
+  multiplyBy: 15
+--- !u!195 &9074731663099167796
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 2699855222625983732}
   - component: {fileID: 2699855222625983731}
   - component: {fileID: 2699855222625983728}
-  - component: {fileID: 1273089540373310575}
+  - component: {fileID: -8715359372136312732}
   m_Layer: 0
   m_Name: VaccinatedEnemy
   m_TagString: Untagged
@@ -422,12 +422,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 2699855222625983732}
-  agent: {fileID: 1273089540373310575}
+  agent: {fileID: -8715359372136312732}
   wanderRadius: 1000
   wanderTime: 10
-  minDistanceToPlayer: 10
-  multiplyBy: 3
---- !u!195 &1273089540373310575
+  minDistanceToPlayer: 50
+  multiplyBy: 15
+--- !u!195 &-8715359372136312732
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -435,7 +435,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2699855222625983729}
   m_Enabled: 0
-  m_AgentTypeID: -1372625422
+  m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
