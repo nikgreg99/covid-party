@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _speedMultiplier = 3f;
     [SerializeField] private float _camPlayerSlerpFactor = 1f;
 
-    [SerializeField] private float _jumpSpeed = 5.0f;
+    [SerializeField] private float _jumpSpeed = 1.5f;
     [SerializeField] private float _offsetSpeed = 0.5f;
     [SerializeField] private float _gravity = 9.81f;
  
@@ -72,29 +72,29 @@ public class PlayerMovement : MonoBehaviour
         return _hitGround;
     }
 
-    private void jump(Vector3 movement)
+    private float jump()
     {
-        movement.y = _jumpSpeed;
-        movement.y -= _gravity * Time.deltaTime;
-
-        _characterController.Move(movement * Time.deltaTime);
+        float velocity  = _jumpSpeed * Time.deltaTime;
+        return velocity;
     }
 
     private void move()
     {
         Vector3 direction = _translation * _speed * Time.deltaTime;
+        direction.y += -_gravity * Time.deltaTime;
 
-         _characterController.Move(direction);
-        _characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             if (checkJump())
             {
-                jump(direction);
+                direction.y += jump();
             }
         }
 
+        _characterController.Move(direction);
+        _characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
+
+  
     }
 
     void Update()
