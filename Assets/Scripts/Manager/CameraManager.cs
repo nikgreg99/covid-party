@@ -7,7 +7,6 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private bool _isFirstPerson = false;
     [SerializeField] private GameObject firstCameera;
     [SerializeField] private GameObject orbitCamera;
-    //public static Quaternion orbitRotation { get; private set; }
     public static Camera currentCamera { get; private set; }
 
     public float CurRotX { get; set; } = 0;
