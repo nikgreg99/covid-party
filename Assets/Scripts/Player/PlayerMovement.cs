@@ -11,6 +11,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _jumpSpeed = 1.5f;
     [SerializeField] private float _offsetSpeed = 0.5f;
+
+    [SerializeField] private TMPro.TextMeshProUGUI _interactingText;
+
+    private PowerUpContainer nearDNA = null;
+
+    private Rigidbody _rigidbody;
     [SerializeField] private float _gravity = 9.81f;
  
     private CharacterController _characterController;
@@ -27,9 +33,14 @@ public class PlayerMovement : MonoBehaviour
     private float _startTime;
     private bool _speedUp = false;
 
+    public delegate void PowerUpEvent(PowerupTypes type);
+    public static PowerUpEvent acquiredPowerup;
+
     // Start is called before the first frame update
     void Start()
     {
+        _interactingText.enabled = false;
+
         _characterController = GetComponent<CharacterController>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
         foreach (Animator a in GetComponentsInChildren<Animator>())
@@ -134,10 +145,61 @@ public class PlayerMovement : MonoBehaviour
         UpdateTranslation(moveX, moveZ);
         UpdateRotation();
 
+        if (nearDNA != null)
+        {
+            Vector3 vec1 = new Vector3(nearDNA.transform.position.x - transform.position.x, 0, nearDNA.transform.position.z - transform.position.z);
+            Vector3 vec2 = new Vector3(transform.forward.x, 0, transform.forward.z);
+
+            if (Mathf.Abs(Vector3.Angle(vec1, vec2)) < 50 || vec1.magnitude <= 1.5)
+            {
+                _interactingText.text = string.Format("Press E to Buy - {0}$", PowerUp.POWERUP_PRICE);
+                _interactingText.enabled = true;
+                if (Input.GetKey(KeyCode.E))
+                {
+                    if (ScoreManager.CanBuy(PowerUp.POWERUP_PRICE))
+                    {
+                        nearDNA.OpenContainer();
+                        nearDNA = null;
+                        _interactingText.enabled = false;
+                    }
+
+                }
+            }
+            else
+            {
+                _interactingText.enabled = false;
+            }
+        }
+
         move();
     }
 
   
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<PowerUpContainer>() != null)
+        {
+            nearDNA = other.gameObject.GetComponent<PowerUpContainer>();
+        }
+        else if (other.gameObject.GetComponent<PowerUp>() != null)
+        {
+            PowerupTypes type = other.gameObject.GetComponent<PowerUp>().PowerupType;
+            acquiredPowerup(type);
+            Destroy(other.gameObject);
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.GetComponent<PowerUpContainer>() != null)
+        {
+            nearDNA = null;
+            _interactingText.enabled = false;
+        }
+    }
 }
 
 

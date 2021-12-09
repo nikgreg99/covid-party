@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     public void backToMainMenu()
     {
-        Resume(true);
+        Resume(false);
         SceneManager.LoadScene(0);
     }
 
@@ -37,7 +37,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void Resume(bool lockMouse = false)
+    public void Resume(bool lockMouse = true)
     {
 #if !UNITY_EDITOR
         if (lockMouse)

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public delegate void ScoreAction(int value);
-    public static event ScoreAction SimpleHit;
 
     private Rigidbody _rb;
     private float _range = 1;
     private float _startTime;
+
+    private bool isHit = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
         if (Time.time - _startTime > _range)
         {
             _rb.useGravity = true;
-            _rb.AddForce(Vector3.down*10,ForceMode.Acceleration);
+            _rb.AddForce(Vector3.down * 10, ForceMode.Acceleration);
         }
     }
 
@@ -48,10 +48,11 @@ public class Projectile : MonoBehaviour
         {
             StartCoroutine(destroyRoutine(1));
         }
-        else if (collision.gameObject.GetComponent<AIMovement>() != null)
+        else if (collision.gameObject.GetComponent<AIMovement>() != null && !isHit)
         {
-            SimpleHit(10);
+            isHit = true;
             Destroy(this.gameObject);
+            collision.gameObject.GetComponent<AIMovement>().TargetHit();
         }
     }
 }

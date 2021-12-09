@@ -4,6 +4,10 @@ using UnityEngine;
 public class AIMovement : MonoBehaviour
 {
 
+    public delegate void ScoreAction(int value);
+    public static ScoreAction hit;
+    public static ScoreAction incrementPassive;
+
     Rigidbody body;
     GameObject player;
 
@@ -19,6 +23,27 @@ public class AIMovement : MonoBehaviour
     public LayerMask obstacleMask;
 
     private List<Animator> _animators = new List<Animator>();
+
+    private float _infectionPercent = 0f;
+
+    public void TargetHit()
+    {
+        if (_infectionPercent < 1)
+        {
+            _infectionPercent += 0.25f;
+            ChangeInfectedStatus(_infectionPercent);
+            hit(5);
+            Debug.Log(_infectionPercent);
+            if (_infectionPercent >= 1)
+            {
+                Debug.Log("full enemy");
+                incrementPassive(2);
+            }
+        }
+    }
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +74,7 @@ public class AIMovement : MonoBehaviour
 
         counter += Time.deltaTime;
 
-        if(Physics.CheckSphere(transform.position, maxDistFromObstacle, obstacleMask) && (distanceToPlayer < maxDistFromPlayer))
+        if (Physics.CheckSphere(transform.position, maxDistFromObstacle, obstacleMask) && (distanceToPlayer < maxDistFromPlayer))
         {
             speed = 0;
         }
@@ -74,6 +99,14 @@ public class AIMovement : MonoBehaviour
         }
     }
 
+    private void ChangeInfectedStatus(float status)
+    {
+        status = Mathf.Clamp(status, 0, 1);
+        foreach (Renderer r in GetComponentsInChildren<Renderer>())
+        {
+            r.material.color = new Color(status, 0, 0);
+        }
+    }
     Vector3 chooseDirection()
     {
         Vector3 dir = Random.onUnitSphere;
