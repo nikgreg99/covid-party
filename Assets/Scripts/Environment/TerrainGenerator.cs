@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 public class TerrainGenerator : MonoBehaviour
 {
 
+    public delegate void TerrainAction();
+    public static TerrainAction terrainReady;
+ 
     private Terrain _terrain;
 
     [SerializeField] private int _width;
@@ -53,6 +56,7 @@ public class TerrainGenerator : MonoBehaviour
         TerrainData newTerrainData = GenerateTerrainData(terrainCopy);
         _terrain.terrainData = newTerrainData;
         _terrain.GetComponent<TerrainCollider>().terrainData = newTerrainData;
+        terrainReady();
         SpawnGivenPlayer();
         SpawnDNAs();
         SpwanWalls();

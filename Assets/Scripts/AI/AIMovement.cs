@@ -1,8 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AIMovement : MonoBehaviour
 {
+    [SerializeField] private Rigidbody body;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private float wanderRadius = 1000f;
+    [SerializeField] private float wanderTime = 10f;
+    [SerializeField] private float minDistanceToPlayer = 10f;
+    [SerializeField] private float multiplyBy = 10f;
 
     public delegate void ScoreAction(int value);
     public static ScoreAction hit;
@@ -10,19 +17,11 @@ public class AIMovement : MonoBehaviour
 
     Rigidbody body;
     GameObject player;
-
-    Vector3 moveDir;
-    public int speed = 1;
-    int initialSpeed = 0;
-
-    public float maxDistFromObstacle = 0.0f;
-    public float maxDistFromPlayer = 0.0f;
-    float counter = 0.0f;
-
-    public LayerMask groundMask;
-    public LayerMask obstacleMask;
-
+    private Transform target;
     private List<Animator> _animators = new List<Animator>();
+    private float timer;
+    private float speed;
+    private float angularSpeed;
 
     private float _infectionPercent = 0f;
 
@@ -42,63 +41,81 @@ public class AIMovement : MonoBehaviour
         }
     }
 
-
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        body = gameObject.GetComponent<Rigidbody>();
-        moveDir = chooseDirection();
-        transform.rotation = Quaternion.LookRotation(moveDir);
-        player = GameObject.FindGameObjectWithTag("Player");
-        initialSpeed = speed;
-
+        target = GameObject.FindWithTag("Player").transform;
         foreach (Animator a in GetComponentsInChildren<Animator>())
         {
             _animators.Add(a);
         }
+
+        transform.position = new Vector3(transform.position.x, 20, transform.position.z);
+
+        agent.enabled = false;
+        body.isKinematic = false;
+        body.useGravity = true;
+
+        agent.baseOffset = 2;
+        agent.height = 0.5f;
+        timer = wanderTime;
+        speed = agent.speed;
+        angularSpeed = agent.angularSpeed;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        foreach (Animator a in _animators)
+
+        if (agent.enabled)
         {
-            a.SetBool("moving", true);
+            timer += Time.deltaTime;
+
+            float distance = Vector3.Distance(target.position, transform.position);
+
+            if (distance < minDistanceToPlayer)
+            {
+                Vector3 newPos = transform.position + ((transform.position - target.position).normalized * multiplyBy);
+                agent.speed = 2 * speed;
+                agent.angularSpeed = 100 * angularSpeed;
+                agent.SetDestination(newPos);
+            }
+
+            if (timer >= wanderTime && (distance > minDistanceToPlayer))
+            {
+                foreach (Animator a in _animators)
+                {
+                    a.SetBool("moving", true);
+                }
+
+                Vector3 newPos = RandomMove(transform.position, wanderRadius, -1);
+                agent.SetDestination(newPos);
+                agent.speed = speed;
+                agent.angularSpeed = angularSpeed;
+                
+                timer = 0;
+            }
         }
 
-        body.MovePosition(body.position + transform.forward * Time.deltaTime * speed);
+    }
 
-        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-
-        counter += Time.deltaTime;
-
-        if (Physics.CheckSphere(transform.position, maxDistFromObstacle, obstacleMask) && (distanceToPlayer < maxDistFromPlayer))
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == 7)
         {
-            speed = 0;
-        }
-        else if ((Physics.CheckSphere(transform.position, maxDistFromObstacle, obstacleMask) || counter > Random.Range(10f, 15f)) && (distanceToPlayer > maxDistFromPlayer))
-        {
-            speed = initialSpeed;
-            moveDir = chooseDirection();
-            transform.rotation = Quaternion.LookRotation(moveDir);
-            counter = 0.0f;
-        }
-        else if (distanceToPlayer < 5f)
-        {
-            speed = 0;
-        }
-        else if (distanceToPlayer < maxDistFromPlayer)
-        {
-            speed = initialSpeed;
-            Vector3 playerPos = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-            Vector3 enemyPos = new Vector3(transform.position.x, 0, transform.position.z);
-            moveDir = (enemyPos - playerPos).normalized;
-            transform.rotation = Quaternion.LookRotation(moveDir);
+            agent.enabled = true;
+            body.isKinematic = true;
+            body.useGravity = false;
         }
     }
 
+    public Vector3 RandomMove(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDir = Random.insideUnitSphere * dist;
+        randDir += origin;
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(randDir, out navHit, dist, layermask);
+
+        return navHit.position;
+    }
     private void ChangeInfectedStatus(float status)
     {
         status = Mathf.Clamp(status, 0, 1);
@@ -107,10 +124,5 @@ public class AIMovement : MonoBehaviour
             r.material.color = new Color(status, 0, 0);
         }
     }
-    Vector3 chooseDirection()
-    {
-        Vector3 dir = Random.onUnitSphere;
-        dir.y = 0;
-        return dir.normalized;
-    }
+
 }
