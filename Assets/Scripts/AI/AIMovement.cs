@@ -15,8 +15,6 @@ public class AIMovement : MonoBehaviour
     public static ScoreAction hit;
     public static ScoreAction incrementPassive;
 
-    Rigidbody body;
-    GameObject player;
     private Transform target;
     private List<Animator> _animators = new List<Animator>();
     private float timer;

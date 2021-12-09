@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _camPlayerSlerpFactor = 1f;
 
     [SerializeField] private float _jumpSpeed = 1.5f;
-    [SerializeField] private float _offsetSpeed = 0.5f;
 
     [SerializeField] private TMPro.TextMeshProUGUI _interactingText;
 

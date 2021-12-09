@@ -3957,7 +3957,6 @@ MonoBehaviour:
   _speedMultiplier: 2.5
   _camPlayerSlerpFactor: 3
   _jumpSpeed: 10
-  _offsetSpeed: 0.5
   _interactingText: {fileID: 173327817}
   _gravity: 9.81
 --- !u!136 &1643640419
@@ -4458,12 +4457,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c80561fe8acf649a523158ac8731c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 1594522161192962525}
-  agent: {fileID: 1594522161192962523}
+  body: {fileID: 0}
+  agent: {fileID: 0}
   wanderRadius: 1000
   wanderTime: 10
-  minDistanceToPlayer: 50
-  multiplyBy: 15
+  minDistanceToPlayer: 10
+  multiplyBy: 10
 --- !u!136 &1594522161192962522
 CapsuleCollider:
   m_ObjectHideFlags: 0
