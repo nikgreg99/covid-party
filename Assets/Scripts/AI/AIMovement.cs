@@ -80,7 +80,6 @@ public class AIMovement : MonoBehaviour
             agent.enabled = true;
             body.isKinematic = true;
             body.useGravity = false;
-            Debug.Log("Touched ground");
         }
     }
 
