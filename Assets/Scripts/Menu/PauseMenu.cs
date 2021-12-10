@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     public void backToMainMenu()
     {
+        Resume(false);
         SceneManager.LoadScene(0);
     }
 
@@ -36,8 +37,15 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void Resume()
+    public void Resume(bool lockMouse = true)
     {
+#if !UNITY_EDITOR
+        if (lockMouse)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+#endif
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
@@ -45,6 +53,11 @@ public class PauseMenu : MonoBehaviour
 
     private void Pause()
     {
+#if !UNITY_EDITOR
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+#endif
+
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;

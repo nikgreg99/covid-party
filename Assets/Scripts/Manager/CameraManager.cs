@@ -5,31 +5,38 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] private bool _isFirstPerson = false;
-    [SerializeField] private GameObject _firstCamera;
-    [SerializeField] private GameObject _orbitCamera;
+    [SerializeField] private GameObject firstCameera;
+    [SerializeField] private GameObject orbitCamera;
+    public static Camera currentCamera { get; private set; }
+
+    public float CurRotX { get; set; } = 0;
+    public float CurRotY { get; set; } = 0;
 
 
-    private void Start() {
-
+    private void Start()
+    {
         UpdateView();
     }
 
     private void UpdateView()
     {
-  
         if (_isFirstPerson)
         {
-            _firstCamera.SetActive(true);
-            _orbitCamera.SetActive(false);
+            //orbitRotation = orbitCamera.transform.rotation;
+            firstCameera.SetActive(true);
+            orbitCamera.SetActive(false);
+            currentCamera = firstCameera.GetComponent<Camera>();
         }
         else
         {
-            _firstCamera.SetActive(false);
-            _orbitCamera.SetActive(true);
+            firstCameera.SetActive(false);
+            orbitCamera.SetActive(true);
+            currentCamera = orbitCamera.GetComponent<Camera>();
         }
     }
 
-       
+    
+
 
     private void ChangeView()
     {
@@ -44,6 +51,6 @@ public class CameraManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             ChangeView();
-        }   
+        }
     }
 }

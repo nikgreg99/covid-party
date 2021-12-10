@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+
     private Rigidbody _rb;
     private float _range = 1;
     private float _startTime;
+
+    private bool isHit = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +24,7 @@ public class Projectile : MonoBehaviour
         if (Time.time - _startTime > _range)
         {
             _rb.useGravity = true;
+            _rb.AddForce(Vector3.down * 10, ForceMode.Acceleration);
         }
     }
 
@@ -43,6 +47,12 @@ public class Projectile : MonoBehaviour
         if (collisionLayer == LayerMask.NameToLayer("Ground") || collisionLayer == LayerMask.NameToLayer("Obstacle"))
         {
             StartCoroutine(destroyRoutine(1));
+        }
+        else if (collision.gameObject.GetComponent<AIMovement>() != null && !isHit)
+        {
+            isHit = true;
+            Destroy(this.gameObject);
+            collision.gameObject.GetComponent<AIMovement>().TargetHit();
         }
     }
 }

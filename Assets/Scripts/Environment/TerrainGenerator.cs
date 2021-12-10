@@ -6,14 +6,24 @@ using Random = UnityEngine.Random;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    //public delegate void GenerationAction();
-    //public static event GenerationAction generated;
 
+    public delegate void TerrainAction();
+    public static TerrainAction terrainReady;
+ 
     private Terrain _terrain;
 
     [SerializeField] private int _width;
+
+
     [SerializeField] private int _depth;
+
     [SerializeField] private int _height;
+
+    public int Height
+    {
+        get;
+    }
+
 
     [SerializeField] private int _scale;
 
@@ -23,6 +33,10 @@ public class TerrainGenerator : MonoBehaviour
 
     [SerializeField] private Transform _playerSpawnTransform;
     [SerializeField] private float _playerSapwnYOffset;
+
+    [SerializeField] private int _dnaCount = 20;
+    [SerializeField] private PowerUpContainer powerUpContainerPrefab;
+    [SerializeField] private float _dnaSpawnHeight = 1f;
 
 
 
@@ -36,12 +50,27 @@ public class TerrainGenerator : MonoBehaviour
             _originY = Random.Range(0, 400);
         }
 
+        TerrainData terrainCopy = Instantiate(GetComponent<Terrain>().terrainData);
         _terrain = GetComponent<Terrain>();
         this.transform.position = new Vector3(-_width / 2, 0, -_height / 2);
-        _terrain.terrainData = GenerateTerrainData(_terrain.terrainData);
-
+        TerrainData newTerrainData = GenerateTerrainData(terrainCopy);
+        _terrain.terrainData = newTerrainData;
+        _terrain.GetComponent<TerrainCollider>().terrainData = newTerrainData;
+        terrainReady();
         SpawnGivenPlayer();
+        SpawnDNAs();
         SpwanWalls();
+    }
+
+    private void SpawnDNAs()
+    {
+        for (int i = 0; i < _dnaCount; i++)
+        {
+            int x = Random.Range(0, _width);
+            int y = Random.Range(0, _height);
+
+            Instantiate(powerUpContainerPrefab, new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) + _dnaSpawnHeight, y - _height / 2), Quaternion.identity);
+        }
     }
 
     private void SpwanWalls()
@@ -52,25 +81,25 @@ public class TerrainGenerator : MonoBehaviour
         {
             GameObject wall1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall1.transform.position = new Vector3(_width / 2, _depth, 0);
-            wall1.transform.localScale = new Vector3(1, _depth * 2, _height);
+            wall1.transform.localScale = new Vector3(10, _depth * 2, _height);
             wall1.transform.SetParent(wallParent.transform);
             wall1.layer = wallParent.layer;
 
             GameObject wall2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall2.transform.position = new Vector3(-_width / 2, _depth, 0);
-            wall2.transform.localScale = new Vector3(1, _depth * 2, _height);
+            wall2.transform.localScale = new Vector3(10, _depth * 2, _height);
             wall2.transform.SetParent(wallParent.transform);
             wall2.layer = wallParent.layer;
 
             GameObject wall3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall3.transform.position = new Vector3(0, _depth, _height / 2);
-            wall3.transform.localScale = new Vector3(_width, _depth * 2, 1);
+            wall3.transform.localScale = new Vector3(_width, _depth * 2, 10);
             wall3.transform.SetParent(wallParent.transform);
             wall3.layer = wallParent.layer;
 
             GameObject wall4 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall4.transform.position = new Vector3(0, _depth, -_height / 2);
-            wall4.transform.localScale = new Vector3(_width, _depth * 2, 1);
+            wall4.transform.localScale = new Vector3(_width, _depth * 2, 10);
             wall4.transform.SetParent(wallParent.transform);
             wall4.layer = wallParent.layer;
         }
@@ -80,7 +109,7 @@ public class TerrainGenerator : MonoBehaviour
     {
         if (_playerSpawnTransform != null)
         {
-            _playerSpawnTransform.position = new Vector3(0, _terrain.terrainData.GetInterpolatedHeight(0, 0) + _playerSapwnYOffset, 0);
+            _playerSpawnTransform.position = new Vector3(0, _terrain.terrainData.GetInterpolatedHeight(0.5f, 0.5f) + _playerSpawnTransform.gameObject.GetComponent<CapsuleCollider>().height / 2+0.2f, 0);
         }
     }
 
@@ -123,7 +152,6 @@ public class TerrainGenerator : MonoBehaviour
         {
             SpawnGivenPlayer();
         }
-        //DoGenerate();
     }
 
 }

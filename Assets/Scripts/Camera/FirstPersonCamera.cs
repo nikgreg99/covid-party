@@ -4,31 +4,57 @@ using UnityEngine;
 
 public class FirstPersonCamera : MonoBehaviour
 {
-    [SerializeField] private Transform _target;
-    [SerializeField] private float _rotXSpeed = 1.5f;
-    [SerializeField] private float _rotYSpeed = 1.5f;
-    [SerializeField] private float _rotYMaxAngle = 360.0f;
 
-    private float _rotX;
-    private float _rotY;
+    [SerializeField] private float _rotSpeed = 1.5f;
+    [SerializeField] private float _maxAngleRotationX = 90.0f;
+    [SerializeField] private Transform _player;
+    [SerializeField] private CameraManager _cameraManager;
+
+    private float _rotX = 0.0f;
+    private float _rotY = 0.0f;
+
+    private void OnEnable()
+    {
+        /*Quaternion orbitRotation = CameraManager.orbitRotation;
+        if (orbitRotation != null)
+        {
+            transform.rotation = orbitRotation;
+        }*/
+        if (_cameraManager != null)
+        {
+            _rotX = _cameraManager.CurRotX;
+            _rotY = _cameraManager.CurRotY;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        _rotX = _target.eulerAngles.x;
-        _rotY = _target.eulerAngles.y;
+        _cameraManager = GetComponentInParent<CameraManager>();
+        transform.position = _player.position + 1.66f * _player.up;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _rotX += Input.GetAxis("Mouse X") * _rotXSpeed;
-        _rotY += Input.GetAxis("Mouse Y") * _rotYSpeed;
+        if (!PauseMenu.gameIsPaused)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * _rotSpeed;
+            float mouseY = -Input.GetAxis("Mouse Y") * _rotSpeed;
 
-        _rotY = Mathf.Clamp(_rotY ,-_rotYMaxAngle, _rotYMaxAngle);
+            //inversione da asse mouse a asse attorno a cui girare
+            _rotY += mouseX;
+            _rotX += mouseY;
 
-        Quaternion xQuat = Quaternion.AngleAxis(_rotX, Vector3.up);
-        Quaternion yQuat = Quaternion.AngleAxis(_rotY, Vector3.left);
-        _target.rotation = xQuat * yQuat;
+            _rotX = Mathf.Clamp(_rotX, -_maxAngleRotationX, _maxAngleRotationX);
+
+            _cameraManager.CurRotX = _rotX;
+            _cameraManager.CurRotY = _rotY;
+
+            transform.rotation = Quaternion.Euler(_rotX, _rotY, 0.0f);
+            transform.position = _player.position + 1.66f * _player.up;
+            //_player.Rotate(Vector3.up * mouseX);
+        }
+
     }
 }
