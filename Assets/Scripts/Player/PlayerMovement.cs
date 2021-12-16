@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rigidbody;
     [SerializeField] private float _gravity = 9.81f;
- 
+
     private CharacterController _characterController;
     private CapsuleCollider _capsuleCollider;
 
@@ -84,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float jump()
     {
-        float velocity  = _jumpSpeed * Time.deltaTime;
+        float velocity = _jumpSpeed * Time.deltaTime;
         return velocity;
     }
 
@@ -104,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         _characterController.Move(direction);
         _characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
 
-  
+
     }
 
     void Update()
@@ -157,9 +158,18 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (ScoreManager.CanBuy(PowerUp.POWERUP_PRICE))
                     {
-                        nearDNA.OpenContainer();
-                        nearDNA = null;
-                        _interactingText.enabled = false;
+                        try
+                        {
+                            ScoreManager.removeTokens(PowerUp.POWERUP_PRICE);
+                            nearDNA.OpenContainer();
+                            nearDNA = null;
+                            _interactingText.enabled = false;
+                        }
+                        catch (ScoreManager.ScoreException e)
+                        {
+                            Debug.LogWarning(e.Message);
+                        }
+
                     }
 
                 }
@@ -173,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
         move();
     }
 
-  
+
 
 
     private void OnTriggerEnter(Collider other)

@@ -34,7 +34,7 @@ public class AIMovement : MonoBehaviour
             if (_infectionPercent >= 1)
             {
                 Debug.Log("full enemy");
-                incrementPassive(2);
+                incrementPassive(1);
             }
         }
     }

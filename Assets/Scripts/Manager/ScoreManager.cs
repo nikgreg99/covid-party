@@ -4,8 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
 public class ScoreManager : MonoBehaviour
 {
+    public class ScoreException : Exception
+    {
+        public ScoreException() : base("Not enough tokens") { }
+    }
     public delegate void PowerUpEvent(PowerupTypes type);
     public static PowerUpEvent powerUpAcquired;
 
@@ -33,7 +38,7 @@ public class ScoreManager : MonoBehaviour
     [Tooltip("Times per second")]
     [SerializeField] private int _regenSpeed = 2;
     //times per second
-    
+
     public static bool CanBuy(int price)
     {
         return price <= instance._tokens;
@@ -47,6 +52,20 @@ public class ScoreManager : MonoBehaviour
         powerUpAcquired(powerUpType);
     }
 
+    private static void changeTokens(int amount)
+    {
+        if (amount > instance._tokens)
+        {
+            throw new ScoreException();
+        }
+        instance._tokens += amount;
+        instance._tokensText.text = string.Format("$ {0}", instance._tokens);
+    }
+
+    public static void removeTokens(int price)
+    {
+        changeTokens(-price);
+    }
 
 
     private void OnEnable()
@@ -100,7 +119,7 @@ public class ScoreManager : MonoBehaviour
         RectTransform passiveRect = _passiveText.gameObject.GetComponent<RectTransform>();
         Vector2 rectPos = passiveRect.anchoredPosition;
         rectPos.x = 20 + _maxPoints + 5;
-        passiveRect.anchoredPosition = new Vector2(rectPos.x,rectPos.y);
+        passiveRect.anchoredPosition = new Vector2(rectPos.x, rectPos.y);
     }
 
     private void Update()
