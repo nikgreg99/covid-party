@@ -28,22 +28,6 @@ public class AIMovement : MonoBehaviour
 
     private float _infectionPercent = 0f;
 
-    public void TargetHit()
-    {
-        if (_infectionPercent < 1)
-        {
-            _infectionPercent += 0.25f;
-            ChangeInfectedStatus(_infectionPercent);
-            hit(5);
-            Debug.Log(_infectionPercent);
-            if (_infectionPercent >= 1)
-            {
-                Debug.Log("full enemy");
-                incrementPassive(2);
-            }
-        }
-    }
-
     private void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
@@ -64,6 +48,7 @@ public class AIMovement : MonoBehaviour
         agent.speed = speed;
         angularSpeed = agent.angularSpeed;
     }
+
     bool findVisibleTarget()
     {
         Collider[] playerInVewRadius = Physics.OverlapSphere(transform.position, viewRadius, playerMask);
@@ -100,6 +85,10 @@ public class AIMovement : MonoBehaviour
             ChangeInfectedStatus(_infectionPercent);
             hit(5);
             Debug.Log(_infectionPercent);
+            if(_infectionPercent > 0)
+            {
+                Run();
+            }
             if (_infectionPercent >= 1)
             {
                 Debug.Log("full enemy");
@@ -115,22 +104,20 @@ public class AIMovement : MonoBehaviour
         {
             timer += Time.deltaTime;
 
+            foreach (Animator a in _animators)
+            {
+                a.SetBool("moving", true);
+            }
+
             float distance = Vector3.Distance(target.position, transform.position);
 
             if (distance < minDistanceToPlayer && findVisibleTarget())
             {
-                Vector3 newPos = transform.position + ((transform.position - target.position).normalized * multiplyBy);
-                agent.speed = 3 * speed;
-                agent.angularSpeed = 100 * angularSpeed;
-                agent.SetDestination(newPos);
+                Run();
             }
 
             if (timer >= wanderTime && (distance > minDistanceToPlayer))
             {
-                foreach (Animator a in _animators)
-                {
-                    a.SetBool("moving", true);
-                }
 
                 Vector3 newPos = RandomMove(transform.position, wanderRadius, -1);
                 agent.SetDestination(newPos);
@@ -141,6 +128,14 @@ public class AIMovement : MonoBehaviour
             }
         }
 
+    }
+
+    private void Run()
+    {
+        Vector3 newPos = transform.position + ((transform.position - target.position).normalized * multiplyBy);
+        agent.speed = 3 * speed;
+        agent.angularSpeed = 100 * angularSpeed;
+        agent.SetDestination(newPos);
     }
 
     private void OnCollisionEnter(Collision collision)

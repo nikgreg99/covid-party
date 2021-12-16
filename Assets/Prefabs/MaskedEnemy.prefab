@@ -87,10 +87,10 @@ MonoBehaviour:
   wanderRadius: 1000
   wanderTime: 10
   minDistanceToPlayer: 50
-  multiplyBy: 30
+  multiplyBy: 300
   speed: 5
   viewRadius: 50
-  viewAngle: 40
+  viewAngle: 90
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
