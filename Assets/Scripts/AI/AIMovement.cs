@@ -10,6 +10,12 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private float wanderTime = 10f;
     [SerializeField] private float minDistanceToPlayer = 10f;
     [SerializeField] private float multiplyBy = 10f;
+    [SerializeField] private float speed = 3.5f;
+    [SerializeField] private float viewRadius;
+    [Range(0,360)]
+    [SerializeField] private float viewAngle;
+    [SerializeField] private LayerMask obstacleMask;
+    [SerializeField] private LayerMask playerMask;
 
     public delegate void ScoreAction(int value);
     public static ScoreAction hit;
@@ -18,7 +24,6 @@ public class AIMovement : MonoBehaviour
     private Transform target;
     private List<Animator> _animators = new List<Animator>();
     private float timer;
-    private float speed;
     private float angularSpeed;
 
     private float _infectionPercent = 0f;
@@ -56,8 +61,51 @@ public class AIMovement : MonoBehaviour
         agent.baseOffset = 2;
         agent.height = 0.5f;
         timer = wanderTime;
-        speed = agent.speed;
+        agent.speed = speed;
         angularSpeed = agent.angularSpeed;
+    }
+    bool findVisibleTarget()
+    {
+        Collider[] playerInVewRadius = Physics.OverlapSphere(transform.position, viewRadius, playerMask);
+
+        Transform player = playerInVewRadius[0].transform;
+        Vector3 dirToPlayer = (player.position - transform.position).normalized;
+        if(Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
+        {
+            float distToPlayer = Vector3.Distance(transform.position, target.position);
+
+            if(!Physics.Raycast(transform.position, dirToPlayer, distToPlayer, obstacleMask))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Vector3 DirFromAngle(float angle, bool angleIsGlobal)
+    {
+        if (!angleIsGlobal)
+        {
+            angle += transform.eulerAngles.y;
+        }
+        return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
+    }
+
+    public void TargetHit()
+    {
+        if (_infectionPercent < 1)
+        {
+            _infectionPercent += 0.25f;
+            ChangeInfectedStatus(_infectionPercent);
+            hit(5);
+            Debug.Log(_infectionPercent);
+            if (_infectionPercent >= 1)
+            {
+                Debug.Log("full enemy");
+                incrementPassive(2);
+            }
+        }
     }
 
     private void Update()
@@ -69,10 +117,10 @@ public class AIMovement : MonoBehaviour
 
             float distance = Vector3.Distance(target.position, transform.position);
 
-            if (distance < minDistanceToPlayer)
+            if (distance < minDistanceToPlayer && findVisibleTarget())
             {
                 Vector3 newPos = transform.position + ((transform.position - target.position).normalized * multiplyBy);
-                agent.speed = 2 * speed;
+                agent.speed = 3 * speed;
                 agent.angularSpeed = 100 * angularSpeed;
                 agent.SetDestination(newPos);
             }

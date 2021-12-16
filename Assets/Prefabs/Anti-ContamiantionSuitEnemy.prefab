@@ -138,7 +138,16 @@ MonoBehaviour:
   wanderRadius: 1000
   wanderTime: 10
   minDistanceToPlayer: 50
-  multiplyBy: 15
+  multiplyBy: 30
+  speed: 5
+  viewRadius: 50
+  viewAngle: 40
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!195 &-1967302983616267048
 NavMeshAgent:
   m_ObjectHideFlags: 0
