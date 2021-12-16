@@ -24,6 +24,7 @@ public class ShootingScript : MonoBehaviour
     [SerializeField] private float _shotSize = 2f;
     private bool _dualShoot = false;
     private bool _isShotgun = false;
+    private bool _homing = true;
 
     private void powerUpAcquired(PowerupTypes type)
     {
@@ -33,6 +34,7 @@ public class ShootingScript : MonoBehaviour
                 _dualShoot = true;
                 break;
             case PowerupTypes.HOMING:
+                _homing = true;
                 break;
             case PowerupTypes.RANGE_UP:
                 _range *= 1.3f;
@@ -75,7 +77,7 @@ public class ShootingScript : MonoBehaviour
         if (Time.time >= _lastShotTime + _shotDelay && _launcher != null)
         {
             _lastShotTime = Time.time;
-            _launcher.GenerateShot(_shotSpeed, _range, _shotSize, _dualShoot, _isShotgun);
+            _launcher.GenerateShot(_shotSpeed, _range, _shotSize, _dualShoot, _isShotgun,_homing);
         }
     }
 }
