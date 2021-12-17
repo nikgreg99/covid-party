@@ -7790,6 +7790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 5
   _frequence: 3
+  _unique: 1
 --- !u!135 &7279112101375502859
 SphereCollider:
   m_ObjectHideFlags: 0

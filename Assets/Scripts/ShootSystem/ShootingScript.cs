@@ -26,9 +26,9 @@ public class ShootingScript : MonoBehaviour
     private bool _isShotgun = false;
     private bool _homing = false;
 
-    private void powerUpAcquired(PowerupTypes type)
+    private void powerUpAcquired(PowerUp powerUp)
     {
-        switch (type)
+        switch (powerUp.PowerupType)
         {
             case PowerupTypes.DOUBLE_SHOT:
                 _dualShoot = true;
@@ -37,10 +37,10 @@ public class ShootingScript : MonoBehaviour
                 _homing = true;
                 break;
             case PowerupTypes.RANGE_UP:
-                _range *= 1.3f;
+                _range *= 1.15f;
                 break;
             case PowerupTypes.SHOOT_RATE_UP:
-                _shotDelay /= 1.3f;
+                _shotDelay /= 1.15f;
                 break;
             case PowerupTypes.SHOTGUN:
                 if (!_isShotgun)

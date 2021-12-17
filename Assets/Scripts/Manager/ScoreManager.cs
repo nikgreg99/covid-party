@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 
 public class ScoreManager : MonoBehaviour
 {
+
+    private Dictionary<PowerupTypes, (Color Color, int Count, bool Unique)> detainedPowerUps;
+    [SerializeField] private TMPro.TextMeshProUGUI powerUpHud;
     public class ScoreException : Exception
     {
         public ScoreException() : base("Not enough tokens") { }
@@ -39,17 +42,44 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int _regenSpeed = 2;
     //times per second
 
+
+
     public static bool CanBuy(int price)
     {
         return price <= instance._tokens;
     }
 
-    public void TryToBuy(int price, PowerupTypes powerUpType)
+    private void countPowerup(PowerUp powerUp)
     {
-        if (price > _tokens) return;
-        _tokens -= price;
-        _tokensText.text = string.Format("$ {0}", _tokens);
-        powerUpAcquired(powerUpType);
+        PowerupTypes t = powerUp.PowerupType;
+        if (detainedPowerUps.ContainsKey(t))
+        {
+            (Color Color, int Count, bool Unique) existing = detainedPowerUps[t];
+            existing.Count++;
+            detainedPowerUps[t] = existing;
+        }
+        else
+        {
+            Color c = powerUp.gameObject.GetComponentInChildren<Outline>().OutlineColor;
+            detainedPowerUps[t] = (c, 1, powerUp.Unique);
+        }
+        updatePowerUpCountGui();
+    }
+
+    private void updatePowerUpCountGui()
+    {
+        string guiString = "";
+        foreach (KeyValuePair<PowerupTypes, (Color Color, int Count, bool Unique)> p in detainedPowerUps)
+        {
+            guiString += getFormattedColoredLine(p);
+        }
+        powerUpHud.text = guiString;
+    }
+
+    private string getFormattedColoredLine(KeyValuePair<PowerupTypes, (Color Color, int Count, bool Unique)> p)
+    {
+        string colorHex = "#" + ColorUtility.ToHtmlStringRGB(p.Value.Color);
+        return string.Format("<color={0}>{1}</color>{2}\n", colorHex, Enum.GetName(typeof(PowerupTypes), p.Key).ToLower(), p.Value.Unique ? "" : "   " + p.Value.Count);
     }
 
     private static void changeTokens(int amount)
@@ -72,12 +102,14 @@ public class ScoreManager : MonoBehaviour
     {
         AIMovement.hit += Hit;
         AIMovement.incrementPassive += incrementPassive;
+        PlayerMovement.acquiredPowerup += countPowerup;
     }
 
     private void OnDisable()
     {
         AIMovement.hit -= Hit;
         AIMovement.incrementPassive -= incrementPassive;
+        PlayerMovement.acquiredPowerup -= countPowerup;
     }
 
     public void incrementPassive(int amount)
@@ -90,6 +122,7 @@ public class ScoreManager : MonoBehaviour
     {
         instance = this;
         adjustContainerWidth();
+        detainedPowerUps = new Dictionary<PowerupTypes, (Color Color, int Count, bool Unique)>();
     }
 
     public void Hit(int value)
@@ -98,7 +131,7 @@ public class ScoreManager : MonoBehaviour
         if (_curPoints >= _maxPoints) //bar filled
         {
             _curPoints = _curPoints - _maxPoints;
-            _maxPoints += _increment;
+            _maxPoints = Mathf.Clamp(_maxPoints + _increment, 0, 800);
             adjustContainerWidth();
 
             BarFilled();
@@ -129,13 +162,5 @@ public class ScoreManager : MonoBehaviour
             _lastRegenCheck = Mathf.FloorToInt(Time.time * _regenSpeed);
             Hit(_curRegenQuantity);
         }
-        //solo per testare acquisizione oggetti
-        /*if (Input.GetKeyDown(KeyCode.P))
-        {
-            //int pu = Random.Range(0, Enum.GetNames(typeof(PowerupTypes)).Length);
-            int pu = 5;
-            Debug.Log(Enum.GetName(typeof(PowerupTypes), pu));
-            TryToBuy(5, (PowerupTypes)pu);
-        }*/
     }
 }
