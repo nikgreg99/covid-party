@@ -6,25 +6,29 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed = 1.0f;
-    [SerializeField] private float _speedRotate = 50.0f;
     [SerializeField] private float _speedMultiplier = 3f;
     [SerializeField] private float _camPlayerSlerpFactor = 1f;
 
-    [SerializeField] private float _jumpSpeed = 1.5f;
+    [Header("Character Controller Vertical")]
+    [SerializeField] private float _jumpSpeed = 15f;
+    [SerializeField] private float _gravity = -9.81f;
+    [SerializeField] private float _minFall = -1.5f;
+    [SerializeField] private float _terminalVelocity = -10f;
+    private float _vertSpeed;
+
+    [Header("text")]
+
 
     [SerializeField] private TMPro.TextMeshProUGUI _interactingText;
     [SerializeField] private TMPro.TextMeshProUGUI _notification;
 
     private PowerUpContainer nearDNA = null;
 
-    private Rigidbody _rigidbody;
-    [SerializeField] private float _gravity = 9.81f;
+    //private Rigidbody _rigidbody;
 
     private CharacterController _characterController;
     private CapsuleCollider _capsuleCollider;
 
-    private Vector3 _translation = Vector3.zero;
-    private Vector3 _rotation = Vector3.zero;
 
     private List<Animator> _animators = new List<Animator>();
     private bool _lastMoving = false;
@@ -44,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _vertSpeed = _minFall;
         _interactingText.enabled = false;
 
         _characterController = GetComponent<CharacterController>();
@@ -69,25 +74,6 @@ public class PlayerMovement : MonoBehaviour
         TerrainGenerator.playerReady -= enableMovement;
     }
 
-    private void UpdateTranslation(float moveX, float moveZ)
-    {
-        _translation = Vector3.zero;
-        _translation += transform.right * moveX;
-        _translation += transform.forward * moveZ;
-
-        if (_speedUp)
-        {
-            _translation *= _speedMultiplier;
-        }
-    }
-
-    private void UpdateRotation()
-    {
-        if (_speedUp)
-        {
-            _rotation *= _speedMultiplier;
-        }
-    }
 
     private bool checkJump()
     {
@@ -96,35 +82,50 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-            float check = (_capsuleCollider.height / 2) + 0.6f;
+            float check = (_capsuleCollider.height / 2) + 0.15f;
             _hitGround = hit.distance <= check;
         }
         return _hitGround;
     }
 
-    private float jump()
+    private void move(float horInput, float verInput)
     {
-        float velocity = _jumpSpeed * Time.deltaTime;
-        return velocity;
-    }
-
-    private void move()
-    {
-        Vector3 direction = _translation * _speed * Time.deltaTime;
-        direction.y += -_gravity * Time.deltaTime;
-
-        if (Input.GetKey(KeyCode.Space))
+        Vector3 movement = new Vector3();
+        float moveSpeed = _speedUp ? _speed * _speedMultiplier : _speed;
+        if (horInput != 0 || verInput != 0)
         {
-            if (checkJump())
+            movement.x = horInput * moveSpeed;
+            movement.z = verInput * moveSpeed;
+            movement = Vector3.ClampMagnitude(movement, moveSpeed);
+        }
+
+        if (checkJump())
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                direction.y += jump();
+                _vertSpeed = _jumpSpeed;
+            }
+            else
+            {
+                _vertSpeed = _minFall;
             }
         }
+        else
+        {
+            _vertSpeed += _gravity * 5 * Time.deltaTime;
+            if (_vertSpeed < _terminalVelocity)
+            {
+                _vertSpeed = _terminalVelocity;
+            }
+        }
+        movement = Quaternion.Euler(0, CameraManager.currentCamera.gameObject.transform.rotation.eulerAngles.y, 0) * movement;
+        movement.y = _vertSpeed;
+        movement *= Time.deltaTime;
 
         if (_canMove)
         {
-            _characterController.Move(direction);
-            _characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
+            _characterController.Move(movement);
+            //_characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
         }
 
 
@@ -163,9 +164,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _speedUp = Input.GetKey(KeyCode.LeftShift);
-
-        UpdateTranslation(moveX, moveZ);
-        UpdateRotation();
 
         if (nearDNA != null)
         {
@@ -206,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        move();
+        move(moveX, moveZ);
     }
 
 
