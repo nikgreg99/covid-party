@@ -26,7 +26,6 @@ public class AIMovement : MonoBehaviour
     private float timer;
     private float angularSpeed;
     private bool isRunning = false;
-    private bool isMoving = false;
 
     private float _infectionPercent = 0f;
 
