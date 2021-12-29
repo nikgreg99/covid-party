@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     public delegate void PowerUpEvent(PowerUp powerUp);
     public static PowerUpEvent acquiredPowerup;
 
+    private bool _canMove = false;
+
 
 
     // Start is called before the first frame update
@@ -51,6 +53,20 @@ public class PlayerMovement : MonoBehaviour
             _animators.Add(a);
         }
 
+    }
+
+    private void enableMovement()
+    {
+        _canMove = true;
+    }
+
+    private void OnEnable()
+    {
+        TerrainGenerator.playerReady += enableMovement;
+    }
+    private void OnDisable()
+    {
+        TerrainGenerator.playerReady -= enableMovement;
     }
 
     private void UpdateTranslation(float moveX, float moveZ)
@@ -105,8 +121,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        _characterController.Move(direction);
-        _characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
+        if (_canMove)
+        {
+            _characterController.Move(direction);
+            _characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
+        }
 
 
     }

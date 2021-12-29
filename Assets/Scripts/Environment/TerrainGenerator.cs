@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+//using Random = System.Random;
 
 public class TerrainGenerator : MonoBehaviour
 {
 
     public delegate void TerrainAction();
     public static TerrainAction terrainReady;
- 
+    public static TerrainAction playerReady;
+
     private Terrain _terrain;
 
     [SerializeField] private int _width;
@@ -27,9 +29,9 @@ public class TerrainGenerator : MonoBehaviour
 
     [SerializeField] private int _scale;
 
-    [SerializeField] private int _originX;
-    [SerializeField] private int _originY;
-    [SerializeField] private bool _randomGen = true;
+    [SerializeField] private float _originX;
+    [SerializeField] private float _originY;
+    //[SerializeField] private bool _randomGen = true;
 
     [SerializeField] private Transform _playerSpawnTransform;
     [SerializeField] private float _playerSapwnYOffset;
@@ -43,12 +45,8 @@ public class TerrainGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        if (_randomGen)
-        {
-            _originX = Random.Range(0, 400);
-            _originY = Random.Range(0, 400);
-        }
+        _originX = Random.Range(0f, 4000f);
+        _originY = Random.Range(0f, 4000f);
 
         TerrainData terrainCopy = Instantiate(GetComponent<Terrain>().terrainData);
         _terrain = GetComponent<Terrain>();
@@ -57,9 +55,10 @@ public class TerrainGenerator : MonoBehaviour
         _terrain.terrainData = newTerrainData;
         _terrain.GetComponent<TerrainCollider>().terrainData = newTerrainData;
         terrainReady();
-        SpawnGivenPlayer();
+        SpawnGivenPlayer(newTerrainData);
         SpawnDNAs();
         SpwanWalls();
+        playerReady();
     }
 
     private void SpawnDNAs()
@@ -86,7 +85,7 @@ public class TerrainGenerator : MonoBehaviour
             wall1.layer = wallParent.layer;
 
             GameObject wall2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            wall2.transform.position = new Vector3(-5 -_width / 2, _depth, 0);
+            wall2.transform.position = new Vector3(-5 - _width / 2, _depth, 0);
             wall2.transform.localScale = new Vector3(10, _depth * 2, _height);
             wall2.transform.SetParent(wallParent.transform);
             wall2.layer = wallParent.layer;
@@ -105,13 +104,16 @@ public class TerrainGenerator : MonoBehaviour
         }
     }
 
-    private void SpawnGivenPlayer()
+    private void SpawnGivenPlayer(TerrainData terrainData)
     {
-        //if (_playerSpawnTransform != null)
-        //{
-        _playerSpawnTransform.position = new Vector3(0, _terrain.terrainData.GetInterpolatedHeight(0.5f, 0.5f) + _playerSpawnTransform.gameObject.GetComponent<CapsuleCollider>().height / 2f + 2.5f, 0);
-        //Instantiate(playerPrefab, new Vector3(0, _terrain.terrainData.GetInterpolatedHeight(0.5f, 0.5f) + playerPrefab.GetComponentInChildren<CapsuleCollider>().height / 2f + 2.5f, 0), Quaternion.identity);
-        //}
+        Vector3 spawnPos = new Vector3(
+                0,
+                terrainData.GetInterpolatedHeight(0.5f, 0.5f) +
+                _playerSpawnTransform.gameObject.GetComponent<CapsuleCollider>().height / 2f + 2.5f,
+                0);
+        _playerSpawnTransform.position = spawnPos;
+        _playerSpawnTransform.gameObject.SetActive(true);
+
     }
 
     private TerrainData GenerateTerrainData(TerrainData terrainData)
@@ -151,7 +153,7 @@ public class TerrainGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SpawnGivenPlayer();
+            SpawnGivenPlayer(_terrain.terrainData);
         }
     }
 
