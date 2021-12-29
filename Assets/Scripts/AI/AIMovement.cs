@@ -25,25 +25,24 @@ public class AIMovement : MonoBehaviour
     private List<Animator> _animators = new List<Animator>();
     private float timer;
     private float angularSpeed;
+    private bool isRunning = false;
+    private bool isMoving = false;
 
     private float _infectionPercent = 0f;
 
     private void Start()
     {
-        target = GameObject.FindWithTag("Player").transform;
         foreach (Animator a in GetComponentsInChildren<Animator>())
         {
             _animators.Add(a);
         }
 
+        target = GameObject.FindWithTag("Player").transform;
         transform.position = new Vector3(transform.position.x, 20, transform.position.z);
-
-        agent.enabled = false;
-        body.isKinematic = false;
-        body.useGravity = true;
 
         agent.baseOffset = 2;
         agent.height = 0.5f;
+
         timer = wanderTime;
         agent.speed = speed;
         angularSpeed = agent.angularSpeed;
@@ -52,8 +51,9 @@ public class AIMovement : MonoBehaviour
     bool findVisibleTarget()
     {
         Collider[] playerInVewRadius = Physics.OverlapSphere(transform.position, viewRadius, playerMask);
-
+            
         Transform player = playerInVewRadius[0].transform;
+
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         if(Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
         {
@@ -68,24 +68,17 @@ public class AIMovement : MonoBehaviour
         return false;
     }
 
-    public Vector3 DirFromAngle(float angle, bool angleIsGlobal)
-    {
-        if (!angleIsGlobal)
-        {
-            angle += transform.eulerAngles.y;
-        }
-        return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
-    }
-
     public void TargetHit()
     {
+        float distance = Vector3.Distance(target.position, transform.position);
+
         if (_infectionPercent < 1)
         {
             _infectionPercent += 0.25f;
             ChangeInfectedStatus(_infectionPercent);
             hit(5);
             Debug.Log(_infectionPercent);
-            if(_infectionPercent > 0)
+            if(_infectionPercent > 0 && distance < minDistanceToPlayer)
             {
                 Run();
             }
@@ -111,20 +104,21 @@ public class AIMovement : MonoBehaviour
 
             float distance = Vector3.Distance(target.position, transform.position);
 
-            if (distance < minDistanceToPlayer && findVisibleTarget())
+            if (distance < minDistanceToPlayer && (findVisibleTarget() || isRunning))
             {
                 Run();
             }
 
             if (timer >= wanderTime && (distance > minDistanceToPlayer))
             {
+                isRunning = false;
 
                 Vector3 newPos = RandomMove(transform.position, wanderRadius, -1);
                 agent.SetDestination(newPos);
                 agent.speed = speed;
                 agent.angularSpeed = angularSpeed;
                 
-                timer = 0;
+                timer -= wanderTime;
             }
         }
 
@@ -132,10 +126,12 @@ public class AIMovement : MonoBehaviour
 
     private void Run()
     {
-        Vector3 newPos = transform.position + ((transform.position - target.position).normalized * multiplyBy);
-        agent.speed = 3 * speed;
-        agent.angularSpeed = 100 * angularSpeed;
+        isRunning = true;
+
+        Vector3 newPos = transform.position + (transform.position - target.position).normalized * multiplyBy;
         agent.SetDestination(newPos);
+        agent.angularSpeed = 100 * angularSpeed;
+        agent.speed = 3 * speed;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -145,6 +141,7 @@ public class AIMovement : MonoBehaviour
             agent.enabled = true;
             body.isKinematic = true;
             body.useGravity = false;
+            agent.SetDestination(RandomMove(transform.position, wanderRadius, -1));
         }
     }
 
