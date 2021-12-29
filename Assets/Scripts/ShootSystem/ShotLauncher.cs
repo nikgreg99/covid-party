@@ -21,7 +21,7 @@ public class ShotLauncher : MonoBehaviour
 
     }
 
-    internal void GenerateShot(float shotSpeed, float range, float shotSize, bool dualShoot, bool isShotgun)
+    internal void GenerateShot(float shotSpeed, float range, float shotSize, bool dualShoot, bool isShotgun, bool homing)
     {
         int individualShotCount = dualShoot ? 2 : 1;
         int shotGunCount = isShotgun ? _shotgunBulletCount : 1;
@@ -32,27 +32,7 @@ public class ShotLauncher : MonoBehaviour
                 for (int j = 0; j < individualShotCount; j++)
                 {
                     float offset = isShotgun ? 0 : j * _posXOffset;
-                    IndividualShot(shotSpeed, range, shotSize, offset, isShotgun);
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("Missing Projectile Prefab");
-        }
-    }
-    internal void GenerateAShot(float shotSpeed, float range, float shotSize, bool dualShoot, bool isShotgun)
-    {
-        int individualShotCount = dualShoot ? 2 : 1;
-        int shotGunCount = isShotgun ? _shotgunBulletCount : 1;
-        if (_projectilePrefab != null)
-        {
-            for (int i = 0; i < shotGunCount; i++)
-            {
-                for (int j = 0; j < individualShotCount; j++)
-                {
-                    float offset = isShotgun ? 0 : j * _posXOffset;
-                    IndividualShot(shotSpeed, range, shotSize, offset, isShotgun);
+                    IndividualShot(shotSpeed, range, shotSize, offset, isShotgun, homing);
                 }
             }
         }
@@ -62,7 +42,8 @@ public class ShotLauncher : MonoBehaviour
         }
     }
 
-    private void IndividualShot(float shotSpeed, float range, float shotSize, float posXOffset, bool isShotGun)
+
+    private void IndividualShot(float shotSpeed, float range, float shotSize, float posXOffset, bool isShotGun, bool homing)
     {
         Vector3 shotOrientation = CameraManager.currentCamera.transform.forward * shotSpeed;
         Vector3 rightVector = Vector3.Cross(shotOrientation, Vector3.up);
@@ -77,7 +58,10 @@ public class ShotLauncher : MonoBehaviour
         proj.transform.position = transform.position + rightVector.normalized * posXOffset;
         proj.transform.localScale = proj.transform.localScale * shotSize;
         Rigidbody rb = proj.GetComponent<Rigidbody>();
-        proj.GetComponent<Projectile>().SetRange(isShotGun ? range / 2 : range);
+        Projectile projectileComponent = proj.GetComponent<Projectile>();
+        projectileComponent.SetRange(isShotGun ? range / 2 : range);
+        projectileComponent.SetHoming(homing);
+
         rb.velocity = shotOrientation;
     }
 }

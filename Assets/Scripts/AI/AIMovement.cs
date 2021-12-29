@@ -23,6 +23,8 @@ public class AIMovement : MonoBehaviour
 
     private float _infectionPercent = 0f;
 
+    public bool Infected { get { return _infectionPercent >= 1; } }
+
     public void TargetHit()
     {
         if (_infectionPercent < 1)
@@ -34,7 +36,7 @@ public class AIMovement : MonoBehaviour
             if (_infectionPercent >= 1)
             {
                 Debug.Log("full enemy");
-                incrementPassive(2);
+                incrementPassive(1);
             }
         }
     }
@@ -88,7 +90,7 @@ public class AIMovement : MonoBehaviour
                 agent.SetDestination(newPos);
                 agent.speed = speed;
                 agent.angularSpeed = angularSpeed;
-                
+
                 timer = 0;
             }
         }
@@ -97,7 +99,7 @@ public class AIMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == 7)
+        if (collision.gameObject.layer == 7)
         {
             agent.enabled = true;
             body.isKinematic = true;

@@ -107,10 +107,11 @@ public class TerrainGenerator : MonoBehaviour
 
     private void SpawnGivenPlayer()
     {
-        if (_playerSpawnTransform != null)
-        {
-            _playerSpawnTransform.position = new Vector3(0, _terrain.terrainData.GetInterpolatedHeight(0.5f, 0.5f) + _playerSpawnTransform.gameObject.GetComponent<CapsuleCollider>().height / 2+0.2f, 0);
-        }
+        //if (_playerSpawnTransform != null)
+        //{
+        _playerSpawnTransform.position = new Vector3(0, _terrain.terrainData.GetInterpolatedHeight(0.5f, 0.5f) + _playerSpawnTransform.gameObject.GetComponent<CapsuleCollider>().height / 2f + 2.5f, 0);
+        //Instantiate(playerPrefab, new Vector3(0, _terrain.terrainData.GetInterpolatedHeight(0.5f, 0.5f) + playerPrefab.GetComponentInChildren<CapsuleCollider>().height / 2f + 2.5f, 0), Quaternion.identity);
+        //}
     }
 
     private TerrainData GenerateTerrainData(TerrainData terrainData)

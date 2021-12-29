@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,12 +13,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpSpeed = 1.5f;
 
     [SerializeField] private TMPro.TextMeshProUGUI _interactingText;
+    [SerializeField] private TMPro.TextMeshProUGUI _notification;
 
     private PowerUpContainer nearDNA = null;
 
     private Rigidbody _rigidbody;
     [SerializeField] private float _gravity = 9.81f;
- 
+
     private CharacterController _characterController;
     private CapsuleCollider _capsuleCollider;
 
@@ -32,8 +34,10 @@ public class PlayerMovement : MonoBehaviour
     private float _startTime;
     private bool _speedUp = false;
 
-    public delegate void PowerUpEvent(PowerupTypes type);
+    public delegate void PowerUpEvent(PowerUp powerUp);
     public static PowerUpEvent acquiredPowerup;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -84,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float jump()
     {
-        float velocity  = _jumpSpeed * Time.deltaTime;
+        float velocity = _jumpSpeed * Time.deltaTime;
         return velocity;
     }
 
@@ -104,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         _characterController.Move(direction);
         _characterController.Move(Quaternion.Euler(_rotation * _speedRotate * Time.deltaTime).eulerAngles);
 
-  
+
     }
 
     void Update()
@@ -157,9 +161,22 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (ScoreManager.CanBuy(PowerUp.POWERUP_PRICE))
                     {
-                        nearDNA.OpenContainer();
-                        nearDNA = null;
-                        _interactingText.enabled = false;
+                        try
+                        {
+                            ScoreManager.removeTokens(PowerUp.POWERUP_PRICE);
+                            nearDNA.OpenContainer();
+                            nearDNA = null;
+                            _interactingText.enabled = false;
+                        }
+                        catch (ScoreManager.ScoreException e)
+                        {
+                            Debug.LogWarning(e.Message);
+                        }
+
+                    }
+                    else
+                    {
+                        StartCoroutine(flashInteractingTextRed());
                     }
 
                 }
@@ -173,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
         move();
     }
 
-  
+
 
 
     private void OnTriggerEnter(Collider other)
@@ -184,8 +201,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (other.gameObject.GetComponent<PowerUp>() != null)
         {
-            PowerupTypes type = other.gameObject.GetComponent<PowerUp>().PowerupType;
-            acquiredPowerup(type);
+            PowerUp powerUp = other.gameObject.GetComponent<PowerUp>();
+            acquiredPowerup(powerUp);
+            StartCoroutine(powerUpAcquiredNotification(powerUp.PowerupType, powerUp.gameObject.GetComponentInChildren<Outline>().OutlineColor));
             Destroy(other.gameObject);
         }
 
@@ -198,6 +216,49 @@ public class PlayerMovement : MonoBehaviour
             nearDNA = null;
             _interactingText.enabled = false;
         }
+    }
+
+
+    private IEnumerator flashInteractingTextRed()
+    {
+        _interactingText.color = Color.red;
+        yield return new WaitForSeconds(.1f);
+        _interactingText.color = Color.white;
+        yield return new WaitForSeconds(.1f);
+
+        _interactingText.color = Color.red;
+        yield return new WaitForSeconds(.1f);
+        _interactingText.color = Color.white;
+
+        yield return null;
+    }
+
+    private IEnumerator powerUpAcquiredNotification(PowerupTypes type, Color color)
+    {
+        float startingTime = Time.time;
+        float endTime = startingTime + 0.6f;
+        _notification.text = string.Format("Acquired <color=#{0}>{1}</color> !", ColorUtility.ToHtmlStringRGB(color), Enum.GetName(typeof(PowerupTypes), type).ToLower());
+        Vector2 startingPos = new Vector2(0, 0);
+        Vector2 endPos = new Vector2(0, 55);
+        while (Time.time < endTime)
+        {
+            Vector2 pos = Vector2.Lerp(startingPos, endPos, (Time.time - startingTime) / (endTime - startingTime));
+            _notification.rectTransform.anchoredPosition = pos;
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForSeconds(3f);
+        startingTime = Time.time;
+        endTime = startingTime + 0.6f;
+
+        while (Time.time < endTime)
+        {
+            Vector2 pos = Vector2.Lerp(endPos, startingPos, (Time.time - startingTime) / (endTime - startingTime));
+            _notification.rectTransform.anchoredPosition = pos;
+            yield return new WaitForEndOfFrame();
+        }
+
+
+        yield return null;
     }
 }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PowerUpContainer : MonoBehaviour
 {
+    private static List<PowerupTypes> _acquiredUniques;
     private struct Range
     {
         public int MinInclusive { get; set; }
@@ -24,15 +25,25 @@ public class PowerUpContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (_acquiredUniques == null)
+        {
+            _acquiredUniques = new List<PowerupTypes>();
+        }
+    }
+    private void generatePossibilities()
+    {
         _randomRanges = new Dictionary<PowerUp, Range>();
         foreach (PowerUp powerUp in _possibilities)
         {
-            Range range = new Range();
-            range.MinInclusive = rarityPoolTotal;
-            rarityPoolTotal += powerUp.Frequence;
-            range.MaxExclusive = rarityPoolTotal;
+            if (!_acquiredUniques.Contains(powerUp.PowerupType))
+            {
+                Range range = new Range();
+                range.MinInclusive = rarityPoolTotal;
+                rarityPoolTotal += powerUp.Frequence;
+                range.MaxExclusive = rarityPoolTotal;
 
-            _randomRanges.Add(powerUp, range);
+                _randomRanges.Add(powerUp, range);
+            }
         }
     }
 
@@ -44,11 +55,16 @@ public class PowerUpContainer : MonoBehaviour
 
     public void OpenContainer()
     {
+        generatePossibilities();
         int ran = Random.Range(0, rarityPoolTotal);
         foreach (KeyValuePair<PowerUp, Range> item in _randomRanges)
         {
             if (item.Value.isInRange(ran))
             {
+                if (item.Key.Unique)
+                {
+                    _acquiredUniques.Add(item.Key.PowerupType);
+                }
                 Instantiate(item.Key.gameObject, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                 break;
             }
