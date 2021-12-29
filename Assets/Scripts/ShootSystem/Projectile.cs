@@ -32,7 +32,8 @@ public class Projectile : MonoBehaviour
             if (nearColliders.Count > 0)
             {
                 nearColliders = nearColliders
-                    .Where(c => c.transform.gameObject.GetComponent<AIMovement>() != null)
+                    .Where(c => c.transform.gameObject.GetComponent<AIMovement>() != null &&
+                    !c.transform.gameObject.GetComponent<AIMovement>().Infected)
                     .OrderBy(c => (c.transform.position - pos).magnitude)
                     .ToList();
                 if (nearColliders.Count > 0)
