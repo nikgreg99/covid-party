@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -50,8 +51,13 @@ public class AIMovement : MonoBehaviour
     bool findVisibleTarget()
     {
         Collider[] playerInVewRadius = Physics.OverlapSphere(transform.position, viewRadius, playerMask);
-            
-        Transform player = playerInVewRadius[0].transform;
+        try
+        {
+            Transform player = playerInVewRadius[0].transform;
+        } catch(Exception e)
+        {
+            Debug.LogException(e, this);
+        }
 
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         if(Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
