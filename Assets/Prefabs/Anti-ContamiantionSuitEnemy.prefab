@@ -137,8 +137,17 @@ MonoBehaviour:
   agent: {fileID: -1967302983616267048}
   wanderRadius: 1000
   wanderTime: 10
-  minDistanceToPlayer: 50
-  multiplyBy: 15
+  minDistanceToPlayer: 100
+  multiplyBy: 110
+  speed: 5
+  viewRadius: 100
+  viewAngle: 45
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!195 &-1967302983616267048
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -156,7 +165,7 @@ NavMeshAgent:
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295

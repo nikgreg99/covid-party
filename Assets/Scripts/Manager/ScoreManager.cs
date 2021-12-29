@@ -40,6 +40,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int _curRegenQuantity = 0;
     [Tooltip("Times per second")]
     [SerializeField] private int _regenSpeed = 2;
+    private int _baseRegen;
+    private int _smoothFactor = 1;
     //times per second
 
 
@@ -115,11 +117,17 @@ public class ScoreManager : MonoBehaviour
     public void incrementPassive(int amount)
     {
         _curRegenQuantity += amount;
+        if (_curRegenQuantity % 6 == 0)
+        {
+            _smoothFactor++;
+            _regenSpeed = _baseRegen * _smoothFactor;
+        }
         _passiveText.text = string.Format("+{0}", _curRegenQuantity);
     }
     // Start is called before the first frame update
     void Start()
     {
+        _baseRegen = _regenSpeed;
         instance = this;
         adjustContainerWidth();
         detainedPowerUps = new Dictionary<PowerupTypes, (Color Color, int Count, bool Unique)>();
@@ -160,7 +168,7 @@ public class ScoreManager : MonoBehaviour
         if (Mathf.FloorToInt(Time.time * _regenSpeed) > _lastRegenCheck)
         {
             _lastRegenCheck = Mathf.FloorToInt(Time.time * _regenSpeed);
-            Hit(_curRegenQuantity);
+            Hit(Mathf.CeilToInt(_curRegenQuantity / _smoothFactor));
         }
     }
 }
