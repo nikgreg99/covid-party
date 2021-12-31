@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private HealthBar healthBar;
 
+    [SerializeField] private GameOver gameOver;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -217,9 +219,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        if(currentHealth > 0)
+        {
+            currentHealth -= damage;
 
-        healthBar.SetHealth(currentHealth);
+            healthBar.SetHealth(currentHealth);
+        }
+        else
+        {
+            gameOver.EndGame();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -236,7 +245,6 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
         } else if(other.gameObject.tag == "Enemy")
         {
-            Debug.Log("Hit by enemy");
             TakeDamage(10);
         }
 
