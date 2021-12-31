@@ -123,7 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< HEAD
 --- !u!1 &8205215
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,8 +196,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
-=======
->>>>>>> 7a5046498d03a13dfb58e1279ae7d96e5eff6370
 --- !u!1 &39906159
 GameObject:
   m_ObjectHideFlags: 0
@@ -4267,11 +4264,8 @@ MonoBehaviour:
   _terminalVelocity: -10
   _interactingText: {fileID: 173327817}
   _notification: {fileID: 1713553912}
-<<<<<<< HEAD
   _gravity: 9.81
   healthBar: {fileID: 674353783}
-=======
->>>>>>> 7a5046498d03a13dfb58e1279ae7d96e5eff6370
 --- !u!136 &1643640419
 CapsuleCollider:
   m_ObjectHideFlags: 0
