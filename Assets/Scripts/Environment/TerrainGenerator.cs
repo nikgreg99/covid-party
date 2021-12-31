@@ -37,8 +37,11 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] private float _playerSapwnYOffset;
 
     [SerializeField] private int _dnaCount = 20;
+    [SerializeField] private int _buildingCount = 10;
     [SerializeField] private PowerUpContainer powerUpContainerPrefab;
     [SerializeField] private float _dnaSpawnHeight = 1f;
+
+    [SerializeField] private GameObject buildingPrefab;
 
 
 
@@ -58,7 +61,24 @@ public class TerrainGenerator : MonoBehaviour
         SpawnGivenPlayer(newTerrainData);
         SpawnDNAs();
         SpwanWalls();
+        SpawnBuildings();
         playerReady();
+    }
+
+    private void SpawnBuildings()
+    {
+        for (int i = 0; i < _buildingCount; i++)
+        {
+            int x = Random.Range(0, _width);
+            int y = Random.Range(0, _height);
+
+            Vector3 normal = _terrain.terrainData.GetInterpolatedNormal(1.0f * x / _width, 1f * y / _height);
+            Quaternion normalRotation = Quaternion.FromToRotation(Vector3.up, normal);
+            Quaternion ranRot = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
+            Quaternion buildingRotation = normalRotation * ranRot;
+
+            Instantiate(buildingPrefab, new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) - 1.5f, y - _height / 2), buildingRotation);
+        }
     }
 
     private void SpawnDNAs()

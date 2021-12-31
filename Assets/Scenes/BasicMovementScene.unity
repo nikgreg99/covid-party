@@ -123,6 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &8205215
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,6 +197,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+=======
+>>>>>>> 7a5046498d03a13dfb58e1279ae7d96e5eff6370
 --- !u!1 &39906159
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,75 +999,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173327815}
   m_CullTransparentMesh: 1
---- !u!1001 &248050389
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8205216}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.046
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -2734317969401094140, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: -1760714182489039777, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_Name
-      value: WoodenCabinFbx
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
 --- !u!1 &338632626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1614,8 +1548,10 @@ MonoBehaviour:
   _playerSpawnTransform: {fileID: 638718251}
   _playerSapwnYOffset: 0
   _dnaCount: 100
+  _buildingCount: 10
   powerUpContainerPrefab: {fileID: 8446318166965153976, guid: b9da77392e43e7e42a5438752c073f87, type: 3}
   _dnaSpawnHeight: 1
+  buildingPrefab: {fileID: 7327949048383978761, guid: 2f1e5670af436524f8f415efcb4a8938, type: 3}
 --- !u!154 &540798294
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -3162,11 +3098,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!4 &1218066492 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-  m_PrefabInstance: {fileID: 248050389}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1233795815
 GameObject:
   m_ObjectHideFlags: 0
@@ -4314,7 +4245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1643640418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4328,14 +4259,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
-  _speedRotate: 50
   _speedMultiplier: 2.5
   _camPlayerSlerpFactor: 3
-  _jumpSpeed: 500
+  _jumpSpeed: 20
+  _gravity: -9.81
+  _minFall: -5
+  _terminalVelocity: -10
   _interactingText: {fileID: 173327817}
   _notification: {fileID: 1713553912}
+<<<<<<< HEAD
   _gravity: 9.81
   healthBar: {fileID: 674353783}
+=======
+>>>>>>> 7a5046498d03a13dfb58e1279ae7d96e5eff6370
 --- !u!136 &1643640419
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4384,25 +4320,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1649939786 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -2734317969401094140, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
-  m_PrefabInstance: {fileID: 248050389}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1649939790
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649939786}
-  m_Material: {fileID: 13400000, guid: 7c7b012d018878d429ee0c877937efb3, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8589727401767789917, guid: fa585b07ac012454bb3127d48fe7812e, type: 3}
 --- !u!1 &1713553910
 GameObject:
   m_ObjectHideFlags: 0
