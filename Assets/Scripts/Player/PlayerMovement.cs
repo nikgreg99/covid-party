@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -39,7 +40,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool _canMove = false;
 
+    public int maxHealth = 100;
+    public int currentHealth;
 
+    [SerializeField] private HealthBar healthBar;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
             _animators.Add(a);
         }
 
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     private void enableMovement()
@@ -209,8 +215,12 @@ public class PlayerMovement : MonoBehaviour
         move();
     }
 
+    private void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
 
-
+        healthBar.SetHealth(currentHealth);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -224,6 +234,10 @@ public class PlayerMovement : MonoBehaviour
             acquiredPowerup(powerUp);
             StartCoroutine(powerUpAcquiredNotification(powerUp.PowerupType, powerUp.gameObject.GetComponentInChildren<Outline>().OutlineColor));
             Destroy(other.gameObject);
+        } else if(other.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Hit by enemy");
+            TakeDamage(10);
         }
 
     }
