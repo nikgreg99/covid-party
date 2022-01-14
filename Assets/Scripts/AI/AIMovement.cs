@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -51,18 +52,22 @@ public class AIMovement : MonoBehaviour
     bool findVisibleTarget()
     {
         Collider[] playerInVewRadius = Physics.OverlapSphere(transform.position, viewRadius, playerMask);
-            
-        Transform player = playerInVewRadius[0].transform;
-
-        Vector3 dirToPlayer = (player.position - transform.position).normalized;
-        if(Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
+        try
         {
-            float distToPlayer = Vector3.Distance(transform.position, target.position);
+            Transform player = playerInVewRadius[0].transform;
 
-            if(!Physics.Raycast(transform.position, dirToPlayer, distToPlayer, obstacleMask))
+            Vector3 dirToPlayer = (player.position - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
             {
-                return true;
+                float distToPlayer = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, dirToPlayer, distToPlayer, obstacleMask))
+                {
+                    return true;
+                }
             }
+        } catch(Exception e) {
+            Debug.Log("Player outside view range");
         }
 
         return false;
@@ -147,7 +152,7 @@ public class AIMovement : MonoBehaviour
 
     public Vector3 RandomMove(Vector3 origin, float dist, int layermask)
     {
-        Vector3 randDir = Random.insideUnitSphere * dist;
+        Vector3 randDir = UnityEngine.Random.insideUnitSphere * dist;
         randDir += origin;
         NavMeshHit navHit;
         NavMesh.SamplePosition(randDir, out navHit, dist, layermask);
