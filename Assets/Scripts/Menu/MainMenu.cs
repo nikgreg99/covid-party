@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        AudioManager.Instance.PlayLevelAudio();
+        //AudioManager.Instance.PlayLevelAudio();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
