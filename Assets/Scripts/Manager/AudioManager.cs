@@ -6,9 +6,11 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager _instance;
-    private static string  ASSET_AUDIO_PATH = "Audio/";
+    public static string  ASSET_AUDIO_LEVEL_PATH = "Audio/Level/";
     [SerializeField] private AudioSource _audioSource;
+    private AudioClip _audioClip;
     [SerializeField] private string _levelAudio;
+
 
     public static AudioManager Instance
     {
@@ -25,22 +27,24 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+         initLevelAudio();
+    }
+
+    private void initLevelAudio()
+    {
+        _audioClip = Resources.Load(ASSET_AUDIO_LEVEL_PATH + _levelAudio) as AudioClip;
+        _audioSource.clip = _audioClip;
     }
 
     public void PlayLevelAudio()
     {
-        PlayMusic(Resources.Load(ASSET_AUDIO_PATH + _levelAudio) as AudioClip);
-    }
-
-    private void PlayMusic(AudioClip audioClip)
-    {
-        _audioSource.clip = audioClip;
         _audioSource.Play();
     }
 
-    public void StopMusic()
+ 
+    public void PauseLevelAudio()
     {
-        _audioSource.Stop();
+        _audioSource.Pause();
     }
 
 }
