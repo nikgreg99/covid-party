@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShootingScript : MonoBehaviour
+
 {
     private void OnEnable()
     {
@@ -18,10 +19,16 @@ public class ShootingScript : MonoBehaviour
 
 
     private float _lastShotTime = -10;
+
+   
     [SerializeField] private float _shotDelay = 0.5f;
     [SerializeField] private float _shotSpeed = 2f;
     [SerializeField] private float _range = 4f;
     [SerializeField] private float _shotSize = 2f;
+    [SerializeField] private AudioSource _playerSource;
+    [SerializeField] private AudioClip _coughAudio;
+    [SerializeField] private AudioClip _megaCoughAudio;
+
     private bool _dualShoot = false;
     private bool _isShotgun = false;
     private bool _homing = false;
@@ -56,6 +63,8 @@ public class ShootingScript : MonoBehaviour
         }
     }
 
+  
+
     private ShotLauncher _launcher;
     // Start is called before the first frame update
     void Start()
@@ -81,6 +90,16 @@ public class ShootingScript : MonoBehaviour
         {
             _lastShotTime = Time.time;
             _launcher.GenerateShot(_shotSpeed, _range, _shotSize, _dualShoot, _isShotgun, _homing);
+
+            if (_isShotgun)
+            {
+                _playerSource.PlayOneShot(_megaCoughAudio);
+            }
+            else
+            {
+                _playerSource.PlayOneShot(_coughAudio);
+            }
+           
         }
     }
 }
