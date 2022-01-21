@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: -3091003341407552872}
   - component: {fileID: -1967302983616267048}
   m_Layer: 0
-  m_Name: Anti-ContamiantionSuitEnemy
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
