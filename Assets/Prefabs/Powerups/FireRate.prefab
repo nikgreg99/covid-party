@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 0
   _frequence: 10
+  _unique: 0
 --- !u!135 &7039113325946453965
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -58,8 +59,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.30396494
-  m_Center: {x: -0.23831299, y: 0.042277932, z: 0}
+  m_Radius: 0.42670664
+  m_Center: {x: -0.11557129, y: 0.042277932, z: 0}
 --- !u!1 &1171453607257467545
 GameObject:
   m_ObjectHideFlags: 0
