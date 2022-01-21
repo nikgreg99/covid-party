@@ -28,6 +28,12 @@ public class AIMovement : MonoBehaviour
     private bool isRunning = false;
 
     private float _infectionPercent = 0f;
+
+    // For tutorial purposes
+    public bool isHit = false;
+    public bool fullyInfected = false;
+    //////////////////////////////////
+
     public bool Infected { get { return _infectionPercent >= 1; } }
 
     private void Start()
@@ -74,6 +80,7 @@ public class AIMovement : MonoBehaviour
 
         if (_infectionPercent < 1)
         {
+            isHit = true;
             _infectionPercent += 0.25f;
             ChangeInfectedStatus(_infectionPercent);
             hit(5);
@@ -84,6 +91,7 @@ public class AIMovement : MonoBehaviour
             }
             if (_infectionPercent >= 1)
             {
+                fullyInfected = true;
                 Debug.Log("full enemy");
                 incrementPassive(1);
             }

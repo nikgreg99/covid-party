@@ -43,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
+    // For tutorial purposes
+    public bool isNearDNA = false;
+    //////////////////////////////////
+
     [SerializeField] private HealthBar healthBar;
 
     [SerializeField] private GameOver gameOver;
@@ -71,10 +75,12 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         TerrainGenerator.playerReady += enableMovement;
+        TutorialEnvironment.tutorialReady += enableMovement;
     }
     private void OnDisable()
     {
         TerrainGenerator.playerReady -= enableMovement;
+        TutorialEnvironment.tutorialReady -= enableMovement;
     }
 
     private void UpdateTranslation(float moveX, float moveZ)
@@ -236,6 +242,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.GetComponent<PowerUpContainer>() != null)
         {
             nearDNA = other.gameObject.GetComponent<PowerUpContainer>();
+            isNearDNA = true;
         }
         else if (other.gameObject.GetComponent<PowerUp>() != null)
         {
