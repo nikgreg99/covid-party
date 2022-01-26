@@ -37,8 +37,11 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] private float _playerSapwnYOffset;
 
     [SerializeField] private int _dnaCount = 20;
+    [SerializeField] private int _buildingCount = 10;
     [SerializeField] private PowerUpContainer powerUpContainerPrefab;
     [SerializeField] private float _dnaSpawnHeight = 1f;
+
+    [SerializeField] private GameObject buildingPrefab;
 
 
 
@@ -58,7 +61,28 @@ public class TerrainGenerator : MonoBehaviour
         SpawnGivenPlayer(newTerrainData);
         SpawnDNAs();
         SpwanWalls();
+        SpawnBuildings();
         playerReady();
+    }
+
+    private void SpawnBuildings()
+    {
+        for (int i = 0; i < _buildingCount; i++)
+        {
+            int x = Random.Range(0, _width);
+            int y = Random.Range(0, _height);
+
+
+            Vector3 normal = _terrain.terrainData.GetInterpolatedNormal(1.0f * x / _width, 1f * y / _height);
+            Quaternion normalRotation = Quaternion.FromToRotation(Vector3.up, normal);
+            Quaternion ranRot = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
+            Quaternion buildingRotation = normalRotation * ranRot;
+
+            GameObject building = Instantiate(buildingPrefab, new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) - 1.5f, y - _height / 2), buildingRotation);
+
+            int range = Mathf.CeilToInt(building.GetComponentInChildren<MeshCollider>().bounds.size.magnitude / 2);
+            clearZone(x, y, range, true);
+        }
     }
 
     private void SpawnDNAs()
@@ -146,6 +170,57 @@ public class TerrainGenerator : MonoBehaviour
         }
 
         return heights;
+    }
+
+    public void clearZone(int x, int y, int range, bool fromGrass = false, bool fromTrees = true)
+    {
+        Vector2 pos = new Vector2(x, y);
+        Vector2 invPos = new Vector2(y, x);
+        if (fromGrass)
+        {
+            int[,] map = _terrain.terrainData.GetDetailLayer(0, 0, _terrain.terrainData.detailWidth, _terrain.terrainData.detailHeight, 0);
+            for (int i = 0; i < _terrain.terrainData.detailWidth; i++)
+            {
+                for (int j = 0; j < _terrain.terrainData.detailHeight; j++)
+                {
+                    Vector2 cur = new Vector2(i, j);
+                    if ((invPos - cur).magnitude <= range)
+                    {
+                        //Debug.Log(cur);
+                        map[i, j] = 0;
+                    }
+                }
+            }
+            for (int i = 0; i < _terrain.terrainData.detailPrototypes.Length; i++)
+            {
+                Terrain.activeTerrain.terrainData.SetDetailLayer(0, 0, i, map);
+            }
+        }
+
+        if (fromTrees)
+        {
+            List<TreeInstance> treeInstances = new List<TreeInstance>(Terrain.activeTerrain.terrainData.treeInstances);
+            /*treeInstances.ForEach((tree) =>
+            {
+                Vector2 cur = new Vector2(tree.position.x * _width, tree.position.z * _height);
+                if( (pos - cur).magnitude <= range)
+                {
+
+                }
+            });*/
+            treeInstances.RemoveAll((tree) =>
+            {
+                //Debug.Log(tree.position);
+                Vector2 cur = new Vector2(tree.position.x * _width, tree.position.z * _height);
+                return (pos - cur).magnitude <= range;
+            });
+            Terrain.activeTerrain.terrainData.SetTreeInstances(treeInstances.ToArray(), true);
+            Terrain.activeTerrain.GetComponent<TerrainCollider>().enabled = false;
+            Terrain.activeTerrain.GetComponent<TerrainCollider>().enabled = true;
+        }
+
+
+
     }
 
     // Update is called once per frame

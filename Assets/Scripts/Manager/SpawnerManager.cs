@@ -71,8 +71,6 @@ public class SpawnerManager : MonoBehaviour
         GameObject currentGameObject = _spawnList[chosenIndex].gameObject;
         CapsuleCollider gameObjectCollider = currentGameObject.GetComponent<CapsuleCollider>();
 
-        /*RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit);*/
 
         Vector3 randomPosition = new Vector3(randomHeight, _terrainData.GetInterpolatedHeight(randomHeight - _xMinBound, randomWidth-_zMinBound) + gameObjectCollider.height / 2 + offsetSpawn, randomWidth);
         Instantiate(currentGameObject, randomPosition, Quaternion.identity);

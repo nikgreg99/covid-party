@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Projectile : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Projectile : MonoBehaviour
     private float _range = 1;
     private float _startTime;
     private bool _homing;
+    private int _damage;
 
     private bool isHit = false;
     // Start is called before the first frame update
@@ -33,7 +35,7 @@ public class Projectile : MonoBehaviour
             {
                 nearColliders = nearColliders
                     .Where(c => c.transform.gameObject.GetComponent<AIMovement>() != null &&
-                    !c.transform.gameObject.GetComponent<AIMovement>().Infected)
+                    !c.transform.gameObject.GetComponent<EnemyHealth>().Infected)
                     .OrderBy(c => (c.transform.position - pos).magnitude)
                     .ToList();
                 if (nearColliders.Count > 0)
@@ -65,6 +67,10 @@ public class Projectile : MonoBehaviour
     {
         _homing = homing;
     }
+    public void SetDamage(int damage)
+    {
+        _damage = damage;
+    }
 
     private IEnumerator destroyRoutine(int waitSecs)
     {
@@ -81,11 +87,17 @@ public class Projectile : MonoBehaviour
         {
             StartCoroutine(destroyRoutine(1));
         }
-        else if (collision.gameObject.GetComponent<AIMovement>() != null && !isHit)
+        else if (collision.gameObject.GetComponent<EnemyHealth>() != null && !isHit)
         {
+            if (!collision.gameObject.GetComponent<EnemyHealth>().Infected)
+            {
+                HitMarker.GetInstance().showHitMarker(_damage, collision.GetContact(0).point);
+            }
             isHit = true;
             Destroy(this.gameObject);
-            collision.gameObject.GetComponent<AIMovement>().TargetHit();
+            collision.gameObject.GetComponent<EnemyHealth>().TargetHit(_damage);
         }
     }
+
+
 }

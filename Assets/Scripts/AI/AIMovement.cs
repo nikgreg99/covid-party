@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(EnemyHealth))]
 public class AIMovement : MonoBehaviour
 {
     [SerializeField] private Rigidbody body;
@@ -12,14 +14,12 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private float multiplyBy = 10f;
     [SerializeField] private float speed = 3.5f;
     [SerializeField] private float viewRadius;
-    [Range(0,360)]
+    [Range(0, 360)]
     [SerializeField] private float viewAngle;
     [SerializeField] private LayerMask obstacleMask;
     [SerializeField] private LayerMask playerMask;
 
-    public delegate void ScoreAction(int value);
-    public static ScoreAction hit;
-    public static ScoreAction incrementPassive;
+
 
     private Transform target;
     private List<Animator> _animators = new List<Animator>();
@@ -27,17 +27,11 @@ public class AIMovement : MonoBehaviour
     private float angularSpeed;
     private bool isRunning = false;
 
-    private float _infectionPercent = 0f;
 
-    // For tutorial purposes
-    public bool isHit = false;
-    public bool fullyInfected = false;
-    //////////////////////////////////
-
-    public bool Infected { get { return _infectionPercent >= 1; } }
 
     private void Start()
     {
+
         foreach (Animator a in GetComponentsInChildren<Animator>())
         {
             _animators.Add(a);
@@ -57,46 +51,30 @@ public class AIMovement : MonoBehaviour
     bool findVisibleTarget()
     {
         Collider[] playerInVewRadius = Physics.OverlapSphere(transform.position, viewRadius, playerMask);
-            
-        Transform player = playerInVewRadius[0].transform;
-
-        Vector3 dirToPlayer = (player.position - transform.position).normalized;
-        if(Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
+        try
         {
-            float distToPlayer = Vector3.Distance(transform.position, target.position);
+            Transform player = playerInVewRadius[0].transform;
 
-            if(!Physics.Raycast(transform.position, dirToPlayer, distToPlayer, obstacleMask))
+            Vector3 dirToPlayer = (player.position - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
             {
-                return true;
+                float distToPlayer = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, dirToPlayer, distToPlayer, obstacleMask))
+                {
+                    return true;
+                }
             }
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Player outside view range");
         }
 
         return false;
     }
 
-    public void TargetHit()
-    {
-        float distance = Vector3.Distance(target.position, transform.position);
 
-        if (_infectionPercent < 1)
-        {
-            isHit = true;
-            _infectionPercent += 0.25f;
-            ChangeInfectedStatus(_infectionPercent);
-            hit(5);
-            Debug.Log(_infectionPercent);
-            if(_infectionPercent > 0 && distance < minDistanceToPlayer)
-            {
-                Run();
-            }
-            if (_infectionPercent >= 1)
-            {
-                fullyInfected = true;
-                Debug.Log("full enemy");
-                incrementPassive(1);
-            }
-        }
-    }
 
     private void Update()
     {
@@ -125,13 +103,21 @@ public class AIMovement : MonoBehaviour
                 agent.SetDestination(newPos);
                 agent.speed = speed;
                 agent.angularSpeed = angularSpeed;
-                
+
                 timer -= wanderTime;
             }
         }
 
     }
 
+    public void RequestRun()
+    {
+        float distance = Vector3.Distance(target.position, transform.position);
+        if (distance < minDistanceToPlayer)
+        {
+            Run();
+        }
+    }
     private void Run()
     {
         isRunning = true;
@@ -155,20 +141,13 @@ public class AIMovement : MonoBehaviour
 
     public Vector3 RandomMove(Vector3 origin, float dist, int layermask)
     {
-        Vector3 randDir = Random.insideUnitSphere * dist;
+        Vector3 randDir = UnityEngine.Random.insideUnitSphere * dist;
         randDir += origin;
         NavMeshHit navHit;
         NavMesh.SamplePosition(randDir, out navHit, dist, layermask);
 
         return navHit.position;
     }
-    private void ChangeInfectedStatus(float status)
-    {
-        status = Mathf.Clamp(status, 0, 1);
-        foreach (Renderer r in GetComponentsInChildren<Renderer>())
-        {
-            r.material.color = new Color(status, 0, 0);
-        }
-    }
+
 
 }

@@ -82,8 +82,8 @@ public class Tutorial : MonoBehaviour
     {
         counter += Time.deltaTime;
 
-        enemyHit = enemy.GetComponent<AIMovement>().isHit;
-        isFullyInfected = enemy.GetComponent<AIMovement>().fullyInfected;
+        enemyHit = enemy.GetComponent<EnemyHealth>().IsHitAtLeastOnce;
+        isFullyInfected = enemy.GetComponent<EnemyHealth>().Infected;
         isNearDNA = player.GetComponent<PlayerMovement>().isNearDNA;
 
         if ((Input.GetKeyDown(KeyCode.Return) || counter > timer) && instrunctionsCounter < instrunctionsLength)

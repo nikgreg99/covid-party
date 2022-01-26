@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
 
     public static bool gameIsPaused = false;
+    [SerializeField] private AudioSource gameAudio;
 
     public GameObject PauseMenuUI;
 
@@ -46,6 +47,7 @@ public class PauseMenu : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 #endif
+        AudioManager.Instance.PlayLevelAudio();
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
@@ -57,7 +59,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 #endif
-
+        AudioManager.Instance.PauseLevelAudio();
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;

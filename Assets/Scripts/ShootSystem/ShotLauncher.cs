@@ -12,7 +12,6 @@ public class ShotLauncher : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -21,7 +20,7 @@ public class ShotLauncher : MonoBehaviour
 
     }
 
-    internal void GenerateShot(float shotSpeed, float range, float shotSize, bool dualShoot, bool isShotgun, bool homing)
+    internal void GenerateShot(float shotSpeed, float range, float shotSize, bool dualShoot, bool isShotgun, bool homing, int damage)
     {
         int individualShotCount = dualShoot ? 2 : 1;
         int shotGunCount = isShotgun ? _shotgunBulletCount : 1;
@@ -32,7 +31,7 @@ public class ShotLauncher : MonoBehaviour
                 for (int j = 0; j < individualShotCount; j++)
                 {
                     float offset = isShotgun ? 0 : j * _posXOffset;
-                    IndividualShot(shotSpeed, range, shotSize, offset, isShotgun, homing);
+                    IndividualShot(shotSpeed, range, shotSize, offset, isShotgun, homing, damage);
                 }
             }
         }
@@ -43,7 +42,7 @@ public class ShotLauncher : MonoBehaviour
     }
 
 
-    private void IndividualShot(float shotSpeed, float range, float shotSize, float posXOffset, bool isShotGun, bool homing)
+    private void IndividualShot(float shotSpeed, float range, float shotSize, float posXOffset, bool isShotGun, bool homing, int damage)
     {
         Vector3 shotOrientation = CameraManager.currentCamera.transform.forward * shotSpeed;
         Vector3 rightVector = Vector3.Cross(shotOrientation, Vector3.up);
@@ -61,7 +60,11 @@ public class ShotLauncher : MonoBehaviour
         Projectile projectileComponent = proj.GetComponent<Projectile>();
         projectileComponent.SetRange(isShotGun ? range / 2 : range);
         projectileComponent.SetHoming(homing);
+        projectileComponent.SetDamage(damage);
 
         rb.velocity = shotOrientation;
+
+
+
     }
 }
