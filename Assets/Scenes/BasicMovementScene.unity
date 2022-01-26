@@ -1905,8 +1905,8 @@ MonoBehaviour:
     weight: 2
   - gameObject: {fileID: 2699855222625983729, guid: df8dc3dfc5069554b94c3e9982f1e2ab, type: 3}
     weight: 3
-  _numMaxEnemies: 80
-  offsetSpawn: 5
+  _numMaxEnemies: 160
+  offsetSpawn: 0.2
 --- !u!54 &540798298
 Rigidbody:
   m_ObjectHideFlags: 0
