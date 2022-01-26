@@ -4571,7 +4571,7 @@ MonoBehaviour:
   _shotSpeed: 50
   _range: 0.5
   _shotSize: 2
-  _damage: 20
+  _damage: 10
   _playerSource: {fileID: 1643640420}
   _coughAudio: {fileID: 8300000, guid: f764db7f1338204449d7f8e3f9aff1a8, type: 3}
   _megaCoughAudio: {fileID: 8300000, guid: 3e99ea9662db0014ab9c8748061410f4, type: 3}
@@ -5124,6 +5124,7 @@ GameObject:
   - component: {fileID: 1594522161192962522}
   - component: {fileID: 1594522161192962521}
   - component: {fileID: 1594522161192962523}
+  - component: {fileID: 1594522161192962524}
   m_Layer: 0
   m_Name: Jesus
   m_TagString: Untagged
@@ -5158,8 +5159,6 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 0
-  healthBar: {fileID: 0}
-  maxHealth: 100
 --- !u!136 &1594522161192962522
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5196,6 +5195,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1594522161192962524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594522161192962520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391d0f7ef66511b4d92032ef527e6cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 0}
+  maxHealth: 100
 --- !u!54 &1594522161192962525
 Rigidbody:
   m_ObjectHideFlags: 0

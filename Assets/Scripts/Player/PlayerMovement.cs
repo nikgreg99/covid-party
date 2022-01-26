@@ -232,7 +232,8 @@ public class PlayerMovement : MonoBehaviour
             acquiredPowerup(powerUp);
             StartCoroutine(powerUpAcquiredNotification(powerUp.PowerupType, powerUp.gameObject.GetComponentInChildren<Outline>().OutlineColor));
             Destroy(other.gameObject);
-        } else if(other.gameObject.tag == "Enemy")
+        }
+        else if (other.gameObject.tag == "Enemy")
         {
             Debug.Log("Hit by enemy");
             TakeDamage(10);
@@ -269,6 +270,8 @@ public class PlayerMovement : MonoBehaviour
         float startingTime = Time.time;
         float endTime = startingTime + 0.6f;
         _notification.text = string.Format("Acquired <color=#{0}>{1}</color> !", ColorUtility.ToHtmlStringRGB(color), Enum.GetName(typeof(PowerupTypes), type).ToLower());
+
+
         Vector2 startingPos = new Vector2(0, 0);
         Vector2 endPos = new Vector2(0, 55);
         while (Time.time < endTime)
