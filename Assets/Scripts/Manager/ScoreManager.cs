@@ -102,15 +102,15 @@ public class ScoreManager : MonoBehaviour
 
     private void OnEnable()
     {
-        AIMovement.hit += Hit;
-        AIMovement.incrementPassive += incrementPassive;
+        EnemyHealth.hit += Hit;
+        EnemyHealth.incrementPassive += incrementPassive;
         PlayerMovement.acquiredPowerup += countPowerup;
     }
 
     private void OnDisable()
     {
-        AIMovement.hit -= Hit;
-        AIMovement.incrementPassive -= incrementPassive;
+        EnemyHealth.hit -= Hit;
+        EnemyHealth.incrementPassive -= incrementPassive;
         PlayerMovement.acquiredPowerup -= countPowerup;
     }
 
@@ -171,4 +171,6 @@ public class ScoreManager : MonoBehaviour
             Hit(Mathf.CeilToInt(_curRegenQuantity / _smoothFactor));
         }
     }
+
+   
 }

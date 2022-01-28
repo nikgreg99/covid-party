@@ -62,6 +62,7 @@ public class TerrainGenerator : MonoBehaviour
         SpawnDNAs();
         SpwanWalls();
         SpawnBuildings();
+        GetComponent<SpawnerManager>().SpawnIA();
         playerReady();
     }
 

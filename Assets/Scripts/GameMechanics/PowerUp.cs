@@ -9,7 +9,8 @@ public enum PowerupTypes
     SHOT_SPEED_UP,
     HOMING,
     DOUBLE_SHOT,
-    SHOTGUN
+    SHOTGUN,
+    DAMAGE_UP
 
 }
 

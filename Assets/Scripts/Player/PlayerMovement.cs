@@ -6,15 +6,16 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float _speed = 1.0f;
-    [SerializeField] private float _speedMultiplier = 3f;
-    [SerializeField] private float _camPlayerSlerpFactor = 1f;
+    [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _speedMultiplier = 2.5f;
+    [SerializeField] private float _camPlayerSlerpFactor = 3f;
 
     [Header("Character Controller Vertical")]
-    [SerializeField] private float _jumpSpeed = 15f;
+    [SerializeField] private float _jumpSpeed = 10f;
     [SerializeField] private float _gravity = -9.81f;
-    [SerializeField] private float _minFall = -1.5f;
+    [SerializeField] private float _minFall = -5f;
     [SerializeField] private float _terminalVelocity = -10f;
+    [SerializeField] private float _checkOffset = 0.15f;
     private float _vertSpeed;
 
     [Header("text")]
@@ -47,7 +48,13 @@ public class PlayerMovement : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
+    // For tutorial purposes
+    public bool isNearDNA = false;
+    //////////////////////////////////
+
     [SerializeField] private HealthBar healthBar;
+
+    [SerializeField] private GameOver gameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -74,21 +81,24 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         TerrainGenerator.playerReady += enableMovement;
+        TutorialEnvironment.tutorialReady += enableMovement;
     }
     private void OnDisable()
     {
         TerrainGenerator.playerReady -= enableMovement;
+        TutorialEnvironment.tutorialReady -= enableMovement;
     }
 
 
     private bool checkJump()
     {
+
         bool _hitGround = false;
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-            float check = (_capsuleCollider.height / 2) + 0.15f;
+            float check = (_capsuleCollider.height / 2) + _checkOffset;
             _hitGround = hit.distance <= check;
         }
         return _hitGround;
@@ -215,9 +225,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        if (currentHealth > 0)
+        {
+            currentHealth -= damage;
 
-        healthBar.SetHealth(currentHealth);
+            healthBar.SetHealth(currentHealth);
+        }
+        else
+        {
+            gameOver.EndGame();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -225,6 +242,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.GetComponent<PowerUpContainer>() != null)
         {
             nearDNA = other.gameObject.GetComponent<PowerUpContainer>();
+            isNearDNA = true;
         }
         else if (other.gameObject.GetComponent<PowerUp>() != null)
         {
@@ -232,9 +250,9 @@ public class PlayerMovement : MonoBehaviour
             acquiredPowerup(powerUp);
             StartCoroutine(powerUpAcquiredNotification(powerUp.PowerupType, powerUp.gameObject.GetComponentInChildren<Outline>().OutlineColor));
             Destroy(other.gameObject);
-        } else if(other.gameObject.tag == "Enemy")
+        }
+        else if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("Hit by enemy");
             TakeDamage(10);
         }
 
@@ -269,6 +287,8 @@ public class PlayerMovement : MonoBehaviour
         float startingTime = Time.time;
         float endTime = startingTime + 0.6f;
         _notification.text = string.Format("Acquired <color=#{0}>{1}</color> !", ColorUtility.ToHtmlStringRGB(color), Enum.GetName(typeof(PowerupTypes), type).ToLower());
+
+
         Vector2 startingPos = new Vector2(0, 0);
         Vector2 endPos = new Vector2(0, 55);
         while (Time.time < endTime)
