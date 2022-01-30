@@ -251,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(powerUpAcquiredNotification(powerUp.PowerupType, powerUp.gameObject.GetComponentInChildren<Outline>().OutlineColor));
             Destroy(other.gameObject);
         }
-        else if (other.gameObject.tag == "Enemy")
+        else if (other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<EnemyHealth>().Infected)
         {
             TakeDamage(10);
         }

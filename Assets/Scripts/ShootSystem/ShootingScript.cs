@@ -20,7 +20,7 @@ public class ShootingScript : MonoBehaviour
 
     private float _lastShotTime = -10;
 
-
+    [SerializeField] private float minShotDelay = 0.25f;
     [SerializeField] private float _shotDelay = 0.5f;
     [SerializeField] private float _shotSpeed = 2f;
     [SerializeField] private float _range = 4f;
@@ -29,6 +29,8 @@ public class ShootingScript : MonoBehaviour
     [SerializeField] private AudioSource _playerSource;
     [SerializeField] private AudioClip _coughAudio;
     [SerializeField] private AudioClip _megaCoughAudio;
+
+    private int damageCounter = 0;
 
     private bool _dualShoot = false;
     private bool _isShotgun = false;
@@ -48,7 +50,7 @@ public class ShootingScript : MonoBehaviour
                 _range *= 1.15f;
                 break;
             case PowerupTypes.SHOOT_RATE_UP:
-                _shotDelay /= 1.15f;
+                _shotDelay = minShotDelay + (_shotDelay - minShotDelay) / 1.3f;
                 break;
             case PowerupTypes.SHOTGUN:
                 if (!_isShotgun)
@@ -61,7 +63,15 @@ public class ShootingScript : MonoBehaviour
                 _shotSpeed *= 1.3f;
                 break;
             case PowerupTypes.DAMAGE_UP:
-                _damage = Mathf.CeilToInt(_damage * 1.3f);
+                damageCounter++;
+                float coefficient = damageCounter switch
+                {
+                    var n when n > 16 => 1.1f,
+                    var n when n > 8 && n <= 16 => 1.2f,
+                    _ => 1.3f
+                };
+
+                _damage = Mathf.CeilToInt(_damage * coefficient);
                 //shot size
                 break;
         }
