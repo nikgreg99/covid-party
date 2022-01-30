@@ -69,7 +69,11 @@ public class Projectile : MonoBehaviour
     }
     public void SetDamage(int damage)
     {
+        Vector3 startingScale = transform.localScale;
         _damage = damage;
+
+        Vector3 newScale = startingScale * (Mathf.Log(1f * damage / 10f) + 1);
+        this.transform.localScale = newScale;
     }
 
     private IEnumerator destroyRoutine(int waitSecs)

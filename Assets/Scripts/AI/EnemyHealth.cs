@@ -18,8 +18,12 @@ public class EnemyHealth : MonoBehaviour
     public bool IsHitAtLeastOnce { get; private set; } = false;
     public bool Infected { get { return curHealth <= 0; } }
     // Start is called before the first frame update
+
+    private AIMovement _aIMovement;
+
     void Start()
     {
+        _aIMovement = GetComponent<AIMovement>();
         curHealth = maxHealth;
         healtBar = Instantiate(healthBarPrefab, this.transform);
         slider = healtBar.GetComponentInChildren<Slider>();
@@ -47,14 +51,27 @@ public class EnemyHealth : MonoBehaviour
             hit(5);
             if (curHealth < maxHealth)
             {
-                GetComponent<AIMovement>().RequestRun();
+                _aIMovement.RequestRun();
             }
             if (curHealth <= 0)
             {
-                incrementPassive(1);
+                int increment = getIncrementFromAiType(_aIMovement.AIType);
+                incrementPassive(increment);
+                HitMarker.GetInstance().showPassiveIncrement(increment, transform.position + Vector3.up * GetComponentInChildren<CapsuleCollider>().height / 2f);
             }
         }
     }
+
+    private int getIncrementFromAiType(AIMovement.AITypes type) => type switch
+    {
+        //AIMovement.AITypes.NORMAL => 1,
+        AIMovement.AITypes.MASKED => 2,
+        AIMovement.AITypes.VACCINATED => 2,
+        AIMovement.AITypes.ANTI_CONTAMINATION => 10,
+        _ => 1
+    };
+
+
 
     private void ChangeInfectedStatus(float status)
     {

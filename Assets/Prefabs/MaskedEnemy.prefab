@@ -1025,10 +1025,11 @@ MonoBehaviour:
   viewAngle: 0
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   playerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
+  _aiType: 1
 --- !u!1001 &5788713865685538276
 PrefabInstance:
   m_ObjectHideFlags: 0

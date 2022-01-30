@@ -8,6 +8,14 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Rigidbody))]
 public class AIMovement : MonoBehaviour
 {
+    public enum AITypes
+    {
+        NORMAL,
+        MASKED,
+        VACCINATED,
+        ANTI_CONTAMINATION,
+    }
+
     [SerializeField] private Rigidbody body;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float wanderRadius = 1000f;
@@ -21,6 +29,8 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private LayerMask obstacleMask;
     [SerializeField] private LayerMask playerMask;
 
+    [SerializeField] private AITypes _aiType;
+    [SerializeField] public AITypes AIType { get { return _aiType; } }
 
 
     private Transform target;
