@@ -27,7 +27,7 @@ public class Tutorial : MonoBehaviour
 
     string[] instrunctions = new string[] {"Welcome to Covid Party!\nThe happiest place on Earth!", "Congratulations! You have been infected with a fun virus!\nAnd now you can pass it on everyone else!" ,
         "Isn't it exciting????!!!!!", "Anyway!\nLet's get started! Shall we?", "To Move use WASD\nTo switch cameras, press F", "To cough on your ENEMIES, left-click on your mouse",
-        "Why don't you go in that building and cough on that FUCKER"};
+        "Why don't you go ahead and cough on that FUCKER?"};
     int instrunctionsLength;
     int instrunctionsCounter = 0;
 
@@ -35,7 +35,7 @@ public class Tutorial : MonoBehaviour
     int powerUpLength;
     int powerUpCounter = 0;
 
-    string[] endInstrunctions = new string[] { "Well done!\nThese allow your virus to evolve and become stronger!", "Well, I've taught everything you need to know.", "Now go on! Makes us proud!\nInfect everyone you see!"};
+    string[] endInstrunctions = new string[] { "Well done!\nThese allow your virus to evolve and become stronger!", "Well, I've taught everything you need to know.", "Now go on! Make us proud!\nInfect everyone you see!"};
     int endLength;
     int endCounter = 0;
 
