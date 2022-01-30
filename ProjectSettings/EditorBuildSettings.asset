@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: 3a8fea565fe62894db0a3073e5763000
   - enabled: 1
-    path: Assets/Scenes/BasicMovementScene.unity
+    path: Assets/Scenes/Forest.unity
     guid: 95945b75bff5ef8498d986de6460908e
+  - enabled: 1
+    path: Assets/Scenes/City.unity
+    guid: 26662855d54040e4ab9c83bb1477270e
   m_configObjects: {}
