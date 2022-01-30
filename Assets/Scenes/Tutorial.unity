@@ -10467,6 +10467,7 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 224996b8a4e164447b51c4811ba3e8c0, type: 2}
   resolutionDropdown: {fileID: 620147457}
   fullscreen: {fileID: 1652959489}
+  volumeSlider: {fileID: 1708994138}
 --- !u!1 &1497953883
 GameObject:
   m_ObjectHideFlags: 0
@@ -14348,6 +14349,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 512
+  _aiType: 0
 --- !u!114 &7718905936443151535
 MonoBehaviour:
   m_ObjectHideFlags: 0

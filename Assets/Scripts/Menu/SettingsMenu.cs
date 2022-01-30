@@ -11,6 +11,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] TMP_Dropdown resolutionDropdown;
     [SerializeField] Toggle fullscreen;
+    [SerializeField] Slider volumeSlider;
 
     Resolution[] resolutions;
 
@@ -40,6 +41,10 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
 
         fullscreen.isOn = Screen.fullScreen;
+
+        float volume = 0f;
+        audioMixer.GetFloat("volume", out volume);
+        volumeSlider.value = volume;
     }
 
     public void SetResolution(int resolutionIndex)
