@@ -72,8 +72,11 @@ public class TerrainGenerator : MonoBehaviour
     {
         for (int i = 0; i < _buildingCount; i++)
         {
-            int x = Random.Range(0, _width);
-            int y = Random.Range(0, _height);
+            int buildingRadius = Mathf.CeilToInt(_buildingPrefab.GetComponentInChildren<Renderer>().bounds.size.magnitude / 2);
+
+
+            int x = Random.Range(buildingRadius, _width - buildingRadius);
+            int y = Random.Range(buildingRadius, _height - buildingRadius);
 
 
             Vector3 normal = _terrain.terrainData.GetInterpolatedNormal(1.0f * x / _width, 1f * y / _height);
@@ -81,10 +84,18 @@ public class TerrainGenerator : MonoBehaviour
             Quaternion ranRot = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
             Quaternion buildingRotation = normalRotation * ranRot;
 
-            GameObject building = Instantiate(_buildingPrefab, new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) - 1.5f, y - _height / 2), buildingRotation);
+            Vector3 buildingPos = new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) - 1.5f, y - _height / 2);
 
-            int range = Mathf.CeilToInt(building.GetComponentInChildren<MeshCollider>().bounds.size.magnitude / 2);
-            clearZone(x, y, range, true);
+            Instantiate(_buildingPrefab, buildingPos, buildingRotation);
+
+            if (Random.Range(0, 2) == 1)
+            {
+                PowerUpContainer disposableDNA = Instantiate(powerUpContainerPrefab, buildingPos + Vector3.one * 2, Quaternion.identity);
+                disposableDNA.OpenContainer();
+            }
+
+
+            clearZone(x, y, buildingRadius, true);
         }
     }
 

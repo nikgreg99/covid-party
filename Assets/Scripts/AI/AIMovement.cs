@@ -78,9 +78,9 @@ public class AIMovement : MonoBehaviour
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Debug.Log("Player outside view range");
+            //Debug.Log("Player outside view range");
         }
 
         return false;

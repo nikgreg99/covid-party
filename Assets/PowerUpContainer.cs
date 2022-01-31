@@ -7,6 +7,8 @@ using UnityEngine;
 public class PowerUpContainer : MonoBehaviour
 {
     private static List<PowerupTypes> _acquiredUniques;
+    private static List<PowerupTypes> AcquiredUniques { get { if (_acquiredUniques == null) _acquiredUniques = new List<PowerupTypes>(); return _acquiredUniques; } }
+
     private struct Range
     {
         public int MinInclusive { get; set; }
@@ -35,7 +37,7 @@ public class PowerUpContainer : MonoBehaviour
         _randomRanges = new Dictionary<PowerUp, Range>();
         foreach (PowerUp powerUp in _possibilities)
         {
-            if (!_acquiredUniques.Contains(powerUp.PowerupType))
+            if (!AcquiredUniques.Contains(powerUp.PowerupType))
             {
                 Range range = new Range();
                 range.MinInclusive = rarityPoolTotal;
@@ -63,7 +65,7 @@ public class PowerUpContainer : MonoBehaviour
             {
                 if (item.Key.Unique)
                 {
-                    _acquiredUniques.Add(item.Key.PowerupType);
+                    AcquiredUniques.Add(item.Key.PowerupType);
                 }
                 Instantiate(item.Key.gameObject, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
                 break;
