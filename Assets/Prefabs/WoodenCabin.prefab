@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5189075487411902231}
   - component: {fileID: 6420628172587914010}
   - component: {fileID: 7369719329591715061}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 6649878026011947579}
   - component: {fileID: 888370117683720322}
   - component: {fileID: 5212324752623608490}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodCabin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7327949048383978806}
   - component: {fileID: 7327949048383978804}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenCabin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7077586760273632168}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodenCabinFbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}

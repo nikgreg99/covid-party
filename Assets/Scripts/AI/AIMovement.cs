@@ -50,7 +50,7 @@ public class AIMovement : MonoBehaviour
         }
 
         target = GameObject.FindWithTag("Player").transform;
-        transform.position = new Vector3(transform.position.x, 20, transform.position.z);
+        //transform.position = new Vector3(transform.position.x, 20, transform.position.z);
 
         agent.baseOffset = 2;
         agent.height = 0.5f;

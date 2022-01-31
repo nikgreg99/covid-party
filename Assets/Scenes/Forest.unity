@@ -2428,7 +2428,8 @@ MonoBehaviour:
   _buildingCount: 10
   powerUpContainerPrefab: {fileID: 8446318166965153976, guid: b9da77392e43e7e42a5438752c073f87, type: 3}
   _dnaSpawnHeight: 1
-  buildingPrefab: {fileID: 7327949048383978761, guid: 2f1e5670af436524f8f415efcb4a8938, type: 3}
+  _buildingPrefab: {fileID: 7327949048383978761, guid: 2f1e5670af436524f8f415efcb4a8938, type: 3}
+  _wallMaterial: {fileID: 2100000, guid: 9e2a6139a36305a43ae2208165b6c840, type: 2}
 --- !u!154 &540798294
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -7154,6 +7155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329421383294c674593f5a33ca8d66cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minShotDelay: 0.25
   _shotDelay: 0.5
   _shotSpeed: 50
   _range: 0.5

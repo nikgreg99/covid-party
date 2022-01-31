@@ -41,7 +41,9 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] private PowerUpContainer powerUpContainerPrefab;
     [SerializeField] private float _dnaSpawnHeight = 1f;
 
-    [SerializeField] private GameObject buildingPrefab;
+    [SerializeField] private GameObject _buildingPrefab;
+
+    [SerializeField] private Material _wallMaterial;
 
 
 
@@ -79,7 +81,7 @@ public class TerrainGenerator : MonoBehaviour
             Quaternion ranRot = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
             Quaternion buildingRotation = normalRotation * ranRot;
 
-            GameObject building = Instantiate(buildingPrefab, new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) - 1.5f, y - _height / 2), buildingRotation);
+            GameObject building = Instantiate(_buildingPrefab, new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) - 1.5f, y - _height / 2), buildingRotation);
 
             int range = Mathf.CeilToInt(building.GetComponentInChildren<MeshCollider>().bounds.size.magnitude / 2);
             clearZone(x, y, range, true);
@@ -108,24 +110,28 @@ public class TerrainGenerator : MonoBehaviour
             wall1.transform.localScale = new Vector3(10, _depth * 2, _height);
             wall1.transform.SetParent(wallParent.transform);
             wall1.layer = wallParent.layer;
+            wall1.GetComponentInChildren<Renderer>().material = _wallMaterial;
 
             GameObject wall2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall2.transform.position = new Vector3(-5 - _width / 2, _depth, 0);
             wall2.transform.localScale = new Vector3(10, _depth * 2, _height);
             wall2.transform.SetParent(wallParent.transform);
             wall2.layer = wallParent.layer;
+            wall2.GetComponentInChildren<Renderer>().material = _wallMaterial;
 
             GameObject wall3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall3.transform.position = new Vector3(0, _depth, 5 + _height / 2);
             wall3.transform.localScale = new Vector3(_width, _depth * 2, 10);
             wall3.transform.SetParent(wallParent.transform);
             wall3.layer = wallParent.layer;
+            wall3.GetComponentInChildren<Renderer>().material = _wallMaterial;
 
             GameObject wall4 = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall4.transform.position = new Vector3(0, _depth, -5 - _height / 2);
             wall4.transform.localScale = new Vector3(_width, _depth * 2, 10);
             wall4.transform.SetParent(wallParent.transform);
             wall4.layer = wallParent.layer;
+            wall4.GetComponentInChildren<Renderer>().material = _wallMaterial;
         }
     }
 
