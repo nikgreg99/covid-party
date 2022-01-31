@@ -186,6 +186,8 @@ public class Tutorial : MonoBehaviour
 
         if (done && !running)
         {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             goNextUI.SetActive(true);
         }
 
