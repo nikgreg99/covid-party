@@ -88,10 +88,10 @@ public class TerrainGenerator : MonoBehaviour
 
             Instantiate(_buildingPrefab, buildingPos, buildingRotation);
 
-            if (Random.Range(0, 2) == 1)
+            if (Random.Range(0, 3) < 2)
             {
                 PowerUpContainer disposableDNA = Instantiate(powerUpContainerPrefab, buildingPos + Vector3.one * 2, Quaternion.identity);
-                disposableDNA.OpenContainer();
+                disposableDNA.OpenContainer(includeUniques: false);
             }
 
 

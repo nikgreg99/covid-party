@@ -32,19 +32,22 @@ public class PowerUpContainer : MonoBehaviour
             _acquiredUniques = new List<PowerupTypes>();
         }
     }
-    private void generatePossibilities()
+    private void generatePossibilities(bool includeUniques = true)
     {
         _randomRanges = new Dictionary<PowerUp, Range>();
         foreach (PowerUp powerUp in _possibilities)
         {
-            if (!AcquiredUniques.Contains(powerUp.PowerupType))
+            if (includeUniques || !powerUp.Unique)
             {
-                Range range = new Range();
-                range.MinInclusive = rarityPoolTotal;
-                rarityPoolTotal += powerUp.Frequence;
-                range.MaxExclusive = rarityPoolTotal;
+                if (!AcquiredUniques.Contains(powerUp.PowerupType))
+                {
+                    Range range = new Range();
+                    range.MinInclusive = rarityPoolTotal;
+                    rarityPoolTotal += powerUp.Frequence;
+                    range.MaxExclusive = rarityPoolTotal;
 
-                _randomRanges.Add(powerUp, range);
+                    _randomRanges.Add(powerUp, range);
+                }
             }
         }
     }
@@ -55,9 +58,9 @@ public class PowerUpContainer : MonoBehaviour
 
     }
 
-    public void OpenContainer()
+    public void OpenContainer(bool includeUniques = true)
     {
-        generatePossibilities();
+        generatePossibilities(includeUniques);
         int ran = Random.Range(0, rarityPoolTotal);
         foreach (KeyValuePair<PowerUp, Range> item in _randomRanges)
         {
