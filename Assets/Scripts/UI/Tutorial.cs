@@ -186,6 +186,8 @@ public class Tutorial : MonoBehaviour
 
         if (done && !running)
         {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             goNextUI.SetActive(true);
         }
 
@@ -210,7 +212,9 @@ public class Tutorial : MonoBehaviour
 
     public void GoNext()
     {
-        SceneManager.LoadScene(2);
+        NextSceneManager.RequestNextScene(2);
+       /* SceneManager.LoadScene("Loading");
+        SceneManager.LoadSceneAsync(2);*/
     }
 
 }

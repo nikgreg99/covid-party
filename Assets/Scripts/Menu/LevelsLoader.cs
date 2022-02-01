@@ -6,18 +6,18 @@ using UnityEngine.SceneManagement;
 public class LevelsLoader : MonoBehaviour
 {
 
-   public void loadTutorial()
+    public void loadTutorial()
     {
-        SceneManager.LoadScene(1);
+        NextSceneManager.RequestNextScene(1);
     }
 
     public void loadForestLevel()
     {
-        SceneManager.LoadScene(2);
+        NextSceneManager.RequestNextScene(2);
     }
 
     public void loadCityLevel()
     {
-        SceneManager.LoadScene(3);
+        NextSceneManager.RequestNextScene(3);
     }
 }
