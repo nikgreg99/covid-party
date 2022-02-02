@@ -14,6 +14,8 @@ public class OrbitCamera : MonoBehaviour
 
     [SerializeField] private float _targetXOffset = 1;
     [SerializeField] private float _targetYOffset = 1;
+    private float _defaultFOV;
+    private Camera _thisCamera;
 
     private CameraManager _cameraManager;
 
@@ -25,6 +27,9 @@ public class OrbitCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _thisCamera = GetComponent<Camera>();
+        _defaultFOV = _thisCamera.fieldOfView;
+
         _cameraManager = GetComponentInParent<CameraManager>();
         transform.position = _target.position + _offsetZ * _target.forward + _offsetY * _target.up;
         _offset = _target.position - transform.position;
@@ -69,6 +74,16 @@ public class OrbitCamera : MonoBehaviour
             transform.position = _target.position - (rotation * _offset);
             //GetComponentInParent<CameraManager>().setRotation(transform.rotation);
             SetLookAt();
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                _thisCamera.fieldOfView = _defaultFOV / 2.5f;
+            }
+            else
+            {
+                _thisCamera.fieldOfView = _defaultFOV;
+            }
+
         }
 
     }

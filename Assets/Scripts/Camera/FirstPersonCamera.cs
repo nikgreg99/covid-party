@@ -13,6 +13,9 @@ public class FirstPersonCamera : MonoBehaviour
     private float _rotX = 0.0f;
     private float _rotY = 0.0f;
 
+    private float _defaultFOV;
+    private Camera _thisCamera;
+
     private void OnEnable()
     {
         /*Quaternion orbitRotation = CameraManager.orbitRotation;
@@ -30,6 +33,9 @@ public class FirstPersonCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _thisCamera = GetComponent<Camera>();
+        _defaultFOV = _thisCamera.fieldOfView;
+
         _cameraManager = GetComponentInParent<CameraManager>();
         transform.position = _player.position + 1.66f * _player.up;
     }
@@ -54,6 +60,15 @@ public class FirstPersonCamera : MonoBehaviour
             transform.rotation = Quaternion.Euler(_rotX, _rotY, 0.0f);
             transform.position = _player.position + 1.66f * _player.up;
             //_player.Rotate(Vector3.up * mouseX);
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                _thisCamera.fieldOfView = _defaultFOV / 2.5f;
+            }
+            else
+            {
+                _thisCamera.fieldOfView = _defaultFOV;
+            }
         }
 
     }
