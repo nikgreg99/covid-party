@@ -2231,6 +2231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329421383294c674593f5a33ca8d66cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minShotDelay: 0.25
   _shotDelay: 0.5
   _shotSpeed: 50
   _range: 0.5
@@ -7671,7 +7672,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh56282
+  m_Name: pb_Mesh24676
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9636,7 +9637,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 224996b8a4e164447b51c4811ba3e8c0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 123734f009b68ee4985e93f0f6a45c20, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -11469,7 +11470,7 @@ MonoBehaviour:
   m_MinValue: -80
   m_MaxValue: 0
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: -20
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -13537,14 +13538,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3024644155761583029}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 25.54, y: 4, z: -14.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3719408133996548569}
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &489417136334524499
 Transform:
   m_ObjectHideFlags: 0
@@ -14336,11 +14337,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 3024644155761583024}
   agent: {fileID: 6580080128734725458}
-  wanderRadius: 1000
+  wanderRadius: 100
   wanderTime: 10
   minDistanceToPlayer: 100
   multiplyBy: 110
-  speed: 5
+  speed: 0.1
   viewRadius: 100
   viewAngle: 45
   obstacleMask:

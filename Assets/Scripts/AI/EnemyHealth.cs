@@ -51,7 +51,7 @@ public class EnemyHealth : MonoBehaviour
             hit(5);
             if (curHealth < maxHealth)
             {
-                _aIMovement.RequestRun();
+                _aIMovement.NoticeHit();
             }
             if (curHealth <= 0)
             {

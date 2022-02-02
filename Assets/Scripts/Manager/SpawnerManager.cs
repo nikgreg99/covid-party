@@ -21,6 +21,13 @@ public class SpawnerManager : MonoBehaviour
 
     private List<Vector2> _treePositions;
 
+    private static SpawnerManager _instance;
+
+    public static SpawnerManager GetInstance()
+    {
+        return _instance;
+    }
+
     public void SpawnIA()
     {
         Terrain terrain = GetComponent<Terrain>();
@@ -33,6 +40,11 @@ public class SpawnerManager : MonoBehaviour
         _treePositions = new List<TreeInstance>(Terrain.activeTerrain.terrainData.treeInstances)
             .Select(e => new Vector2(e.position.x * _width, e.position.z * _height))
             .ToList();
+
+        if(_instance == null)
+        {
+            _instance = this;
+        }
 
         for (int i = 0; i < _numMaxEnemies; i++)
         {
@@ -94,5 +106,10 @@ public class SpawnerManager : MonoBehaviour
     private bool nearTree(Vector2 pos, float range)
     {
         return _treePositions.Where((treePos) => (pos - treePos).magnitude <= range).Any();
+    }
+
+    public bool nearTreeWorldSpace(Vector3 pos, float range)
+    {
+        return nearTree(new Vector2(pos.x + _width/2, pos.z + _height/2), range);
     }
 }

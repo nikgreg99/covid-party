@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4202270068310308169}
   - component: {fileID: 146967758590130568}
   - component: {fileID: 8253370089455168120}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: legright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8167481652039526437}
   - component: {fileID: 4933103123340549892}
   - component: {fileID: 5249969422428939874}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: legleft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 5907226533265966585}
   - component: {fileID: 6123585578745312447}
   - component: {fileID: 6286694073721300387}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 1898757168539839333}
   - component: {fileID: 3032907021034006495}
   - component: {fileID: 1805687218511236529}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: armleft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 5535228853389210662}
   - component: {fileID: 3560052242991152210}
   - component: {fileID: 3331950495421182886}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UWU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -506,7 +506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7788835831448547074}
   - component: {fileID: 4668091991798207627}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AL_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +557,7 @@ GameObject:
   m_Component:
   - component: {fileID: 560974498344707105}
   - component: {fileID: 9117068857277742968}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LL_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,7 +608,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7346761483489641561}
   - component: {fileID: 3744161462990481620}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LR_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,7 +659,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5851300517778392237}
   - component: {fileID: 6971488271547778046}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AR_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,7 +709,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8309526558832677547}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -749,7 +749,7 @@ GameObject:
   - component: {fileID: 927131325506095591}
   - component: {fileID: 945175268616498974}
   - component: {fileID: 6746946833057016708}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -830,7 +830,7 @@ GameObject:
   - component: {fileID: 1959985167098768344}
   - component: {fileID: 6131336270370506228}
   - component: {fileID: 6853581664823857445}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: armright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -914,7 +914,7 @@ GameObject:
   - component: {fileID: 3009403273223677151}
   - component: {fileID: 3892227981137701482}
   - component: {fileID: 3285635458459788986}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MaskedEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1014,19 +1014,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c80561fe8acf649a523158ac8731c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 3892227981137701482}
-  agent: {fileID: 3009403273223677151}
-  wanderRadius: 1000
-  wanderTime: 10
-  minDistanceToPlayer: 10
-  multiplyBy: 10
-  speed: 3.5
-  viewRadius: 0
-  viewAngle: 0
-  obstacleMask:
+  _body: {fileID: 3892227981137701482}
+  _agent: {fileID: 3009403273223677151}
+  _wanderRadius: 1000
+  _wanderTime: 10
+  _minDistanceToPlayer: 60
+  _multiplyBy: 70
+  _speed: 5
+  _viewRadius: 100
+  _viewAngle: 45
+  _obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  playerMask:
+  _playerMask:
     serializedVersion: 2
     m_Bits: 512
   _aiType: 1
@@ -1093,9 +1093,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: -6526337978409717516, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -6289187925523396608, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -5583383133858978574, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 473802369939625218, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
       propertyPath: m_Name
       value: Face_Mask
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2757636200051740237, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834154345967381583, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 059d035e05f279d428a8d8b09b46c3cf, type: 3}
