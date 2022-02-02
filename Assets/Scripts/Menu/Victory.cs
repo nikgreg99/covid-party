@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOver : MonoBehaviour
+public class Victory : MonoBehaviour
 {
-    [SerializeField] private GameObject GameOverUI;
-    [SerializeField] private AudioSource gameAudio;
+    [SerializeField] GameObject VictoryScreen;
 
-    public void EndGame()
+    public void ShowVictoryScreen()
     {
 #if !UNITY_EDITOR
         Cursor.visible = true;
@@ -15,7 +14,7 @@ public class GameOver : MonoBehaviour
 #endif
 
         AudioManager.Instance.PauseLevelAudio();
-        GameOverUI.SetActive(true);
+        VictoryScreen.SetActive(true);
         Time.timeScale = 0f;
     }
 }
