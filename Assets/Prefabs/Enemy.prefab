@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5978002573933585146}
   - component: {fileID: 9091014682177165683}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AL_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: -3091003341407552872}
   - component: {fileID: -1967302983616267048}
   - component: {fileID: 3823747848156835801}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -129,19 +129,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c80561fe8acf649a523158ac8731c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 1592631091868080698}
-  agent: {fileID: -1967302983616267048}
-  wanderRadius: 1000
-  wanderTime: 10
-  minDistanceToPlayer: 100
-  multiplyBy: 110
-  speed: 5
-  viewRadius: 100
-  viewAngle: 45
-  obstacleMask:
+  _body: {fileID: 1592631091868080698}
+  _agent: {fileID: -1967302983616267048}
+  _wanderRadius: 1000
+  _wanderTime: 10
+  _minDistanceToPlayer: 60
+  _multiplyBy: 70
+  _speed: 5
+  _viewRadius: 100
+  _viewAngle: 45
+  _obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  playerMask:
+  _playerMask:
     serializedVersion: 2
     m_Bits: 512
   _aiType: 0
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 2645896483566954141}
   - component: {fileID: 1510585615513070119}
   - component: {fileID: 2877439202842034249}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: armleft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 8006008684258330625}
   - component: {fileID: 7645698071743707463}
   - component: {fileID: 7628943507990489179}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 5744649234903967197}
   - component: {fileID: 8832762179891024636}
   - component: {fileID: 8519123978222545818}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: legleft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 8130992873151126676}
   - component: {fileID: 8696255642460253614}
   - component: {fileID: 6123919482733882661}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UWU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 338006488135628977}
   - component: {fileID: 4389746457457898608}
   - component: {fileID: 5505788115537799040}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: legright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 2725492929270998560}
   - component: {fileID: 7779757914546931724}
   - component: {fileID: 7060924545158962397}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: armright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -767,7 +767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 900268724072441939}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 3619896051912147999}
   - component: {fileID: 3745955468537979622}
   - component: {fileID: 7151814224387434108}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -886,7 +886,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8057607760679799125}
   - component: {fileID: 6799893264340471302}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AR_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -937,7 +937,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6563242071758571937}
   - component: {fileID: 942464274410546476}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LR_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -988,7 +988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4118922382513416665}
   - component: {fileID: 4640946852020974208}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LL_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}

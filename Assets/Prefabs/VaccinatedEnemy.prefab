@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7377857892974998116}
   - component: {fileID: 2005693229546502672}
   - component: {fileID: 328490818926261732}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UWU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 7190564313929255835}
   - component: {fileID: 3310042231268271543}
   - component: {fileID: 2874862486557471078}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: armright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 8368977844310895012}
   - component: {fileID: 8495108188162527069}
   - component: {fileID: 2691103502584843207}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3011429121672865006}
   - component: {fileID: 1749353374048199613}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AR_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9165312673079739490}
   - component: {fileID: 468116900329463611}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LL_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2093523609669755930}
   - component: {fileID: 5407889693623666839}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LR_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,6 +489,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &3370624679959461390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5988835252660474137}
+  m_Layer: 12
+  m_Name: Launcher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5988835252660474137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3370624679959461390}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.93, z: 0.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5051034671428116579}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4153399461600775780
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4779730781621288753}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: DocumentVaccine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +564,8 @@ GameObject:
   - component: {fileID: 6072940427108746020}
   - component: {fileID: 3365135909948194994}
   - component: {fileID: 769774098756738852}
-  m_Layer: 0
+  - component: {fileID: 5287880648364161867}
+  m_Layer: 12
   m_Name: VaccinatedEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -552,6 +583,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 5988835252660474137}
   - {fileID: 7856115774754819819}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -634,22 +666,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c80561fe8acf649a523158ac8731c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 3365135909948194994}
-  agent: {fileID: 6072940427108746020}
-  wanderRadius: 1000
-  wanderTime: 10
-  minDistanceToPlayer: 10
-  multiplyBy: 10
-  speed: 3.5
-  viewRadius: 0
-  viewAngle: 0
-  obstacleMask:
+  _body: {fileID: 3365135909948194994}
+  _agent: {fileID: 6072940427108746020}
+  _wanderRadius: 1000
+  _wanderTime: 10
+  _minDistanceToPlayer: 60
+  _multiplyBy: 70
+  _speed: 5
+  _viewRadius: 100
+  _viewAngle: 45
+  _obstacleMask:
     serializedVersion: 2
     m_Bits: 256
-  playerMask:
+  _playerMask:
     serializedVersion: 2
     m_Bits: 512
   _aiType: 2
+--- !u!114 &5287880648364161867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051034671428116588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c66cebb893cd44aa763515678a10c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _launcher: {fileID: 3370624679959461390}
+  _syringe: {fileID: 5775828633465855726, guid: 1b4195833b1ab5c449b990dffa84fbb4, type: 3}
+  _playerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  _speed: 20
 --- !u!1 &5131261894339310349
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +710,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1508355055814528833}
   - component: {fileID: 4049058129140528328}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AL_anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +762,7 @@ GameObject:
   - component: {fileID: 2955468832211920314}
   - component: {fileID: 3171124191944496380}
   - component: {fileID: 3442882028898895328}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +843,7 @@ GameObject:
   - component: {fileID: 7106959010164984614}
   - component: {fileID: 5975798249018836892}
   - component: {fileID: 7058925055303822834}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: armleft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +924,7 @@ GameObject:
   - component: {fileID: 694109936916383846}
   - component: {fileID: 4363045903900819271}
   - component: {fileID: 3468584641838204449}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: legleft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -955,7 +1005,7 @@ GameObject:
   - component: {fileID: 4803148761629594890}
   - component: {fileID: 8859533059236387275}
   - component: {fileID: 752273053741828667}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: legright
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1034,7 +1084,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7856115774754819819}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1059,7 +1109,7 @@ Transform:
   - {fileID: 9165312673079739490}
   - {fileID: 2093523609669755930}
   m_Father: {fileID: 5051034671428116579}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4566721971419316915
 PrefabInstance:
@@ -1068,9 +1118,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4779730781621288753}
     m_Modifications:
+    - target: {fileID: 1209414385227575058, guid: e6bb5cd5bb0eb3145a41bb4225397836, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1589027188712483407, guid: e6bb5cd5bb0eb3145a41bb4225397836, type: 3}
       propertyPath: m_Name
       value: DocumentVaccine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589027188712483407, guid: e6bb5cd5bb0eb3145a41bb4225397836, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2422276722722637958, guid: e6bb5cd5bb0eb3145a41bb4225397836, type: 3}
       propertyPath: m_RootOrder

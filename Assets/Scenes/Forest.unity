@@ -6623,8 +6623,8 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: -80
   m_MaxValue: 0
-  m_WholeNumbers: 0
-  m_Value: 0
+  m_WholeNumbers: 1
+  m_Value: -30
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -9333,19 +9333,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c80561fe8acf649a523158ac8731c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 0}
-  agent: {fileID: 0}
-  wanderRadius: 1000
-  wanderTime: 10
-  minDistanceToPlayer: 10
-  multiplyBy: 10
-  speed: 3.5
-  viewRadius: 0
-  viewAngle: 0
-  obstacleMask:
+  _body: {fileID: 0}
+  _agent: {fileID: 0}
+  _wanderRadius: 1000
+  _wanderTime: 10
+  _minDistanceToPlayer: 10
+  _multiplyBy: 10
+  _speed: 3.5
+  _viewRadius: 0
+  _viewAngle: 0
+  _obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  playerMask:
+  _playerMask:
     serializedVersion: 2
     m_Bits: 0
   _aiType: 0

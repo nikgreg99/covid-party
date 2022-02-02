@@ -223,15 +223,12 @@ public class PlayerMovement : MonoBehaviour
         move(moveX, moveZ);
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
-        if (currentHealth > 0)
-        {
-            currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
+        healthBar.SetHealth(currentHealth);
 
-            healthBar.SetHealth(currentHealth);
-        }
-        else
+        if (currentHealth <= 0)
         {
             gameOver.EndGame();
         }
