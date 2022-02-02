@@ -44,7 +44,14 @@ public class ShotLauncher : MonoBehaviour
 
     private void IndividualShot(float shotSpeed, float range, float shotSize, float posXOffset, bool isShotGun, bool homing, int damage)
     {
-        Vector3 shotOrientation = CameraManager.currentCamera.transform.forward * shotSpeed;
+        Vector3 shotOrientation = CameraManager.CurrentType switch
+        {
+            CameraManager.CameraType.FIRST => CameraManager.currentCamera.transform.forward * shotSpeed,
+            CameraManager.CameraType.THIRD => adaptableOrientation() * shotSpeed,
+            _ => CameraManager.currentCamera.transform.forward * shotSpeed,
+        };
+
+        //CameraManager.currentCamera.transform.forward * shotSpeed;
         Vector3 rightVector = Vector3.Cross(shotOrientation, Vector3.up);
 
         if (isShotGun)
@@ -66,5 +73,19 @@ public class ShotLauncher : MonoBehaviour
 
 
 
+    }
+
+    private Vector3 adaptableOrientation()
+    {
+        Transform curCameraTransform = CameraManager.currentCamera.transform;
+        RaycastHit hit;
+        if (Physics.Raycast(curCameraTransform.position, curCameraTransform.forward, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Enemy")))
+        {
+            return (hit.point - transform.position).normalized;
+        }
+        else
+        {
+            return transform.forward;
+        }
     }
 }

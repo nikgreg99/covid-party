@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] private bool _isFirstPerson = false;
+    public enum CameraType
+    {
+        FIRST,
+        THIRD
+    }
+
+    //[SerializeField] private bool _isFirstPerson = false;
     [SerializeField] private GameObject firstCameera;
     [SerializeField] private GameObject orbitCamera;
     public static Camera currentCamera { get; private set; }
+
+    public static CameraType CurrentType { get; private set; } = CameraType.THIRD;
 
     public float CurRotX { get; set; } = 0;
     public float CurRotY { get; set; } = 0;
@@ -20,7 +28,7 @@ public class CameraManager : MonoBehaviour
 
     private void UpdateView()
     {
-        if (_isFirstPerson)
+        if (CurrentType == CameraType.FIRST)
         {
             //orbitRotation = orbitCamera.transform.rotation;
             firstCameera.SetActive(true);
@@ -35,12 +43,17 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    
+
 
 
     private void ChangeView()
     {
-        _isFirstPerson = !_isFirstPerson;
+        CurrentType = CurrentType switch
+        {
+            CameraType.FIRST => CameraType.THIRD,
+            CameraType.THIRD => CameraType.FIRST,
+            _ => CameraType.FIRST,
+        };
         UpdateView();
     }
 

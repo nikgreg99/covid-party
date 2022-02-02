@@ -229,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Mathf.Abs(Vector3.Angle(vec1, vec2)) < 50 || vec1.magnitude <= 1.5)
             {
-                int price = 1000;
+                int price = 350;
 
                 _interactingText.text = string.Format("Pay {0}$ to finish level", price);
                 _interactingText.enabled = true;

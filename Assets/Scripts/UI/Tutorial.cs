@@ -35,7 +35,7 @@ public class Tutorial : MonoBehaviour
     int powerUpLength;
     int powerUpCounter = 0;
 
-    string[] endInstrunctions = new string[] { "Well done!\nThese allow your virus to evolve and become stronger!", "Well, I've taught everything you need to know.", "Now go on! Make us proud!\nInfect everyone you see!"};
+    string[] endInstrunctions = new string[] { "Well done!\nThese allow your virus to evolve and become stronger!", "Well, I've taught everything you need to know.", "Now go on! Make us proud!\nInfect everyone you see!" };
     int endLength;
     int endCounter = 0;
 
@@ -88,7 +88,7 @@ public class Tutorial : MonoBehaviour
 
         if ((Input.GetKeyDown(KeyCode.Return) || counter > timer) && instrunctionsCounter < instrunctionsLength)
         {
-            if(running)
+            if (running)
                 StopCoroutine(routine);
 
             instrunctionsCounter++;
@@ -115,7 +115,7 @@ public class Tutorial : MonoBehaviour
 
         if (startEnd)
         {
-            if(endCounter == endLength)
+            if (endCounter == endLength)
             {
                 done = true;
             }
@@ -150,7 +150,7 @@ public class Tutorial : MonoBehaviour
             if (running)
                 StopCoroutine(routine);
 
-            currentText = "Look at that!\nThe bar is filling up!";
+            currentText = "Look at that! The bar is filling up!\nEach filled bar gives you some <color=#FF0000>$ infection dollar</color> !";
             routine = DisplayText();
             StartCoroutine(routine);
             firstFullInfection = true;
@@ -159,7 +159,7 @@ public class Tutorial : MonoBehaviour
             counter = 0;
         }
 
-        if(isNearDNA && !firstDNA)
+        if (isNearDNA && !firstDNA)
         {
             if (running)
                 StopCoroutine(routine);
@@ -199,12 +199,37 @@ public class Tutorial : MonoBehaviour
 
         text.text = "";
 
-        foreach(char c in currentText.ToCharArray())
+        char[] charArray = currentText.ToCharArray();
+        (int start, int end) skipIndexes = (currentText.IndexOf("<color=#FF0000>"), currentText.IndexOf("</color>") + "</color>".Length);
+        List<char> buffer = new List<char>();
+
+        if (skipIndexes.start >= 0 && skipIndexes.end >= 0)
         {
-            text.text += c;
+            Debug.Log("aola");
+        }
+
+        for (int i = 0; i < charArray.Length; i++)
+        {
+            if (i >= skipIndexes.start && i < skipIndexes.end)
+            {
+                buffer.Add(charArray[i]);
+                if (i != charArray.Length - 1)
+                {
+                    continue;
+                }
+            }
+
+            if (buffer.Count > 0)
+            {
+                text.text += new string(buffer.ToArray());
+                buffer.Clear();
+            }
+
+            text.text += charArray[i];
 
             yield return new WaitForSecondsRealtime(0.04f);
         }
+
 
         running = false;
 
@@ -213,8 +238,8 @@ public class Tutorial : MonoBehaviour
     public void GoNext()
     {
         NextSceneManager.RequestNextScene(2);
-       /* SceneManager.LoadScene("Loading");
-        SceneManager.LoadSceneAsync(2);*/
+        /* SceneManager.LoadScene("Loading");
+         SceneManager.LoadSceneAsync(2);*/
     }
 
 }
