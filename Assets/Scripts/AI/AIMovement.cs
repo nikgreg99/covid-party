@@ -133,7 +133,7 @@ public class AIMovement : MonoBehaviour
                         break;
                 }
             }
-            else if ((_timer >= _wanderTime || _interactingWithPlayer) && (distance > _minDistanceToPlayer || _enemyHealth.Infected || (!findVisibleTarget() && !_running)))
+            else if ((_timer >= _wanderTime || _interactingWithPlayer) && (distance > _minDistanceToPlayer || _enemyHealth.Infected || (!findVisibleTarget())))
             {
                 _running = false;
                 PlayerOnSight = false;

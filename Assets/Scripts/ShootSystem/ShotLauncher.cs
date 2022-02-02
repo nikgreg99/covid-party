@@ -85,7 +85,7 @@ public class ShotLauncher : MonoBehaviour
         }
         else
         {
-            return transform.forward;
+            return curCameraTransform.forward;
         }
     }
 }

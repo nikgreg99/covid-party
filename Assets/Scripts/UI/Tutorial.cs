@@ -203,11 +203,6 @@ public class Tutorial : MonoBehaviour
         (int start, int end) skipIndexes = (currentText.IndexOf("<color=#FF0000>"), currentText.IndexOf("</color>") + "</color>".Length);
         List<char> buffer = new List<char>();
 
-        if (skipIndexes.start >= 0 && skipIndexes.end >= 0)
-        {
-            Debug.Log("aola");
-        }
-
         for (int i = 0; i < charArray.Length; i++)
         {
             if (i >= skipIndexes.start && i < skipIndexes.end)
