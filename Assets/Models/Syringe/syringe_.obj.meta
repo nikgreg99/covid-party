@@ -3,37 +3,7 @@ guid: 41beeaf110dbae748b4fe4ca24b0ac16
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: liquide
-    second: {fileID: 2100000, guid: 2333da2be55fc8940a8a2bd7f6428796, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: metal_pikouze
-    second: {fileID: 2100000, guid: 60bfb89da7e162e468d9699d996c4266, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: metal_quadrillage
-    second: {fileID: 2100000, guid: b30071f9ca2a1954aafbea39b536d734, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: metal_seringue
-    second: {fileID: 2100000, guid: b3be35e1cf5ee6449a6711764efc402e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: plastique
-    second: {fileID: 2100000, guid: 9c402395334199b489360bb06bef6add, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: verre
-    second: {fileID: 2100000, guid: 492117411f402b74f9b396bc3295cd77, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
