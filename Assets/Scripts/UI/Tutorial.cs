@@ -86,10 +86,8 @@ public class Tutorial : MonoBehaviour
         isFullyInfected = enemy.GetComponent<EnemyHealth>().Infected;
         isNearDNA = player.GetComponent<PlayerMovement>().isNearDNA;
 
-        if ((Input.GetKeyDown(KeyCode.Return) || counter > timer) && instrunctionsCounter < instrunctionsLength)
+        if (!running && instrunctionsCounter < instrunctionsLength)
         {
-            if (running)
-                StopCoroutine(routine);
 
             instrunctionsCounter++;
             currentText = instrunctions[instrunctionsCounter];
@@ -100,10 +98,8 @@ public class Tutorial : MonoBehaviour
 
         if (startPowerUp)
         {
-            if ((Input.GetKeyDown(KeyCode.Return) || counter > timer) && powerUpCounter < powerUpLength)
+            if (!running && powerUpCounter < powerUpLength)
             {
-                if (running)
-                    StopCoroutine(routine);
 
                 powerUpCounter++;
                 currentText = powerUp[powerUpCounter];
@@ -119,11 +115,8 @@ public class Tutorial : MonoBehaviour
             {
                 done = true;
             }
-            else if ((Input.GetKeyDown(KeyCode.Return) || counter > timer) && endCounter < endLength)
+            else if (!running && endCounter < endLength)
             {
-                if (running)
-                    StopCoroutine(routine);
-
                 endCounter++;
                 currentText = endInstrunctions[endCounter];
                 routine = DisplayText();
@@ -222,9 +215,24 @@ public class Tutorial : MonoBehaviour
 
             text.text += charArray[i];
 
-            yield return new WaitForSecondsRealtime(0.04f);
+            if (Input.GetKey(KeyCode.Return))
+            {
+                yield return new WaitForSecondsRealtime(0.01f);
+            }
+            else
+            {
+                yield return new WaitForSecondsRealtime(0.04f);
+            }
         }
 
+        if (Input.GetKey(KeyCode.Return))
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(2f);
+        }
 
         running = false;
 
