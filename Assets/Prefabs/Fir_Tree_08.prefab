@@ -107,7 +107,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.3808262
+  m_Radius: 0.42
   m_Height: 4.86
   m_Direction: 1
   m_Center: {x: -0.0021152496, y: 3.19, z: -0.022097588}
@@ -218,7 +218,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.3808262
+  m_Radius: 0.42
   m_Height: 4.86
   m_Direction: 1
   m_Center: {x: -0.0021152496, y: 3.19, z: -0.022097588}
@@ -390,7 +390,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.3808262
+  m_Radius: 0.42
   m_Height: 4.86
   m_Direction: 1
   m_Center: {x: -0.0021152496, y: 3.19, z: -0.022097588}
