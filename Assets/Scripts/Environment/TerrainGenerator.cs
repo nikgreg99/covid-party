@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 //using Random = System.Random;
@@ -46,6 +47,8 @@ public class TerrainGenerator : MonoBehaviour
 
     [SerializeField] private Material _wallMaterial;
 
+    private List<Vector2> _treePositions;
+
 
 
     // Start is called before the first frame update
@@ -61,6 +64,9 @@ public class TerrainGenerator : MonoBehaviour
         _terrain.terrainData = newTerrainData;
         _terrain.GetComponent<TerrainCollider>().terrainData = newTerrainData;
         terrainReady();
+        _treePositions = new List<TreeInstance>(Terrain.activeTerrain.terrainData.treeInstances)
+            .Select(e => new Vector2(e.position.x * _width, e.position.z * _height))
+            .ToList();
         SpawnGivenPlayer(newTerrainData);
         SpawnDNAs();
         SpwanWalls();
@@ -124,8 +130,14 @@ public class TerrainGenerator : MonoBehaviour
     {
         for (int i = 0; i < _dnaCount; i++)
         {
-            int x = Random.Range(0, _width);
-            int y = Random.Range(0, _height);
+            int x, y;
+            do
+            {
+                x = Random.Range(0, _width);
+                y = Random.Range(0, _height);
+            } while (nearTree(new Vector2(x, y), 4));
+
+
 
             Instantiate(powerUpContainerPrefab, new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) + _dnaSpawnHeight, y - _height / 2), Quaternion.identity);
         }
@@ -260,6 +272,11 @@ public class TerrainGenerator : MonoBehaviour
 
 
 
+    }
+
+    private bool nearTree(Vector2 pos, float range)
+    {
+        return _treePositions.Where((treePos) => (pos - treePos).magnitude <= range).Any();
     }
 
     // Update is called once per frame
