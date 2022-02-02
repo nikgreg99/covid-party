@@ -42,7 +42,7 @@ public class NextScene : MonoBehaviour
                 if (textCoroutine != null && text != null)
                 {
                     StopCoroutine(textCoroutine);
-                    text.text = "";
+                    text.text = "Loading";
                 }
                 asyncLoad.allowSceneActivation = true;
             }
