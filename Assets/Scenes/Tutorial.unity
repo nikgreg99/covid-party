@@ -2213,6 +2213,7 @@ MonoBehaviour:
   _terminalVelocity: -10
   _checkOffset: 0.15
   _interactingText: {fileID: 89742605}
+  _victoryScreen: {fileID: 0}
   _notification: {fileID: 1595121046}
   maxHealth: 100
   currentHealth: 0
@@ -2257,7 +2258,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f764db7f1338204449d7f8e3f9aff1a8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.187
+  m_Volume: 0.425
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10679,6 +10680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameOverUI: {fileID: 914411359}
+  gameAudio: {fileID: 0}
 --- !u!114 &1571057076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14335,21 +14337,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c80561fe8acf649a523158ac8731c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 3024644155761583024}
-  agent: {fileID: 6580080128734725458}
-  wanderRadius: 100
-  wanderTime: 10
-  minDistanceToPlayer: 100
-  multiplyBy: 110
-  speed: 0.1
-  viewRadius: 100
-  viewAngle: 45
-  obstacleMask:
+  _body: {fileID: 3024644155761583024}
+  _agent: {fileID: 6580080128734725458}
+  _wanderRadius: 1000
+  _wanderTime: 10
+  _minDistanceToPlayer: 10
+  _multiplyBy: 10
+  _speed: 3.5
+  _viewRadius: 0
+  _viewAngle: 0
+  _obstacleMask:
     serializedVersion: 2
-    m_Bits: 256
-  playerMask:
+    m_Bits: 0
+  _playerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   _aiType: 0
 --- !u!114 &7718905936443151535
 MonoBehaviour:

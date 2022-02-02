@@ -22,9 +22,12 @@ public class PlayerMovement : MonoBehaviour
 
 
     [SerializeField] private TMPro.TextMeshProUGUI _interactingText;
+    [SerializeField] private GameObject _victoryScreen;
+
     [SerializeField] private TMPro.TextMeshProUGUI _notification;
 
-    private PowerUpContainer nearDNA = null;
+    private PowerUpContainer _nearDNA = null;
+    private CovidAltar _covidAltar = null;
 
     //private Rigidbody _rigidbody;
 
@@ -181,9 +184,9 @@ public class PlayerMovement : MonoBehaviour
 
         _speedUp = Input.GetKey(KeyCode.LeftShift);
 
-        if (nearDNA != null)
+        if (_nearDNA != null)
         {
-            Vector3 vec1 = new Vector3(nearDNA.transform.position.x - transform.position.x, 0, nearDNA.transform.position.z - transform.position.z);
+            Vector3 vec1 = new Vector3(_nearDNA.transform.position.x - transform.position.x, 0, _nearDNA.transform.position.z - transform.position.z);
             Vector3 vec2 = new Vector3(transform.forward.x, 0, transform.forward.z);
 
             if (Mathf.Abs(Vector3.Angle(vec1, vec2)) < 50 || vec1.magnitude <= 1.5)
@@ -197,8 +200,47 @@ public class PlayerMovement : MonoBehaviour
                         try
                         {
                             ScoreManager.removeTokens(PowerUp.POWERUP_PRICE);
-                            nearDNA.OpenContainer();
-                            nearDNA = null;
+                            _nearDNA.OpenContainer();
+                            _nearDNA = null;
+                            _interactingText.enabled = false;
+                        }
+                        catch (ScoreManager.ScoreException e)
+                        {
+                            Debug.LogWarning(e.Message);
+                        }
+
+                    }
+                    else
+                    {
+                        StartCoroutine(flashInteractingTextRed());
+                    }
+
+                }
+            }
+            else
+            {
+                _interactingText.enabled = false;
+            }
+        }
+        else if (_covidAltar != null)
+        {
+            Vector3 vec1 = new Vector3(_covidAltar.transform.position.x - transform.position.x, 0, _covidAltar.transform.position.z - transform.position.z);
+            Vector3 vec2 = new Vector3(transform.forward.x, 0, transform.forward.z);
+
+            if (Mathf.Abs(Vector3.Angle(vec1, vec2)) < 50 || vec1.magnitude <= 1.5)
+            {
+                int price = 1000;
+
+                _interactingText.text = string.Format("Pay {0}$ to finish level", price);
+                _interactingText.enabled = true;
+                if (Input.GetKey(KeyCode.E))
+                {
+                    if (ScoreManager.CanBuy(price))
+                    {
+                        try
+                        {
+                            ScoreManager.removeTokens(price);
+                            _covidAltar.ShowVictoryScreen(_victoryScreen);
                             _interactingText.enabled = false;
                         }
                         catch (ScoreManager.ScoreException e)
@@ -238,8 +280,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PowerUpContainer>() != null)
         {
-            nearDNA = other.gameObject.GetComponent<PowerUpContainer>();
+            _nearDNA = other.gameObject.GetComponent<PowerUpContainer>();
             isNearDNA = true;
+        }
+        else if (other.gameObject.GetComponent<CovidAltar>() != null)
+        {
+            _covidAltar = other.gameObject.GetComponent<CovidAltar>();
         }
         else if (other.gameObject.GetComponent<PowerUp>() != null)
         {
@@ -259,7 +305,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PowerUpContainer>() != null)
         {
-            nearDNA = null;
+            _nearDNA = null;
+            _interactingText.enabled = false;
+        }
+        else if (other.gameObject.GetComponent<CovidAltar>() != null)
+        {
+            _covidAltar = null;
             _interactingText.enabled = false;
         }
     }

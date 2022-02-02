@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Victory : MonoBehaviour
+public class CovidAltar : MonoBehaviour
 {
-    [SerializeField] GameObject VictoryScreen;
-
-    public void ShowVictoryScreen()
+    // Start is called before the first frame update
+    public void ShowVictoryScreen(GameObject VictoryScreen)
     {
 #if !UNITY_EDITOR
         Cursor.visible = true;

@@ -42,6 +42,7 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField] private float _dnaSpawnHeight = 1f;
 
     [SerializeField] private GameObject _buildingPrefab;
+    [SerializeField] private GameObject _covidAltarPrefab;
 
     [SerializeField] private Material _wallMaterial;
 
@@ -64,8 +65,28 @@ public class TerrainGenerator : MonoBehaviour
         SpawnDNAs();
         SpwanWalls();
         SpawnBuildings();
+        SpawnCovidAltar();
         GetComponent<SpawnerManager>().SpawnIA();
         playerReady();
+    }
+
+    private void SpawnCovidAltar()
+    {
+        (int x, int y) offsetFromPlayerSpawn = (0, 10);
+
+        int x = _width / 2 + offsetFromPlayerSpawn.x;
+        int y = _height / 2 + offsetFromPlayerSpawn.y;
+
+
+        Vector3 normal = _terrain.terrainData.GetInterpolatedNormal(1.0f * x / _width, 1f * y / _height);
+        Quaternion normalRotation = Quaternion.FromToRotation(Vector3.up, normal);
+        Quaternion ranRot = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
+        Quaternion altarRotation = normalRotation * ranRot;
+
+        Vector3 altarPos = new Vector3(x - _width / 2, _terrain.terrainData.GetInterpolatedHeight(1.0f * x / _width, 1f * y / _height) + 3f, y - _height / 2);
+
+        Instantiate(_covidAltarPrefab, altarPos, altarRotation);
+
     }
 
     private void SpawnBuildings()

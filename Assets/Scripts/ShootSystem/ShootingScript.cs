@@ -104,6 +104,7 @@ public class ShootingScript : MonoBehaviour
         {
             _lastShotTime = Time.time;
             _launcher.GenerateShot(_shotSpeed, _range, _shotSize, _dualShoot, _isShotgun, _homing, _damage);
+            _playerSource.pitch = UnityEngine.Random.Range(0.85f, 1.15f);
 
             if (_isShotgun)
             {

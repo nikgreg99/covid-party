@@ -2429,6 +2429,7 @@ MonoBehaviour:
   powerUpContainerPrefab: {fileID: 8446318166965153976, guid: b9da77392e43e7e42a5438752c073f87, type: 3}
   _dnaSpawnHeight: 1
   _buildingPrefab: {fileID: 7327949048383978761, guid: 2f1e5670af436524f8f415efcb4a8938, type: 3}
+  _covidAltarPrefab: {fileID: 3226170653236280004, guid: 47e9725ee14a2814baa93e9fda9cbc60, type: 3}
   _wallMaterial: {fileID: 2100000, guid: 9e2a6139a36305a43ae2208165b6c840, type: 2}
 --- !u!154 &540798294
 TerrainCollider:
@@ -6624,7 +6625,7 @@ MonoBehaviour:
   m_MinValue: -80
   m_MaxValue: 0
   m_WholeNumbers: 1
-  m_Value: -30
+  m_Value: -20
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -7562,6 +7563,7 @@ MonoBehaviour:
   _terminalVelocity: -10
   _checkOffset: 0.15
   _interactingText: {fileID: 173327817}
+  _victoryScreen: {fileID: 1987529924}
   _notification: {fileID: 1713553912}
   maxHealth: 100
   currentHealth: 0
@@ -7594,7 +7596,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 224996b8a4e164447b51c4811ba3e8c0, type: 2}
   m_audioClip: {fileID: 8300000, guid: f764db7f1338204449d7f8e3f9aff1a8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.608
   m_Pitch: 1
   Loop: 0
   Mute: 0
