@@ -15,9 +15,4 @@ public class LevelsLoader : MonoBehaviour
     {
         NextSceneManager.RequestNextScene(2);
     }
-
-    public void loadCityLevel()
-    {
-        NextSceneManager.RequestNextScene(3);
-    }
 }
