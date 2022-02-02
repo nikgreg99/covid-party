@@ -34,7 +34,7 @@ public class AIMovement : MonoBehaviour
 
     public bool PlayerOnSight { get; private set; } = false;
 
-
+    private Vector3 _lastFramePos;
     private Transform _target;
     private List<Animator> _animators = new List<Animator>();
     private float _timer;
@@ -47,6 +47,7 @@ public class AIMovement : MonoBehaviour
 
     private void Start()
     {
+        _lastFramePos = transform.position;
         foreach (Animator a in GetComponentsInChildren<Animator>())
         {
             _animators.Add(a);
@@ -92,12 +93,22 @@ public class AIMovement : MonoBehaviour
 
     private void Update()
     {
+        if ((_lastFramePos - transform.position).magnitude / Time.deltaTime <= 0.15f)
+        {
+            EnableAnimation(false);
+        }
+        else
+        {
+            EnableAnimation(true);
+        }
+        _lastFramePos = transform.position;
+
 
         if (_agent.enabled)
         {
             _timer += Time.deltaTime;
 
-            EnableAnimation(true);
+            //EnableAnimation(true);
 
             float distance = Vector3.Distance(_target.position, transform.position);
 
@@ -121,7 +132,8 @@ public class AIMovement : MonoBehaviour
                         Run();
                         break;
                 }
-            }else if ((_timer >= _wanderTime || _interactingWithPlayer) && (distance > _minDistanceToPlayer || _enemyHealth.Infected || (!findVisibleTarget() && !_running)))
+            }
+            else if ((_timer >= _wanderTime || _interactingWithPlayer) && (distance > _minDistanceToPlayer || _enemyHealth.Infected || (!findVisibleTarget() && !_running)))
             {
                 _running = false;
                 PlayerOnSight = false;
