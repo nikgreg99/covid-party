@@ -9,6 +9,11 @@ public class PowerUpContainer : MonoBehaviour
     private static List<PowerupTypes> _acquiredUniques;
     private static List<PowerupTypes> AcquiredUniques { get { if (_acquiredUniques == null) _acquiredUniques = new List<PowerupTypes>(); return _acquiredUniques; } }
 
+    public static void ResetUniques()
+    {
+        _acquiredUniques = null;
+    }
+
     private struct Range
     {
         public int MinInclusive { get; set; }
