@@ -68,6 +68,7 @@ public class TerrainGenerator : MonoBehaviour
             .Select(e => new Vector2(e.position.x * _width, e.position.z * _height))
             .ToList();
         SpawnGivenPlayer(newTerrainData);
+        PowerUpContainer.ResetUniques();
         SpawnDNAs();
         SpwanWalls();
         SpawnBuildings();
